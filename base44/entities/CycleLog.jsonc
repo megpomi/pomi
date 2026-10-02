@@ -1,0 +1,65 @@
+{
+  "name": "CycleLog",
+  "type": "object",
+  "properties": {
+    "start_date": {
+      "type": "string",
+      "format": "date",
+      "title": "Start date"
+    },
+    "end_date": {
+      "type": "string",
+      "format": "date",
+      "title": "End date"
+    },
+    "flow_intensity": {
+      "type": "string",
+      "enum": [
+        "light",
+        "medium",
+        "heavy"
+      ],
+      "default": "medium",
+      "title": "Flow intensity"
+    },
+    "mood": {
+      "type": "string",
+      "enum": [
+        "great",
+        "good",
+        "okay",
+        "low",
+        "anxious"
+      ],
+      "title": "Mood"
+    },
+    "symptoms": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "cramps",
+          "headache",
+          "bloating",
+          "fatigue",
+          "breast_tenderness",
+          "acne",
+          "cravings",
+          "backache",
+          "mood_swings",
+          "insomnia"
+        ]
+      },
+      "default": [],
+      "title": "Symptoms"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes",
+      "maxLength": 1000
+    }
+  },
+  "required": [
+    "start_date"
+  ]
+}
