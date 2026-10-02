@@ -64,7 +64,7 @@ export default function Home() {
           <div className="flex items-center gap-2.5">
             <PomegranateLogo className="h-8 w-8" />
             <span className="font-heading text-xl font-semibold tracking-tight text-slate-800">
-              Komi
+              Pomi
             </span>
           </div>
           <Button
@@ -104,7 +104,7 @@ export default function Home() {
         </div>
 
         <p className="mt-10 text-center text-xs text-slate-400">
-          Komi is not a medical device. For health concerns, please consult a
+          Pomi is not a medical device. For health concerns, please consult a
           healthcare professional.
         </p>
       </main>

@@ -28,7 +28,7 @@ const PHASE_COPY = {
     ring: "#8b5cf6",
   },
   unknown: {
-    title: "Welcome to Komi",
+    title: "Welcome to Pomi",
     sub: "Log your first period to start tracking.",
     color: "text-pomegranate-500",
     ring: "#c92a4d",

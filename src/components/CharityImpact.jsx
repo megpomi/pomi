@@ -30,7 +30,7 @@ export default function CharityImpact({ daysTracked }) {
         Every day you track helps fund women's health.
       </h3>
       <p className="mt-3 max-w-md text-sm leading-relaxed text-white/85">
-        Komi is free with ads, or ad-free with a subscription. A share of every
+        Pomi is free with ads, or ad-free with a subscription. A share of every
         dollar we earn is donated to nonprofits supporting menstrual equity,
         research, and maternal care.
       </p>
@@ -75,7 +75,7 @@ export default function CharityImpact({ daysTracked }) {
           ))}
         </div>
         <p className="mt-3 text-[11px] text-white/60">
-          Featured partners — donation distributions are made by Komi
+          Featured partners — donation distributions are made by Pomi
           periodically.
         </p>
       </div>
