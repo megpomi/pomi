@@ -6,8 +6,8 @@ const PHASE_COPY = {
   period: {
     title: "On your period",
     sub: "Be gentle with yourself today.",
-    color: "text-rose-500",
-    ring: "#e11d63",
+    color: "text-pomegranate-500",
+    ring: "#c92a4d",
   },
   follicular: {
     title: "Follicular phase",
@@ -28,10 +28,10 @@ const PHASE_COPY = {
     ring: "#8b5cf6",
   },
   unknown: {
-    title: "Welcome to Luna",
+    title: "Welcome to Komi",
     sub: "Log your first period to start tracking.",
-    color: "text-rose-500",
-    ring: "#e11d63",
+    color: "text-pomegranate-500",
+    ring: "#c92a4d",
   },
 };
 
@@ -57,12 +57,12 @@ export default function CycleStatus({ logs }) {
       : "—";
 
   return (
-    <div className="relative overflow-hidden rounded-3xl border border-rose-100/80 bg-gradient-to-br from-rose-50/60 via-white to-white p-8 sm:p-10">
+    <div className="relative overflow-hidden rounded-3xl border border-pomegranate-100/80 bg-gradient-to-br from-pomegranate-50/60 via-white to-white p-8 sm:p-10">
       <div className="flex flex-col items-center gap-8 sm:flex-row sm:items-center sm:justify-between">
         <div className="order-2 sm:order-1">
           <div className="mb-2 flex items-center gap-2">
-            <Sparkles className="h-4 w-4 text-rose-400" />
-            <span className="text-xs font-medium uppercase tracking-[0.18em] text-rose-400">
+            <Sparkles className="h-4 w-4 text-pomegranate-400" />
+            <span className="text-xs font-medium uppercase tracking-[0.18em] text-pomegranate-400">
               {phaseLabel(status.phase)}
             </span>
           </div>
@@ -100,7 +100,7 @@ export default function CycleStatus({ logs }) {
                 cy="90"
                 r={radius}
                 fill="none"
-                stroke="#fce7f3"
+                stroke="#f8ccd4"
                 strokeWidth="10"
               />
               <circle
@@ -126,7 +126,7 @@ export default function CycleStatus({ logs }) {
                   </span>
                 </>
               ) : (
-                <Droplet className="h-10 w-10 text-rose-300" />
+                <Droplet className="h-10 w-10 text-pomegranate-300" />
               )}
             </div>
           </div>

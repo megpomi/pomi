@@ -44,6 +44,18 @@ module.exports = {
   			border: 'hsl(var(--border))',
   			input: 'hsl(var(--input))',
   			ring: 'hsl(var(--ring))',
+  			pomegranate: {
+  				50: '#fdf3f4',
+  				100: '#fbe3e7',
+  				200: '#f8ccd4',
+  				300: '#f2a3b2',
+  				400: '#e9708a',
+  				500: '#db4464',
+  				600: '#c92a4d',
+  				700: '#a91e3f',
+  				800: '#8c1c39',
+  				900: '#781b35'
+  			},
   			chart: {
   				'1': 'hsl(var(--chart-1))',
   				'2': 'hsl(var(--chart-2))',

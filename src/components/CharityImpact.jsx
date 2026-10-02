@@ -18,7 +18,7 @@ const CHARITIES = [
 
 export default function CharityImpact({ daysTracked }) {
   return (
-    <div className="overflow-hidden rounded-3xl border border-rose-100 bg-gradient-to-br from-rose-500 to-pink-600 p-8 text-white sm:p-10">
+    <div className="overflow-hidden rounded-3xl border border-pomegranate-100 bg-gradient-to-br from-pomegranate-500 to-pomegranate-800 p-8 text-white sm:p-10">
       <div className="mb-6 flex items-center gap-2">
         <Heart className="h-4 w-4 fill-white/80" />
         <span className="text-xs font-medium uppercase tracking-[0.18em] text-white/80">
@@ -30,7 +30,7 @@ export default function CharityImpact({ daysTracked }) {
         Every day you track helps fund women's health.
       </h3>
       <p className="mt-3 max-w-md text-sm leading-relaxed text-white/85">
-        Luna is free with ads, or ad-free with a subscription. A share of every
+        Komi is free with ads, or ad-free with a subscription. A share of every
         dollar we earn is donated to nonprofits supporting menstrual equity,
         research, and maternal care.
       </p>
@@ -75,7 +75,7 @@ export default function CharityImpact({ daysTracked }) {
           ))}
         </div>
         <p className="mt-3 text-[11px] text-white/60">
-          Featured partners — donation distributions are made by Luna
+          Featured partners — donation distributions are made by Komi
           periodically.
         </p>
       </div>

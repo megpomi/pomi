@@ -2,9 +2,9 @@ import React from "react";
 import { Droplet } from "lucide-react";
 
 const FLOW_DOT = {
-  light: "bg-rose-200",
-  medium: "bg-rose-400",
-  heavy: "bg-rose-600",
+  light: "bg-pomegranate-200",
+  medium: "bg-pomegranate-400",
+  heavy: "bg-pomegranate-600",
 };
 
 const fmt = (d) =>
@@ -35,7 +35,7 @@ export default function CycleHistory({ logs, loading }) {
         </div>
       ) : items.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-10 text-center">
-          <Droplet className="mb-3 h-8 w-8 text-rose-200" />
+          <Droplet className="mb-3 h-8 w-8 text-pomegranate-200" />
           <p className="text-sm text-slate-500">
             No periods logged yet. Add your first to begin.
           </p>
@@ -45,11 +45,11 @@ export default function CycleHistory({ logs, loading }) {
           {items.map((l, i) => (
             <li
               key={l.id}
-              className="flex items-center gap-4 rounded-2xl px-2 py-3 transition hover:bg-rose-50/40"
+              className="flex items-center gap-4 rounded-2xl px-2 py-3 transition hover:bg-pomegranate-50/40"
             >
               <span
                 className={`h-2.5 w-2.5 shrink-0 rounded-full ${
-                  FLOW_DOT[l.flow_intensity] || "bg-rose-300"
+                  FLOW_DOT[l.flow_intensity] || "bg-pomegranate-300"
                 }`}
               />
               <div className="flex-1">

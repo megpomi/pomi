@@ -2,7 +2,8 @@ import React, { useState, useEffect, useCallback } from "react";
 import { base44 } from "@/api/base44Client";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
-import { Plus, Droplet } from "lucide-react";
+import { Plus } from "lucide-react";
+import PomegranateLogo from "@/components/PomegranateLogo";
 import CycleStatus from "@/components/CycleStatus";
 import LogPeriodSheet from "@/components/LogPeriodSheet";
 import CycleHistory from "@/components/CycleHistory";
@@ -56,21 +57,19 @@ export default function Home() {
   }, 0);
 
   return (
-    <div className="min-h-screen bg-[#fdf7f5]">
+    <div className="min-h-screen bg-[#fdf6f7]">
       {/* Header */}
-      <header className="sticky top-0 z-30 border-b border-rose-100/70 bg-[#fdf7f5]/85 backdrop-blur-md">
+      <header className="sticky top-0 z-30 border-b border-pomegranate-100/70 bg-[#fdf6f7]/85 backdrop-blur-md">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-5 py-4 sm:px-8">
-          <div className="flex items-center gap-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-2xl bg-rose-500 text-white">
-              <Droplet className="h-5 w-5" />
-            </div>
+          <div className="flex items-center gap-2.5">
+            <PomegranateLogo className="h-8 w-8" />
             <span className="font-heading text-xl font-semibold tracking-tight text-slate-800">
-              Luna
+              Komi
             </span>
           </div>
           <Button
             onClick={() => setSheetOpen(true)}
-            className="rounded-full bg-rose-500 px-4 hover:bg-rose-600"
+            className="rounded-full bg-pomegranate-600 px-4 hover:bg-pomegranate-700"
           >
             <Plus className="mr-1.5 h-4 w-4" />
             Log period
@@ -105,7 +104,7 @@ export default function Home() {
         </div>
 
         <p className="mt-10 text-center text-xs text-slate-400">
-          Luna is not a medical device. For health concerns, please consult a
+          Komi is not a medical device. For health concerns, please consult a
           healthcare professional.
         </p>
       </main>

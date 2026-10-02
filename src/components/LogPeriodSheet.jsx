@@ -15,9 +15,9 @@ import { base44 } from "@/api/base44Client";
 import { Loader2 } from "lucide-react";
 
 const FLOWS = [
-  { value: "light", label: "Light", dot: "bg-rose-200" },
-  { value: "medium", label: "Medium", dot: "bg-rose-400" },
-  { value: "heavy", label: "Heavy", dot: "bg-rose-600" },
+  { value: "light", label: "Light", dot: "bg-pomegranate-200" },
+  { value: "medium", label: "Medium", dot: "bg-pomegranate-400" },
+  { value: "heavy", label: "Heavy", dot: "bg-pomegranate-600" },
 ];
 
 const MOODS = [
@@ -155,8 +155,8 @@ export default function LogPeriodSheet({ open, onOpenChange, onSaved }) {
                   }
                   className={`flex flex-1 items-center justify-center gap-2 rounded-xl border px-3 py-2.5 text-sm transition ${
                     form.flow_intensity === f.value
-                      ? "border-rose-400 bg-rose-50 text-rose-700"
-                      : "border-slate-200 text-slate-600 hover:border-rose-200"
+                      ? "border-pomegranate-400 bg-pomegranate-50 text-pomegranate-700"
+                      : "border-slate-200 text-slate-600 hover:border-pomegranate-200"
                   }`}
                 >
                   <span className={`h-2.5 w-2.5 rounded-full ${f.dot}`} />
@@ -181,8 +181,8 @@ export default function LogPeriodSheet({ open, onOpenChange, onSaved }) {
                   }
                   className={`flex-1 rounded-xl border px-2 py-2 text-xl transition ${
                     form.mood === m.value
-                      ? "border-rose-400 bg-rose-50"
-                      : "border-slate-200 hover:border-rose-200"
+                      ? "border-pomegranate-400 bg-pomegranate-50"
+                      : "border-slate-200 hover:border-pomegranate-200"
                   }`}
                 >
                   {m.emoji}
@@ -203,8 +203,8 @@ export default function LogPeriodSheet({ open, onOpenChange, onSaved }) {
                     onClick={() => toggleSymptom(s)}
                     className={`rounded-full border px-3 py-1.5 text-xs capitalize transition ${
                       active
-                        ? "border-rose-400 bg-rose-50 text-rose-700"
-                        : "border-slate-200 text-slate-600 hover:border-rose-200"
+                        ? "border-pomegranate-400 bg-pomegranate-50 text-pomegranate-700"
+                        : "border-slate-200 text-slate-600 hover:border-pomegranate-200"
                     }`}
                   >
                     {pretty(s)}
@@ -227,7 +227,7 @@ export default function LogPeriodSheet({ open, onOpenChange, onSaved }) {
             />
           </div>
 
-          {error && <p className="text-sm text-rose-600">{error}</p>}
+          {error && <p className="text-sm text-pomegranate-600">{error}</p>}
         </div>
 
         <DialogFooter>
@@ -238,7 +238,7 @@ export default function LogPeriodSheet({ open, onOpenChange, onSaved }) {
           >
             Cancel
           </Button>
-          <Button onClick={submit} disabled={saving} className="bg-rose-500 hover:bg-rose-600">
+          <Button onClick={submit} disabled={saving} className="bg-pomegranate-500 hover:bg-pomegranate-600">
             {saving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             Save entry
           </Button>
