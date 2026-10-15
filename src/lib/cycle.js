@@ -65,6 +65,22 @@ export function getCurrentPhase(logs) {
   };
 }
 
+// Groups selected bleeding days (yyyy-MM-dd strings) into period runs.
+// Consecutive days — and days separated by a single unmarked day — belong to
+// the same run.
+export function groupBleedingDays(dates) {
+  const runs = [];
+  [...dates].sort().forEach((date) => {
+    const last = runs[runs.length - 1];
+    if (last && (new Date(date) - new Date(last.end_date)) / 86400000 <= 2) {
+      last.end_date = date;
+      return;
+    }
+    runs.push({ start_date: date, end_date: date });
+  });
+  return runs;
+}
+
 export function phaseLabel(phase) {
   return {
     period: "Menstrual",

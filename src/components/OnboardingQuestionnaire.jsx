@@ -20,6 +20,7 @@ import pomiLogo from "@/assets/pomi-logo.png";
 import LotusIcon from "@/components/icons/LotusIcon";
 import ChoiceCard from "@/components/onboarding/ChoiceCard";
 import IntroStep from "@/components/onboarding/IntroStep";
+import SymptomHistoryStep from "@/components/onboarding/SymptomHistoryStep";
 
 const TRACKING_OPTIONS = [
   {
@@ -110,11 +111,11 @@ export default function OnboardingQuestionnaire({ onComplete }) {
         tracking_focus: trackingFocus,
         charity_interests: charityInterests,
       });
-      onComplete(trackingFocus);
+      setStep(3);
     } catch (e) {
       setError(e?.message || "Couldn't save your preferences. Please try again.");
-      setSaving(false);
     }
+    setSaving(false);
   };
 
   const isFirst = step === 1;
@@ -124,6 +125,15 @@ export default function OnboardingQuestionnaire({ onComplete }) {
 
   if (step === 0) {
     return <IntroStep onStart={() => setStep(1)} />;
+  }
+
+  if (step === 3) {
+    return (
+      <SymptomHistoryStep
+        trackingFocus={trackingFocus}
+        onComplete={onComplete}
+      />
+    );
   }
 
   return (
@@ -137,7 +147,7 @@ export default function OnboardingQuestionnaire({ onComplete }) {
             fittingType="fit"
           />
           <span className="mt-4 text-xs font-medium uppercase tracking-[0.18em] text-pomegranate-400">
-            Step {step} of 2
+            Step {step} of 3
           </span>
           <h1 className="mt-2 font-heading text-3xl font-semibold text-slate-800">
             {isFirst
