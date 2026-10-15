@@ -51,7 +51,7 @@ const CHARITY_OPTIONS = [
   {
     value: "endometriosis",
     label: "Endometriosis research",
-    icon: Ribbon,
+    icon: HeartPulse,
   },
   {
     value: "pmos",
@@ -66,7 +66,7 @@ const CHARITY_OPTIONS = [
   {
     value: "cancer",
     label: "Ovarian and cervical cancer research and support",
-    icon: HeartPulse,
+    icon: Ribbon,
   },
   {
     value: "trans_aid",
