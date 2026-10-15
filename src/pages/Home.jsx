@@ -4,6 +4,7 @@ import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import { Image } from "@/components/ui/image";
+import pomiLogo from "@/assets/pomi-logo.png";
 import CycleStatus from "@/components/CycleStatus";
 import LogPeriodSheet from "@/components/LogPeriodSheet";
 import CycleHistory from "@/components/CycleHistory";
@@ -85,7 +86,7 @@ export default function Home() {
       <header className="sticky top-0 z-30 border-b border-pomegranate-100/70 bg-background/85 backdrop-blur-md">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-5 py-4 sm:px-8">
           <Image
-            src="https://media.base44.com/images/public/6abf57ae128f5a85cdac21e4/323317ba9_image.png"
+            src={pomiLogo}
             alt="Pomi"
             className="h-14 w-14"
             fittingType="fit"

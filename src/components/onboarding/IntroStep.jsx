@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Droplet, Heart, Navigation } from "lucide-react";
 import { Image } from "@/components/ui/image";
+import pomiLogo from "@/assets/pomi-logo.png";
 
 export default function IntroStep({ onStart }) {
   return (
@@ -9,7 +10,7 @@ export default function IntroStep({ onStart }) {
       <div className="w-full max-w-xl">
         <div className="flex flex-col items-center text-center">
           <Image
-            src="https://media.base44.com/images/public/6abf57ae128f5a85cdac21e4/323317ba9_image.png"
+            src={pomiLogo}
             alt="Pomi"
             className="h-24 w-24"
             fittingType="fit"
