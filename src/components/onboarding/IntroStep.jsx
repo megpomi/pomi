@@ -18,14 +18,27 @@ export default function IntroStep({ onStart }) {
           </p>
         </div>
 
-        <div className="mt-6 flex items-start gap-3 rounded-2xl border border-pomegranate-100 bg-white p-5">
-          <Heart className="mt-0.5 h-5 w-5 shrink-0 fill-pomegranate-400 text-pomegranate-400" />
-          <p className="text-sm leading-relaxed text-slate-600">
-            Our purpose is built on the simple idea that every cycle can benefit
-            women everywhere. Your data powers your own personalised insights -
-            and a share of what Pomi earns from revenue goes direct to the
-            causes you choose.
-          </p>
+        <div className="mt-6 space-y-3">
+          <div className="flex items-start gap-3 rounded-2xl border border-pomegranate-100 bg-white p-5">
+            <Heart className="mt-0.5 h-5 w-5 shrink-0 fill-pomegranate-400 text-pomegranate-400" />
+            <p className="text-sm leading-relaxed text-slate-600">
+              Our purpose is built on the simple idea that every cycle can
+              benefit women everywhere.
+            </p>
+          </div>
+          <div className="flex items-start gap-3 rounded-2xl border border-pomegranate-100 bg-white p-5">
+            <Heart className="mt-0.5 h-5 w-5 shrink-0 fill-pomegranate-400 text-pomegranate-400" />
+            <p className="text-sm leading-relaxed text-slate-600">
+              Your data powers your own personalised insights.
+            </p>
+          </div>
+          <div className="flex items-start gap-3 rounded-2xl border border-pomegranate-100 bg-white p-5">
+            <Heart className="mt-0.5 h-5 w-5 shrink-0 fill-pomegranate-400 text-pomegranate-400" />
+            <p className="text-sm leading-relaxed text-slate-600">
+              A share of what Pomi earns from revenue goes direct to the causes
+              you choose.
+            </p>
+          </div>
         </div>
 
         <Button
