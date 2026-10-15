@@ -1,8 +1,9 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Droplets, Heart, Navigation } from "lucide-react";
+import { ArrowRight, Heart, Navigation } from "lucide-react";
 import { Image } from "@/components/ui/image";
 import pomiLogo from "@/assets/pomi-logo.png";
+import DropIcon from "@/components/onboarding/DropIcon";
 
 export default function IntroStep({ onStart }) {
   return (
@@ -33,7 +34,7 @@ export default function IntroStep({ onStart }) {
             </p>
           </div>
           <div className="flex items-start gap-3 rounded-2xl border border-pomegranate-100 bg-white p-5">
-            <Droplets className="mt-0.5 h-5 w-5 shrink-0 fill-pomegranate-400 text-pomegranate-400" />
+            <DropIcon className="mt-0.5 h-5 w-5 shrink-0 text-pomegranate-400" />
             <p className="text-sm leading-relaxed text-slate-600">
               Your data powers your own personalised health insights
             </p>
