@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import PomegranateLogo from "@/components/PomegranateLogo";
 import ChoiceCard from "@/components/onboarding/ChoiceCard";
+import IntroStep from "@/components/onboarding/IntroStep";
 
 const TRACKING_OPTIONS = [
   {
@@ -91,8 +92,8 @@ export default function OnboardingQuestionnaire({ onComplete }) {
     );
 
   const handleContinue = async () => {
-    if (step === 0) {
-      setStep(1);
+    if (step === 1) {
+      setStep(2);
       return;
     }
     setSaving(true);
@@ -109,10 +110,14 @@ export default function OnboardingQuestionnaire({ onComplete }) {
     }
   };
 
-  const isFirst = step === 0;
+  const isFirst = step === 1;
   const options = isFirst ? TRACKING_OPTIONS : CHARITY_OPTIONS;
   const selected = isFirst ? trackingFocus : charityInterests;
   const toggleCurrent = toggle(isFirst ? setTrackingFocus : setCharityInterests);
+
+  if (step === 0) {
+    return <IntroStep onStart={() => setStep(1)} />;
+  }
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-[#fdf6f7] px-5 py-10">
@@ -120,7 +125,7 @@ export default function OnboardingQuestionnaire({ onComplete }) {
         <div className="mb-8 flex flex-col items-center text-center">
           <PomegranateLogo className="h-12 w-12" />
           <span className="mt-4 text-xs font-medium uppercase tracking-[0.18em] text-pomegranate-400">
-            Step {step + 1} of 2
+            Step {step} of 2
           </span>
           <h1 className="mt-2 font-heading text-3xl font-semibold text-slate-800">
             {isFirst
@@ -153,7 +158,7 @@ export default function OnboardingQuestionnaire({ onComplete }) {
           {!isFirst && (
             <Button
               variant="outline"
-              onClick={() => setStep(0)}
+              onClick={() => setStep(step - 1)}
               disabled={saving}
               className="rounded-full border-pomegranate-200 px-5 text-pomegranate-600 hover:bg-pomegranate-50"
             >
