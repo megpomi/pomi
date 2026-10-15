@@ -13,6 +13,7 @@ import {
   HeartPulse,
   HeartHandshake,
   Gavel,
+  Globe,
 } from "lucide-react";
 import { Image } from "@/components/ui/image";
 import pomiLogo from "@/assets/pomi-logo.png";
@@ -48,6 +49,11 @@ const TRACKING_OPTIONS = [
 ];
 
 const CHARITY_OPTIONS = [
+  {
+    value: "period_poverty",
+    label: "International period poverty aid",
+    icon: Globe,
+  },
   {
     value: "endometriosis",
     label: "Endometriosis research",
