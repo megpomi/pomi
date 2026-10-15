@@ -15,9 +15,9 @@ const COPY = {
       "Tap the days you were bleeding — scroll back through the months to build your history.",
   },
   default: {
-    question: "Are you currently experiencing symptoms?",
+    question: "Do you currently experience menstrual symptoms?",
     prompt:
-      "Tap the days you noticed symptoms — scroll back through the months to build your history.",
+      "Tap the days you experienced menstrual bleeding - scroll back through the months to build your history.",
   },
 };
 
