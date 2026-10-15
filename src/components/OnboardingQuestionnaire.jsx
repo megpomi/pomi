@@ -15,7 +15,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import PomegranateLogo from "@/components/PomegranateLogo";
-import YogaIcon from "@/components/icons/YogaIcon";
+import LotusIcon from "@/components/icons/LotusIcon";
 import ChoiceCard from "@/components/onboarding/ChoiceCard";
 import IntroStep from "@/components/onboarding/IntroStep";
 
@@ -42,7 +42,7 @@ const TRACKING_OPTIONS = [
     value: "general_wellbeing",
     label: "General well-being",
     desc: "Track mood, energy, and everyday health.",
-    icon: YogaIcon,
+    icon: LotusIcon,
   },
 ];
 
