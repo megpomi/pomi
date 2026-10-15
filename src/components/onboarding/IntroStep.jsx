@@ -1,14 +1,19 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Droplet, Heart, Navigation } from "lucide-react";
-import PomegranateLogo from "@/components/PomegranateLogo";
+import { Image } from "@/components/ui/image";
 
 export default function IntroStep({ onStart }) {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-5 py-10">
       <div className="w-full max-w-xl">
         <div className="flex flex-col items-center text-center">
-          <PomegranateLogo className="h-14 w-14" />
+          <Image
+            src="https://media.base44.com/images/public/6abf57ae128f5a85cdac21e4/323317ba9_image.png"
+            alt="Pomi"
+            className="h-24 w-24"
+            fittingType="fit"
+          />
           <h1 className="mt-4 font-heading text-3xl font-semibold text-slate-800">
             Welcome to Pomi
           </h1>
