@@ -14,7 +14,7 @@ export default function IntroStep({ onStart }) {
           </h1>
           <p className="mt-3 max-w-md text-sm leading-relaxed text-slate-500">
             as in the pomegranate - Symbolic of health, abundance and natural
-            cycles.
+            cycles
           </p>
         </div>
 
@@ -23,19 +23,19 @@ export default function IntroStep({ onStart }) {
             <Heart className="mt-0.5 h-5 w-5 shrink-0 fill-pomegranate-400 text-pomegranate-400" />
             <p className="text-sm leading-relaxed text-slate-600">
               Our purpose is built on the simple idea that every cycle is
-              powerful.
+              powerful
             </p>
           </div>
           <div className="flex items-start gap-3 rounded-2xl border border-pomegranate-100 bg-white p-5">
             <Heart className="mt-0.5 h-5 w-5 shrink-0 fill-pomegranate-400 text-pomegranate-400" />
             <p className="text-sm leading-relaxed text-slate-600">
-              Your data powers your own personalised health insights.
+              Your data powers your own personalised health insights
             </p>
           </div>
           <div className="flex items-start gap-3 rounded-2xl border border-pomegranate-100 bg-white p-5">
             <Heart className="mt-0.5 h-5 w-5 shrink-0 fill-pomegranate-400 text-pomegranate-400" />
             <p className="text-sm leading-relaxed text-slate-600">
-              Track the donations sent directly to the causes you choose.
+              Track the donations sent directly to the causes you choose
             </p>
           </div>
         </div>
