@@ -14,16 +14,17 @@ export default function IntroStep({ onStart }) {
           </h1>
           <p className="mt-3 max-w-md text-sm leading-relaxed text-slate-500">
             as in the pomegranate symbolic of health, abundance, the body and
-            natural cycles - Our purpose is built on the simple idea that every
-            cycle can benefit women everywhere
+            natural cycles
           </p>
         </div>
 
         <div className="mt-6 flex items-start gap-3 rounded-2xl border border-pomegranate-100 bg-white p-5">
           <Heart className="mt-0.5 h-5 w-5 shrink-0 fill-pomegranate-400 text-pomegranate-400" />
           <p className="text-sm leading-relaxed text-slate-600">
-            Your data powers your own personalised insights - and a share of
-            what Pomi earns from revenue goes direct to the causes you choose.
+            Our purpose is built on the simple idea that every cycle can benefit
+            women everywhere. Your data powers your own personalised insights -
+            and a share of what Pomi earns from revenue goes direct to the
+            causes you choose.
           </p>
         </div>
 
