@@ -69,7 +69,7 @@ export default function Home() {
 
   if (checkingProfile) {
     return (
-      <div className="fixed inset-0 flex items-center justify-center bg-[#fdf6f7]">
+      <div className="fixed inset-0 flex items-center justify-center bg-background">
         <div className="h-8 w-8 animate-spin rounded-full border-4 border-pomegranate-100 border-t-pomegranate-600" />
       </div>
     );
@@ -80,9 +80,9 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-[#fdf6f7]">
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="sticky top-0 z-30 border-b border-pomegranate-100/70 bg-[#fdf6f7]/85 backdrop-blur-md">
+      <header className="sticky top-0 z-30 border-b border-pomegranate-100/70 bg-background/85 backdrop-blur-md">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-5 py-4 sm:px-8">
           <div className="flex items-center gap-2.5">
             <PomegranateLogo className="h-8 w-8" />

@@ -8,21 +8,84 @@ export default function PomegranateLogo({ className = "h-8 w-8" }) {
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
     >
-      <path
-        d="M24 45C14.6 45 8 38.6 8 29.4 8 18.6 15.2 11 24 11s16 7.6 16 18.4C40 38.6 33.4 45 24 45Z"
-        fill="#c92a4d"
-      />
-      <path
-        d="M19.5 9.4 22 3l2 4 2-4 2.5 6.4c-1.5.8-3 1.2-4.5 1.2s-3-.4-4.5-1.2Z"
-        fill="#a91e3f"
-      />
-      <g fill="#fbe3e7">
-        <circle cx="18" cy="27" r="2.2" />
-        <circle cx="24" cy="23" r="2.2" />
-        <circle cx="30" cy="27" r="2.2" />
-        <circle cx="21" cy="34" r="2.2" />
-        <circle cx="27" cy="34" r="2.2" />
-        <circle cx="24" cy="30" r="2.2" />
+      <g fill="hsl(var(--primary))">
+        <path d="M17.6 12.6 18.8 6.4 22 10 24 4.6 26 10 29.2 6.4 30.4 12.6Z" />
+        <circle cx="24" cy="27" r="16.6" />
+      </g>
+
+      <g
+        stroke="hsl(var(--background))"
+        strokeWidth="2"
+        strokeLinecap="round"
+      >
+        <line x1="24" y1="27" x2="9.62" y2="18.7" />
+        <line x1="24" y1="27" x2="24" y2="43.6" />
+        <line x1="24" y1="27" x2="38.38" y2="18.7" />
+      </g>
+
+      <g fill="hsl(var(--background))">
+        <ellipse cx="20.6" cy="22" rx="2.1" ry="3.1" />
+        <ellipse cx="27.4" cy="22" rx="2.1" ry="3.1" />
+        <ellipse cx="20.6" cy="16" rx="2.1" ry="3.1" />
+        <ellipse cx="27.4" cy="16" rx="2.1" ry="3.1" />
+
+        <ellipse
+          cx="21.37"
+          cy="32.44"
+          rx="2.1"
+          ry="3.1"
+          transform="rotate(60 21.37 32.44)"
+        />
+        <ellipse
+          cx="17.97"
+          cy="26.56"
+          rx="2.1"
+          ry="3.1"
+          transform="rotate(60 17.97 26.56)"
+        />
+        <ellipse
+          cx="16.17"
+          cy="35.44"
+          rx="2.1"
+          ry="3.1"
+          transform="rotate(60 16.17 35.44)"
+        />
+        <ellipse
+          cx="12.77"
+          cy="29.56"
+          rx="2.1"
+          ry="3.1"
+          transform="rotate(60 12.77 29.56)"
+        />
+
+        <ellipse
+          cx="26.63"
+          cy="32.44"
+          rx="2.1"
+          ry="3.1"
+          transform="rotate(-60 26.63 32.44)"
+        />
+        <ellipse
+          cx="30.03"
+          cy="26.56"
+          rx="2.1"
+          ry="3.1"
+          transform="rotate(-60 30.03 26.56)"
+        />
+        <ellipse
+          cx="31.83"
+          cy="35.44"
+          rx="2.1"
+          ry="3.1"
+          transform="rotate(-60 31.83 35.44)"
+        />
+        <ellipse
+          cx="35.23"
+          cy="29.56"
+          rx="2.1"
+          ry="3.1"
+          transform="rotate(-60 35.23 29.56)"
+        />
       </g>
     </svg>
   );

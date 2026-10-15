@@ -6,7 +6,7 @@ import PomegranateSeed from "@/components/onboarding/PomegranateSeed";
 
 export default function IntroStep({ onStart }) {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#fdf6f7] px-5 py-10">
+    <div className="flex min-h-screen items-center justify-center bg-background px-5 py-10">
       <div className="w-full max-w-xl">
         <div className="flex flex-col items-center text-center">
           <PomegranateLogo className="h-14 w-14" />

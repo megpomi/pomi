@@ -7,7 +7,7 @@ const PHASE_COPY = {
     title: "On your period",
     sub: "Be gentle with yourself today.",
     color: "text-pomegranate-500",
-    ring: "#c92a4d",
+    ring: "#b7888f",
   },
   follicular: {
     title: "Follicular phase",
@@ -31,7 +31,7 @@ const PHASE_COPY = {
     title: "Welcome to Pomi",
     sub: "Log your first period to start tracking.",
     color: "text-pomegranate-500",
-    ring: "#c92a4d",
+    ring: "#b7888f",
   },
 };
 
@@ -100,7 +100,7 @@ export default function CycleStatus({ logs }) {
                 cy="90"
                 r={radius}
                 fill="none"
-                stroke="#f8ccd4"
+                stroke="#e2c9cd"
                 strokeWidth="10"
               />
               <circle
