@@ -14,17 +14,15 @@ export default function IntroStep({ onStart }) {
           </h1>
           <p className="mt-3 max-w-md text-sm leading-relaxed text-slate-500">
             as in the pomegranate - Our purpose is built on the simple idea that
-            every cycle can help fund precious aid and research for important
-            causes to benefit women everywhere.
+            every cycle can help to fund women's health.
           </p>
         </div>
 
         <div className="mt-6 flex items-start gap-3 rounded-2xl border border-pomegranate-100 bg-white p-5">
           <Heart className="mt-0.5 h-5 w-5 shrink-0 fill-pomegranate-400 text-pomegranate-400" />
           <p className="text-sm leading-relaxed text-slate-600">
-            Every cycle you log helps fund women's health. Your data powers your
-            own personalized insights — and a share of what Pomi earns goes to
-            the causes you choose.
+            Your data powers your own personalised insights - and a share of
+            what Pomi earns from revenue goes direct to the causes you choose.
           </p>
         </div>
 
