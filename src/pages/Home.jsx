@@ -8,11 +8,14 @@ import CycleStatus from "@/components/CycleStatus";
 import LogPeriodSheet from "@/components/LogPeriodSheet";
 import CycleHistory from "@/components/CycleHistory";
 import CharityImpact from "@/components/CharityImpact";
+import OnboardingQuestionnaire from "@/components/OnboardingQuestionnaire";
 
 export default function Home() {
   const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [sheetOpen, setSheetOpen] = useState(false);
+  const [checkingProfile, setCheckingProfile] = useState(true);
+  const [trackingFocus, setTrackingFocus] = useState([]);
   const { toast } = useToast();
 
   const loadLogs = useCallback(async () => {
@@ -38,6 +41,14 @@ export default function Home() {
     loadLogs();
   }, [loadLogs]);
 
+  useEffect(() => {
+    base44.auth
+      .me()
+      .then((u) => setTrackingFocus(u?.tracking_focus || []))
+      .catch(() => setTrackingFocus([]))
+      .finally(() => setCheckingProfile(false));
+  }, []);
+
   const handleSaved = () => {
     setSheetOpen(false);
     loadLogs();
@@ -55,6 +66,18 @@ export default function Home() {
     }
     return acc + 1;
   }, 0);
+
+  if (checkingProfile) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-[#fdf6f7]">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-pomegranate-100 border-t-pomegranate-600" />
+      </div>
+    );
+  }
+
+  if (!trackingFocus.length) {
+    return <OnboardingQuestionnaire onComplete={setTrackingFocus} />;
+  }
 
   return (
     <div className="min-h-screen bg-[#fdf6f7]">
