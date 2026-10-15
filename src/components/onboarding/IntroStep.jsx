@@ -13,7 +13,8 @@ export default function IntroStep({ onStart }) {
             Welcome to Pomi
           </h1>
           <p className="mt-3 max-w-md text-sm leading-relaxed text-slate-500">
-            as in pomegranate symbolic of health, strength and vitality
+            as in the pomegranate - Our purpose is built on the simple idea that
+            every cycle can help to fund women's health.
           </p>
         </div>
 
