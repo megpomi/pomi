@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Heart, Send } from "lucide-react";
+import { ArrowRight, Heart, SendHorizontal } from "lucide-react";
 import PomegranateLogo from "@/components/PomegranateLogo";
 import PomegranateSeed from "@/components/onboarding/PomegranateSeed";
 
@@ -34,7 +34,7 @@ export default function IntroStep({ onStart }) {
             </p>
           </div>
           <div className="flex items-start gap-3 rounded-2xl border border-pomegranate-100 bg-white p-5">
-            <Send className="mt-0.5 h-5 w-5 shrink-0 fill-pomegranate-400 text-pomegranate-400" />
+            <SendHorizontal className="mt-0.5 h-5 w-5 shrink-0 fill-pomegranate-400 text-pomegranate-400" />
             <p className="text-sm leading-relaxed text-slate-600">
               Track the donations sent directly to the causes you choose
             </p>
