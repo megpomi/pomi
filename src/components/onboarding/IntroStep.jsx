@@ -36,8 +36,8 @@ export default function IntroStep({ onStart }) {
           <div className="flex items-start gap-3 rounded-2xl border border-pomegranate-100 bg-white p-5">
             <Navigation className="mt-0.5 h-5 w-5 shrink-0 fill-pomegranate-400 text-pomegranate-400" />
             <p className="text-sm leading-relaxed text-slate-600">
-              App revenue generates donations sent in full transparency to the
-              causes you choose
+              App revenue generates trackable donations sent in full
+              transparency to the causes you choose
             </p>
           </div>
         </div>
