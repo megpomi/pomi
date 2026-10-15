@@ -4,7 +4,7 @@ export default function PomegranateSeed({ className = "h-5 w-5" }) {
   return (
     <svg
       viewBox="0 0 24 24"
-      className={className}
+      className={`rotate-180 ${className}`}
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
     >
