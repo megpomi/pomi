@@ -22,20 +22,20 @@ export default function IntroStep({ onStart }) {
           <div className="flex items-start gap-3 rounded-2xl border border-pomegranate-100 bg-white p-5">
             <Heart className="mt-0.5 h-5 w-5 shrink-0 fill-pomegranate-400 text-pomegranate-400" />
             <p className="text-sm leading-relaxed text-slate-600">
-              Our purpose is built on the simple idea that every cycle can
-              benefit women everywhere.
+              Our purpose is built on the simple idea that every cycle is
+              powerful.
             </p>
           </div>
           <div className="flex items-start gap-3 rounded-2xl border border-pomegranate-100 bg-white p-5">
             <Heart className="mt-0.5 h-5 w-5 shrink-0 fill-pomegranate-400 text-pomegranate-400" />
             <p className="text-sm leading-relaxed text-slate-600">
-              Your data powers your own personalised insights.
+              Your data powers your own personalised health insights.
             </p>
           </div>
           <div className="flex items-start gap-3 rounded-2xl border border-pomegranate-100 bg-white p-5">
             <Heart className="mt-0.5 h-5 w-5 shrink-0 fill-pomegranate-400 text-pomegranate-400" />
             <p className="text-sm leading-relaxed text-slate-600">
-              Track earnings sent directly to the causes you choose
+              Track the donations sent directly to the causes you choose.
             </p>
           </div>
         </div>
