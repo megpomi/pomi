@@ -35,8 +35,7 @@ export default function IntroStep({ onStart }) {
           <div className="flex items-start gap-3 rounded-2xl border border-pomegranate-100 bg-white p-5">
             <Heart className="mt-0.5 h-5 w-5 shrink-0 fill-pomegranate-400 text-pomegranate-400" />
             <p className="text-sm leading-relaxed text-slate-600">
-              A share of what Pomi earns from revenue goes direct to the causes
-              you choose.
+              Track earnings sent directly to the causes you choose
             </p>
           </div>
         </div>
