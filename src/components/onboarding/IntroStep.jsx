@@ -1,25 +1,7 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Layers, RefreshCw, Sun, Heart } from "lucide-react";
+import { ArrowRight, Heart } from "lucide-react";
 import PomegranateLogo from "@/components/PomegranateLogo";
-
-const SYMBOLISM = [
-  {
-    icon: Layers,
-    title: "What lies beneath",
-    text: "A pomegranate's intricate internal structures are hidden beneath the surface — a symbol of the struggles of women's health.",
-  },
-  {
-    icon: RefreshCw,
-    title: "Cycles of life",
-    text: "Its many seeds and returning seasons echo the cycles of life and transformation.",
-  },
-  {
-    icon: Sun,
-    title: "Persephone's seeds",
-    text: "In Greek mythology, Persephone ate pomegranate seeds, binding her to the underworld — and creating the cycle of seasons.",
-  },
-];
 
 export default function IntroStep({ onStart }) {
   return (
@@ -43,28 +25,6 @@ export default function IntroStep({ onStart }) {
             own personalized insights — and a share of what Pomi earns goes to
             the causes you choose.
           </p>
-        </div>
-
-        <div className="mt-6 space-y-3">
-          {SYMBOLISM.map((s) => {
-            const Icon = s.icon;
-            return (
-              <div
-                key={s.title}
-                className="flex items-start gap-4 rounded-2xl border border-pomegranate-100 bg-white p-5"
-              >
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-pomegranate-50 text-pomegranate-500">
-                  <Icon className="h-5 w-5" />
-                </span>
-                <div>
-                  <p className="font-medium text-slate-800">{s.title}</p>
-                  <p className="mt-0.5 text-sm leading-relaxed text-slate-500">
-                    {s.text}
-                  </p>
-                </div>
-              </div>
-            );
-          })}
         </div>
 
         <Button
