@@ -14,7 +14,8 @@ import {
   HeartHandshake,
   ShieldCheck,
 } from "lucide-react";
-import PomegranateLogo from "@/components/PomegranateLogo";
+import { Image } from "@/components/ui/image";
+import pomiLogo from "@/assets/pomi-logo.png";
 import LotusIcon from "@/components/icons/LotusIcon";
 import ChoiceCard from "@/components/onboarding/ChoiceCard";
 import IntroStep from "@/components/onboarding/IntroStep";
@@ -123,7 +124,12 @@ export default function OnboardingQuestionnaire({ onComplete }) {
     <div className="flex min-h-screen items-center justify-center bg-background px-5 py-10">
       <div className="w-full max-w-xl">
         <div className="mb-8 flex flex-col items-center text-center">
-          <PomegranateLogo className="h-12 w-12" />
+          <Image
+            src={pomiLogo}
+            alt="Pomi"
+            className="h-12 w-12"
+            fittingType="fit"
+          />
           <span className="mt-4 text-xs font-medium uppercase tracking-[0.18em] text-pomegranate-400">
             Step {step} of 2
           </span>
