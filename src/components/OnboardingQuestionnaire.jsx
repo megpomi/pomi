@@ -1,10 +1,24 @@
 import React, { useState } from "react";
 import { base44 } from "@/api/base44Client";
 import { Button } from "@/components/ui/button";
-import { Droplet, Flame, Baby, Heart, Check, ArrowRight } from "lucide-react";
+import {
+  Droplet,
+  Flame,
+  Baby,
+  Heart,
+  ArrowRight,
+  ArrowLeft,
+  Ribbon,
+  Activity,
+  Sprout,
+  HeartPulse,
+  HeartHandshake,
+  ShieldCheck,
+} from "lucide-react";
 import PomegranateLogo from "@/components/PomegranateLogo";
+import ChoiceCard from "@/components/onboarding/ChoiceCard";
 
-const OPTIONS = [
+const TRACKING_OPTIONS = [
   {
     value: "menstrual_cycles",
     label: "Menstrual cycles",
@@ -31,99 +45,131 @@ const OPTIONS = [
   },
 ];
 
+const CHARITY_OPTIONS = [
+  {
+    value: "endometriosis",
+    label: "Endometriosis research",
+    icon: Ribbon,
+  },
+  {
+    value: "pmos",
+    label: "PMOS (Polyendocrine Metabolic Ovarian Syndrome) research",
+    icon: Activity,
+  },
+  {
+    value: "fertility",
+    label: "Fertility research and treatment plan grants",
+    icon: Sprout,
+  },
+  {
+    value: "cancer",
+    label: "Ovarian and cervical cancer research and support",
+    icon: HeartPulse,
+  },
+  {
+    value: "trans_aid",
+    label: "Trans lives matter aid",
+    icon: HeartHandshake,
+  },
+  {
+    value: "violence_survivors",
+    label: "Sexual and domestic violence survivors aid",
+    icon: ShieldCheck,
+  },
+];
+
 export default function OnboardingQuestionnaire({ onComplete }) {
-  const [selected, setSelected] = useState([]);
+  const [step, setStep] = useState(0);
+  const [trackingFocus, setTrackingFocus] = useState([]);
+  const [charityInterests, setCharityInterests] = useState([]);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
-  const toggle = (value) =>
-    setSelected((prev) =>
+  const toggle = (setter) => (value) =>
+    setter((prev) =>
       prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]
     );
 
   const handleContinue = async () => {
-    if (!selected.length) return;
+    if (step === 0) {
+      setStep(1);
+      return;
+    }
     setSaving(true);
     setError("");
     try {
-      await base44.auth.updateMe({ tracking_focus: selected });
-      onComplete(selected);
+      await base44.auth.updateMe({
+        tracking_focus: trackingFocus,
+        charity_interests: charityInterests,
+      });
+      onComplete(trackingFocus);
     } catch (e) {
       setError(e?.message || "Couldn't save your preferences. Please try again.");
       setSaving(false);
     }
   };
 
+  const isFirst = step === 0;
+  const options = isFirst ? TRACKING_OPTIONS : CHARITY_OPTIONS;
+  const selected = isFirst ? trackingFocus : charityInterests;
+  const toggleCurrent = toggle(isFirst ? setTrackingFocus : setCharityInterests);
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-[#fdf6f7] px-5 py-10">
       <div className="w-full max-w-xl">
         <div className="mb-8 flex flex-col items-center text-center">
           <PomegranateLogo className="h-12 w-12" />
-          <h1 className="mt-4 font-heading text-3xl font-semibold text-slate-800">
-            What would you like to track?
+          <span className="mt-4 text-xs font-medium uppercase tracking-[0.18em] text-pomegranate-400">
+            Step {step + 1} of 2
+          </span>
+          <h1 className="mt-2 font-heading text-3xl font-semibold text-slate-800">
+            {isFirst
+              ? "What would you like to track?"
+              : "Which causes matter to you?"}
           </h1>
           <p className="mt-2 max-w-md text-sm text-slate-500">
-            Choose what matters to you — this shapes your personalized insights
-            and cycle predictions.
+            {isFirst
+              ? "Choose what matters to you — this shapes your personalized insights and cycle predictions."
+              : "A share of what Pomi earns goes to these areas. Pick the ones you'd like your tracking to support."}
           </p>
         </div>
 
         <div className="space-y-3">
-          {OPTIONS.map((opt) => {
-            const Icon = opt.icon;
-            const active = selected.includes(opt.value);
-            return (
-              <button
-                key={opt.value}
-                type="button"
-                onClick={() => toggle(opt.value)}
-                className={`flex w-full items-center gap-4 rounded-2xl border p-4 text-left transition ${
-                  active
-                    ? "border-pomegranate-400 bg-pomegranate-50/70 ring-1 ring-pomegranate-300"
-                    : "border-pomegranate-100 bg-white hover:border-pomegranate-200 hover:bg-pomegranate-50/40"
-                }`}
-              >
-                <span
-                  className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${
-                    active
-                      ? "bg-pomegranate-500 text-white"
-                      : "bg-pomegranate-50 text-pomegranate-500"
-                  }`}
-                >
-                  <Icon className="h-5 w-5" />
-                </span>
-                <span className="flex-1">
-                  <span className="block font-medium text-slate-800">
-                    {opt.label}
-                  </span>
-                  <span className="mt-0.5 block text-sm text-slate-500">
-                    {opt.desc}
-                  </span>
-                </span>
-                <span
-                  className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full border ${
-                    active
-                      ? "border-pomegranate-500 bg-pomegranate-500 text-white"
-                      : "border-pomegranate-200"
-                  }`}
-                >
-                  {active && <Check className="h-4 w-4" />}
-                </span>
-              </button>
-            );
-          })}
+          {options.map((opt) => (
+            <ChoiceCard
+              key={opt.value}
+              icon={opt.icon}
+              label={opt.label}
+              desc={opt.desc}
+              active={selected.includes(opt.value)}
+              onClick={() => toggleCurrent(opt.value)}
+            />
+          ))}
         </div>
 
         {error && <p className="mt-4 text-sm text-destructive">{error}</p>}
 
-        <Button
-          onClick={handleContinue}
-          disabled={!selected.length || saving}
-          className="mt-6 w-full rounded-full bg-pomegranate-600 py-6 text-base hover:bg-pomegranate-700"
-        >
-          {saving ? "Saving…" : "Continue"}
-          {!saving && <ArrowRight className="ml-2 h-4 w-4" />}
-        </Button>
+        <div className="mt-6 flex items-center gap-3">
+          {!isFirst && (
+            <Button
+              variant="outline"
+              onClick={() => setStep(0)}
+              disabled={saving}
+              className="rounded-full border-pomegranate-200 px-5 text-pomegranate-600 hover:bg-pomegranate-50"
+            >
+              <ArrowLeft className="mr-1.5 h-4 w-4" />
+              Back
+            </Button>
+          )}
+          <Button
+            onClick={handleContinue}
+            disabled={!selected.length || saving}
+            className="flex-1 rounded-full bg-pomegranate-600 py-6 text-base hover:bg-pomegranate-700"
+          >
+            {saving ? "Saving…" : "Continue"}
+            {!saving && <ArrowRight className="ml-2 h-4 w-4" />}
+          </Button>
+        </div>
       </div>
     </div>
   );
