@@ -66,7 +66,7 @@ const CHARITY_OPTIONS = [
   },
   {
     value: "fertility",
-    label: "Fertility research and treatment plan grants",
+    label: "Fertility research and treatment grants",
     icon: Sprout,
   },
   {
