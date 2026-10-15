@@ -12,7 +12,7 @@ import {
   Sprout,
   HeartPulse,
   HeartHandshake,
-  ShieldCheck,
+  Gavel,
 } from "lucide-react";
 import { Image } from "@/components/ui/image";
 import pomiLogo from "@/assets/pomi-logo.png";
@@ -76,7 +76,7 @@ const CHARITY_OPTIONS = [
   {
     value: "violence_survivors",
     label: "Sexual and domestic violence survivors aid",
-    icon: ShieldCheck,
+    icon: Gavel,
   },
 ];
 
