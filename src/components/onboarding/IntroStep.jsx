@@ -10,12 +10,12 @@ export default function IntroStep({ onStart }) {
         <div className="flex flex-col items-center text-center">
           <PomegranateLogo className="h-14 w-14" />
           <h1 className="mt-4 font-heading text-3xl font-semibold text-slate-800">
-            Welcome to Pomi as in the pomegranate.
+            Welcome to Pomi
           </h1>
           <p className="mt-3 max-w-md text-sm leading-relaxed text-slate-500">
-            Our purpose is built on the simple idea that every cycle can help
-            fund precious aid and research for important causes to benefit women
-            everywhere.
+            as in the pomegranate - Our purpose is built on the simple idea that
+            every cycle can help fund precious aid and research for important
+            causes to benefit women everywhere.
           </p>
         </div>
 
