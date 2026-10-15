@@ -1,8 +1,9 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Heart } from "lucide-react";
 import PomegranateLogo from "@/components/PomegranateLogo";
 import PomegranateSeed from "@/components/onboarding/PomegranateSeed";
+import MoneyBag from "@/components/onboarding/MoneyBag";
 
 export default function IntroStep({ onStart }) {
   return (
@@ -21,7 +22,7 @@ export default function IntroStep({ onStart }) {
 
         <div className="mt-6 space-y-3">
           <div className="flex items-start gap-3 rounded-2xl border border-pomegranate-100 bg-white p-5">
-            <PomegranateSeed className="mt-0.5 h-5 w-5 shrink-0" />
+            <Heart className="mt-0.5 h-5 w-5 shrink-0 fill-pomegranate-400 text-pomegranate-400" />
             <p className="text-sm leading-relaxed text-slate-600">
               Our purpose is built on the simple idea that every cycle is
               powerful
@@ -34,7 +35,7 @@ export default function IntroStep({ onStart }) {
             </p>
           </div>
           <div className="flex items-start gap-3 rounded-2xl border border-pomegranate-100 bg-white p-5">
-            <PomegranateSeed className="mt-0.5 h-5 w-5 shrink-0" />
+            <MoneyBag className="mt-0.5 h-5 w-5 shrink-0" />
             <p className="text-sm leading-relaxed text-slate-600">
               Track the donations sent directly to the causes you choose
             </p>
