@@ -62,6 +62,11 @@ export default function SymptomHistoryStep({ trackingFocus, onComplete }) {
     }
   };
 
+  // Opening the calendar lands on the most recent month — the current date.
+  const scrollToLatest = (node) => {
+    if (node) node.scrollTop = node.scrollHeight;
+  };
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-5 py-10">
       <div className="w-full max-w-xl">
@@ -93,7 +98,10 @@ export default function SymptomHistoryStep({ trackingFocus, onComplete }) {
         {currentlyActive && (
           <div className="mt-4">
             <p className="mb-2 text-sm text-slate-500">{copy.prompt}</p>
-            <div className="max-h-[26rem] overflow-y-auto rounded-2xl border border-pomegranate-100 bg-white p-1">
+            <div
+              ref={scrollToLatest}
+              className="max-h-[26rem] overflow-y-auto rounded-2xl border border-pomegranate-100 bg-white p-1"
+            >
               <Calendar
                 mode="multiple"
                 selected={days}
@@ -101,8 +109,19 @@ export default function SymptomHistoryStep({ trackingFocus, onComplete }) {
                 numberOfMonths={12}
                 defaultMonth={historyStart}
                 disabled={{ after: today }}
-                classNames={{ months: "flex flex-col", month: "space-y-3" }}
-                className="p-3"
+                classNames={{
+                  months: "flex flex-col items-center",
+                  month: "w-full space-y-3",
+                  head_row: "flex w-full",
+                  head_cell: "flex-1 font-normal text-[0.8rem] text-muted-foreground",
+                  row: "flex w-full mt-1",
+                  cell: "relative flex-1 p-0 text-center text-sm",
+                  day: "inline-flex h-11 w-full items-center justify-center rounded-full p-0 text-sm font-normal hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring aria-selected:opacity-100",
+                  day_selected:
+                    "bg-pomegranate-600 text-primary-foreground hover:bg-pomegranate-600 focus:bg-pomegranate-600",
+                  day_today: "font-semibold",
+                }}
+                className="w-full p-3"
               />
             </div>
             {days.length > 0 && (
