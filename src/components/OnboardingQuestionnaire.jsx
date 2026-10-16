@@ -14,6 +14,7 @@ import {
   HeartHandshake,
   Gavel,
   Globe,
+  Sparkles,
 } from "lucide-react";
 import { Image } from "@/components/ui/image";
 import pomiLogo from "@/assets/pomi-logo.png";
@@ -99,6 +100,14 @@ export default function OnboardingQuestionnaire({ onComplete }) {
       prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]
     );
 
+  const allCharitiesSelected =
+    charityInterests.length === CHARITY_OPTIONS.length;
+
+  const toggleAllCharities = () =>
+    setCharityInterests(
+      allCharitiesSelected ? [] : CHARITY_OPTIONS.map((o) => o.value)
+    );
+
   const handleContinue = async () => {
     if (step === 1) {
       setStep(2);
@@ -157,7 +166,7 @@ export default function OnboardingQuestionnaire({ onComplete }) {
           <p className="mt-2 max-w-md text-sm text-slate-500">
             {isFirst
               ? "Choose what matters to you — this shapes your personalized insights and symptom predictions."
-              : "A share of what Pomi earns goes to these areas. Pick the ones you'd like your tracking to support."}
+              : "A share of what Pomi earns is donated to these areas. Pick the ones you'd like to support directly."}
           </p>
         </div>
 
@@ -172,6 +181,14 @@ export default function OnboardingQuestionnaire({ onComplete }) {
               onClick={() => toggleCurrent(opt.value)}
             />
           ))}
+          {!isFirst && (
+            <ChoiceCard
+              icon={Sparkles}
+              label="All of the above"
+              active={allCharitiesSelected}
+              onClick={toggleAllCharities}
+            />
+          )}
         </div>
 
         {error && <p className="mt-4 text-sm text-destructive">{error}</p>}
