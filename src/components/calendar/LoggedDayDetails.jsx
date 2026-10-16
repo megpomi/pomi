@@ -1,0 +1,84 @@
+import React from "react";
+import { Droplet } from "lucide-react";
+
+const FLOW_LABEL = { light: "Light", medium: "Medium", heavy: "Heavy" };
+const MOOD_EMOJI = {
+  great: "😊",
+  good: "🙂",
+  okay: "😐",
+  low: "😔",
+  anxious: "😰",
+};
+
+const prettyDate = (d) =>
+  d
+    ? d.toLocaleDateString(undefined, {
+        weekday: "long",
+        month: "long",
+        day: "numeric",
+        year: "numeric",
+      })
+    : "";
+
+const shortDate = (value) =>
+  value
+    ? new Date(value).toLocaleDateString(undefined, {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
+      })
+    : "—";
+
+export default function LoggedDayDetails({ date, log }) {
+  return (
+    <div className="rounded-3xl border border-slate-100 bg-white p-6 sm:p-8">
+      <h3 className="font-heading text-lg font-semibold text-slate-800">
+        {prettyDate(date)}
+      </h3>
+
+      {!log ? (
+        <p className="mt-3 flex items-center gap-2 text-sm text-slate-500">
+          <Droplet className="h-4 w-4 text-pomegranate-200" />
+          Nothing logged for this day.
+        </p>
+      ) : (
+        <div className="mt-4 space-y-3 text-sm text-slate-600">
+          <p className="text-xs uppercase tracking-[0.12em] text-pomegranate-400">
+            Part of your period {shortDate(log.start_date)}
+            {log.end_date ? ` — ${shortDate(log.end_date)}` : ""}
+          </p>
+          <p>
+            <span className="text-slate-400">Flow: </span>
+            {FLOW_LABEL[log.flow_intensity] || "—"} flow
+          </p>
+          {log.mood && (
+            <p>
+              <span className="text-slate-400">Mood: </span>
+              {MOOD_EMOJI[log.mood]} {log.mood}
+            </p>
+          )}
+          {log.symptoms?.length > 0 && (
+            <div>
+              <span className="text-slate-400">Symptoms: </span>
+              <div className="mt-2 flex flex-wrap gap-2">
+                {log.symptoms.map((s) => (
+                  <span
+                    key={s}
+                    className="rounded-full bg-pomegranate-50 px-3 py-1 text-xs capitalize text-pomegranate-700"
+                  >
+                    {s.replace(/_/g, " ")}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+          {log.notes && (
+            <p className="rounded-2xl bg-slate-50 p-4 text-slate-500">
+              {log.notes}
+            </p>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}

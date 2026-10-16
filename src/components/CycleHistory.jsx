@@ -1,5 +1,6 @@
 import React from "react";
-import { Droplet } from "lucide-react";
+import { Link } from "react-router-dom";
+import { CalendarDays, Droplet } from "lucide-react";
 
 const FLOW_DOT = {
   light: "bg-pomegranate-200",
@@ -23,9 +24,18 @@ export default function CycleHistory({ logs, loading }) {
 
   return (
     <div className="rounded-3xl border border-slate-100 bg-white p-6 sm:p-8">
-      <h3 className="mb-5 font-heading text-lg font-semibold text-slate-800">
-        Recent cycles
-      </h3>
+      <div className="mb-5 flex items-center justify-between gap-3">
+        <h3 className="font-heading text-lg font-semibold text-slate-800">
+          Recent cycles
+        </h3>
+        <Link
+          to="/calendar"
+          className="inline-flex items-center gap-1.5 text-sm font-medium text-pomegranate-600 hover:text-pomegranate-700"
+        >
+          <CalendarDays className="h-4 w-4" />
+          View calendar
+        </Link>
+      </div>
 
       {loading ? (
         <div className="space-y-3">

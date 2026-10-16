@@ -13,6 +13,7 @@ import ForgotPassword from '@/pages/ForgotPassword';
 import ResetPassword from '@/pages/ResetPassword';
 import Home from '@/pages/Home';
 import Upgrade from '@/pages/Upgrade';
+import CycleCalendar from '@/pages/CycleCalendar';
 import ThankYou from '@/pages/ThankYou';
 // Add page imports here
 
@@ -49,6 +50,7 @@ const AuthenticatedApp = () => {
       <Route path="/ThankYou" element={<ThankYou />} />
       <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>
         <Route path="/" element={<Home />} />
+        <Route path="/calendar" element={<CycleCalendar />} />
         <Route path="/upgrade" element={<Upgrade />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
