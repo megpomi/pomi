@@ -69,9 +69,9 @@ export default function Upgrade() {
             Track without ads, give more
           </h1>
           <p className="mt-3 text-sm leading-relaxed text-slate-500 sm:text-base">
-            Pomi is free because of ads — but every ad you see is money that
-            doesn't reach the causes you chose. Go ad-free and your whole
-            subscription works for women's health instead.
+            Pomi is free because of ads - every ad you see raises donations for
+            the causes you choose. Go ad-free and earn greater donations each
+            month which you can track.
           </p>
         </div>
 
