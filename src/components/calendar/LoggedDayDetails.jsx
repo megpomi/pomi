@@ -23,9 +23,16 @@ const prettyDate = (d) =>
 export default function LoggedDayDetails({ date, log, cycleDay }) {
   return (
     <div className="rounded-3xl border border-slate-100 bg-white p-6 sm:p-8">
-      <h3 className="font-heading text-lg font-semibold text-slate-800">
-        {prettyDate(date)}
-      </h3>
+      <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+        <h3 className="font-heading text-lg font-semibold text-slate-800">
+          {prettyDate(date)}
+        </h3>
+        {cycleDay ? (
+          <span className="text-xs uppercase tracking-[0.12em] text-pomegranate-400">
+            Day {cycleDay} of your cycle
+          </span>
+        ) : null}
+      </div>
 
       {!log ? (
         <p className="mt-3 flex items-center gap-2 text-sm text-slate-500">
@@ -34,9 +41,6 @@ export default function LoggedDayDetails({ date, log, cycleDay }) {
         </p>
       ) : (
         <div className="mt-4 space-y-3 text-sm text-slate-600">
-          <p className="text-xs uppercase tracking-[0.12em] text-pomegranate-400">
-            {cycleDay ? `Day ${cycleDay} of your cycle` : "Period logged"}
-          </p>
           <p>
             <span className="text-slate-400">Flow: </span>
             {FLOW_LABEL[log.flow_intensity] || "—"} flow

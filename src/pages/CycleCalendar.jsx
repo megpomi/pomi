@@ -67,8 +67,8 @@ export default function CycleCalendar() {
   }, [logs, selected]);
 
   const cycleDay = useMemo(
-    () => (selectedLog ? getCycleDay(logs, selected) : null),
-    [logs, selected, selectedLog]
+    () => (selected ? getCycleDay(logs, selected) : null),
+    [logs, selected]
   );
 
   return (
