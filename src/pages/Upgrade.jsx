@@ -70,8 +70,8 @@ export default function Upgrade() {
           </h1>
           <p className="mt-3 text-sm leading-relaxed text-slate-500 sm:text-base">
             Pomi is free because of ads - every ad you see raises donations for
-            the causes you choose. Go ad-free and earn greater donations each
-            month which you can track.
+            the causes you choose. Go ad-free to earn even more donations each
+            cycle and track your impact.
           </p>
         </div>
 
