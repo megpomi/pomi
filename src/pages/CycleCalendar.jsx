@@ -24,6 +24,22 @@ const expandLog = (log) => {
   return days;
 };
 
+// A pomegranate dot marks every day that has data stored, so it reads as tappable.
+const CalendarDay = ({ date, activeModifiers }) => (
+  <div className="relative flex h-full w-full items-center justify-center">
+    <span>{date.getDate()}</span>
+    {activeModifiers.logged && (
+      <span
+        className={`absolute bottom-1 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full ${
+          activeModifiers.selected
+            ? "bg-primary-foreground"
+            : "bg-pomegranate-600"
+        }`}
+      />
+    )}
+  </div>
+);
+
 export default function CycleCalendar() {
   const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -84,6 +100,7 @@ export default function CycleCalendar() {
             selected={selected}
             onSelect={(value) => value && setSelected(value)}
             modifiers={{ logged: loggedDays }}
+            components={{ DayContent: CalendarDay }}
             disabled={{ after: new Date() }}
             classNames={{
               months: "flex flex-col items-center",
@@ -104,8 +121,10 @@ export default function CycleCalendar() {
           />
 
           <div className="flex items-center gap-2 px-4 pb-3 text-xs text-slate-500">
-            <span className="h-3 w-3 rounded-full bg-pomegranate-200" />
-            Day you logged a period
+            <span className="relative inline-flex h-4 w-4 items-center justify-center rounded-full bg-pomegranate-200/70">
+              <span className="h-1 w-1 rounded-full bg-pomegranate-600" />
+            </span>
+            Day with logged data — tap to view
           </div>
         </div>
 
