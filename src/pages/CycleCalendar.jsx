@@ -6,6 +6,7 @@ import { Image } from "@/components/ui/image";
 import pomiLogo from "@/assets/pomi-logo.png";
 import { Calendar } from "@/components/ui/calendar";
 import LoggedDayDetails from "@/components/calendar/LoggedDayDetails";
+import { getCycleDay } from "@/lib/cycle";
 
 const dayKey = (value) => {
   const d = new Date(value);
@@ -64,6 +65,11 @@ export default function CycleCalendar() {
       }) || null
     );
   }, [logs, selected]);
+
+  const cycleDay = useMemo(
+    () => (selectedLog ? getCycleDay(logs, selected) : null),
+    [logs, selected, selectedLog]
+  );
 
   return (
     <div className="min-h-screen bg-background">
@@ -132,7 +138,11 @@ export default function CycleCalendar() {
           {loading ? (
             <div className="h-32 animate-pulse rounded-3xl bg-white" />
           ) : (
-            <LoggedDayDetails date={selected} log={selectedLog} />
+            <LoggedDayDetails
+              date={selected}
+              log={selectedLog}
+              cycleDay={cycleDay}
+            />
           )}
         </div>
       </main>

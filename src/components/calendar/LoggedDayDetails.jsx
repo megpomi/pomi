@@ -20,16 +20,7 @@ const prettyDate = (d) =>
       })
     : "";
 
-const shortDate = (value) =>
-  value
-    ? new Date(value).toLocaleDateString(undefined, {
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-      })
-    : "—";
-
-export default function LoggedDayDetails({ date, log }) {
+export default function LoggedDayDetails({ date, log, cycleDay }) {
   return (
     <div className="rounded-3xl border border-slate-100 bg-white p-6 sm:p-8">
       <h3 className="font-heading text-lg font-semibold text-slate-800">
@@ -44,8 +35,7 @@ export default function LoggedDayDetails({ date, log }) {
       ) : (
         <div className="mt-4 space-y-3 text-sm text-slate-600">
           <p className="text-xs uppercase tracking-[0.12em] text-pomegranate-400">
-            Part of your period {shortDate(log.start_date)}
-            {log.end_date ? ` — ${shortDate(log.end_date)}` : ""}
+            {cycleDay ? `Day ${cycleDay} of your cycle` : "Period logged"}
           </p>
           <p>
             <span className="text-slate-400">Flow: </span>

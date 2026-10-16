@@ -81,6 +81,29 @@ export function groupBleedingDays(dates) {
   return runs;
 }
 
+// Cycle day for a date: days since the most recent period start on or before it.
+export function getCycleDay(logs, date) {
+  const day = toLocalDay(date);
+  const starts = (logs || [])
+    .map((l) => toLocalDay(l.start_date))
+    .filter((d) => d <= day)
+    .sort((a, b) => b - a);
+  if (!starts.length) return null;
+  return Math.round((day - starts[0]) / 86400000) + 1;
+}
+
+// Date-only strings ("yyyy-MM-dd") parsed as local midnight, so day counts
+// never shift by a timezone offset.
+function toLocalDay(value) {
+  if (typeof value === "string") {
+    const [y, m, d] = value.split("-").map(Number);
+    if (y && m && d) return new Date(y, m - 1, d);
+  }
+  const date = new Date(value);
+  date.setHours(0, 0, 0, 0);
+  return date;
+}
+
 export function phaseLabel(phase) {
   return {
     period: "Menstrual",
