@@ -7,7 +7,7 @@ const PLANS = {
   yearly: { price: "£34.99", cadence: "billed yearly", saving: "Save 27%" },
 };
 
-export default function PlanPicker({ onSubscribe, disabled }) {
+export default function PlanPicker({ onSubscribe, disabled, loading }) {
   const [cadence, setCadence] = useState("yearly");
   const plan = PLANS[cadence];
 
@@ -46,11 +46,11 @@ export default function PlanPicker({ onSubscribe, disabled }) {
 
       <Button
         onClick={() => onSubscribe(cadence)}
-        disabled={disabled}
+        disabled={disabled || loading}
         className="mt-5 w-full rounded-full bg-pomegranate-600 py-6 text-base hover:bg-pomegranate-700"
       >
         <Sparkles className="mr-2 h-4 w-4" />
-        Start ad-free
+        {loading ? "Starting…" : "Start ad-free"}
       </Button>
 
       <p className="mt-3 text-center text-xs text-slate-400">

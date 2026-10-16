@@ -7,18 +7,12 @@ import {
   Baby,
   ArrowRight,
   ArrowLeft,
-  Ribbon,
-  Activity,
-  Sprout,
-  HeartPulse,
-  HeartHandshake,
-  Gavel,
-  Globe,
   Sparkles,
 } from "lucide-react";
 import { Image } from "@/components/ui/image";
 import pomiLogo from "@/assets/pomi-logo.png";
 import LotusIcon from "@/components/icons/LotusIcon";
+import { CHARITY_OPTIONS } from "@/lib/charities";
 import ChoiceCard from "@/components/onboarding/ChoiceCard";
 import IntroStep from "@/components/onboarding/IntroStep";
 import SymptomHistoryStep from "@/components/onboarding/SymptomHistoryStep";
@@ -50,43 +44,7 @@ const TRACKING_OPTIONS = [
   },
 ];
 
-const CHARITY_OPTIONS = [
-  {
-    value: "period_poverty",
-    label: "International period poverty aid",
-    icon: Globe,
-  },
-  {
-    value: "endometriosis",
-    label: "Endometriosis research",
-    icon: HeartPulse,
-  },
-  {
-    value: "pmos",
-    label: "PMOS (Polyendocrine Metabolic Ovarian Syndrome) research",
-    icon: Activity,
-  },
-  {
-    value: "fertility",
-    label: "Fertility research and treatment grants",
-    icon: Sprout,
-  },
-  {
-    value: "cancer",
-    label: "Ovarian and cervical cancer research and support",
-    icon: Ribbon,
-  },
-  {
-    value: "trans_aid",
-    label: "Trans lives matter aid",
-    icon: HeartHandshake,
-  },
-  {
-    value: "violence_survivors",
-    label: "Sexual and domestic violence survivors aid",
-    icon: Gavel,
-  },
-];
+
 
 export default function OnboardingQuestionnaire({ onComplete }) {
   const [step, setStep] = useState(0);

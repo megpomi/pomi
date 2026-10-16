@@ -2,7 +2,8 @@ import React, { useState, useEffect, useCallback } from "react";
 import { base44 } from "@/api/base44Client";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { Plus, Sparkles } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Image } from "@/components/ui/image";
 import pomiLogo from "@/assets/pomi-logo.png";
 import CycleStatus from "@/components/CycleStatus";
@@ -91,13 +92,25 @@ export default function Home() {
             className="h-14 w-14"
             fittingType="fit"
           />
-          <Button
-            onClick={() => setSheetOpen(true)}
-            className="rounded-full bg-pomegranate-600 px-4 hover:bg-pomegranate-700"
-          >
-            <Plus className="mr-1.5 h-4 w-4" />
-            Log period
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              asChild
+              variant="outline"
+              className="rounded-full border-pomegranate-200 px-4 text-pomegranate-600 hover:bg-pomegranate-50"
+            >
+              <Link to="/upgrade">
+                <Sparkles className="mr-1.5 h-4 w-4" />
+                Go ad-free
+              </Link>
+            </Button>
+            <Button
+              onClick={() => setSheetOpen(true)}
+              className="rounded-full bg-pomegranate-600 px-4 hover:bg-pomegranate-700"
+            >
+              <Plus className="mr-1.5 h-4 w-4" />
+              Log period
+            </Button>
+          </div>
         </div>
       </header>
 

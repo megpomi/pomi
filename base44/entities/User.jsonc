@@ -1,4 +1,6 @@
 {
+  "name": "User",
+  "type": "object",
   "properties": {
     "role": {
       "type": "string",
@@ -7,11 +9,19 @@
         "admin",
         "user"
       ]
+    },
+    "plan": {
+      "type": "string",
+      "description": "Subscription plan; written by the payments webhook.",
+      "enum": [
+        "free",
+        "adfree_monthly",
+        "adfree_yearly"
+      ],
+      "default": "free"
     }
   },
   "required": [
     "role"
-  ],
-  "name": "User",
-  "type": "object"
+  ]
 }

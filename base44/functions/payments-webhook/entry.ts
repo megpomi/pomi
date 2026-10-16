@@ -143,29 +143,29 @@ async function handleOrderApproved(db: any, eventData: any): Promise<Response> {
   const buyerEmail: string | null = purchase.buyerEmail ?? extractBuyerEmail(order);
 
   // ===== APP-SPECIFIC =====
-  // Grant whatever the buyer paid for. This runs BEFORE we mark the purchase paid: if it
-  // throws or times out, the status stays "pending", so Wix's retry re-runs the grant
-  // rather than hitting the "already paid" short-circuit above and skipping it forever.
-  //
-  // It MUST therefore be idempotent — Wix can also deliver duplicates CONCURRENTLY, so the
-  // "pending" check above is NOT a lock: two invocations can both reach this block. Make every
-  // effect safe to run twice by keying it on a stable id (purchase.id / checkoutId), never
-  // blind-create/blind-send:
-  //   - unlock a feature:   await db.entities.User.update(purchase.appUserId, { plan: purchase.productId });  // update is naturally idempotent
-  //   - create entitlement: const existing = await db.entities.Entitlement.filter({ purchaseId: purchase.id });
-  //                         if (!existing.length) await db.entities.Entitlement.create({ purchaseId: purchase.id, ... });
-  //   - one-time side effects (email/webhook): guard them the same way — record a marker keyed
-  //     on purchase.id and skip if it already exists, so a duplicate delivery can't send twice.
-  //   - QUANTITY: for a multi-unit purchase grant `purchase.quantity` (seats/credits/items), not a
-  //     single unit — it's the validated count create-checkout charged for. Fixed-entitlement = 1.
-  //   - subscriptions:      subscriptionId is persisted automatically below, for later revoke.
-  //   - GRANT TARGET: use purchase.appUserId when set (the built-in `User` entity — there is no
-  //     `AppUser`). For an anonymous buyer (appUserId null) match `buyerEmail` (resolved above)
-  //     against User; User records CANNOT be created here (invite-only), so when no user matches,
-  //     grant to an Entitlement row keyed on the email and claim it when they sign up.
-  //   - Gate paid access on a WRITABLE field you set here (e.g. plan / has_paid on the user or an
-  //     Entitlement row) — NEVER on is_verified: it is platform-protected and cannot be set here,
-  //     even as service role, so gating access on it locks the paying buyer out.
+  // Grant ad-free access: put the buyer's app user on the plan they paid for. An update is
+  // naturally idempotent, so a duplicate delivery re-runs it harmlessly. Runs BEFORE the
+  // purchase is marked paid, so a failure here leaves it pending for Wix's retry.
+  const plan = purchase.productId === "adfree_yearly" ? "adfree_yearly" : "adfree_monthly";
+
+  if (purchase.appUserId) {
+    await db.entities.User.update(purchase.appUserId, { plan });
+  } else if (buyerEmail) {
+    // Anonymous buyer: match the email they used on Wix's checkout page.
+    const matched = await db.entities.User.filter({ email: buyerEmail });
+    if (matched?.length) {
+      await db.entities.User.update(matched[0].id, { plan });
+    } else {
+      console.error("payments-webhook: paid purchase with no matching app user", {
+        purchaseId: purchase.id,
+        buyerEmail,
+      });
+    }
+  } else {
+    console.error("payments-webhook: paid purchase with no user and no buyer email", {
+      purchaseId: purchase.id,
+    });
+  }
   // ===== END APP-SPECIFIC =====
 
   // Mark paid LAST, so "paid" always implies the grant above completed. The idempotency
@@ -217,10 +217,16 @@ async function handleSubscriptionEnded(db: any, eventData: any): Promise<Respons
   }
 
   // ===== APP-SPECIFIC =====
-  // Revoke whatever access the subscription granted (mirror of the grant). Runs BEFORE we
-  // mark the purchase canceled: if it throws, the status stays as-is so Wix's retry re-runs
-  // the revoke rather than hitting the "already canceled" short-circuit and leaving access on.
-  // Must be idempotent.
+  // Mirror of the grant: the subscription ended, so the buyer returns to the free
+  // (ad-supported) plan. Idempotent — re-running just writes the same value.
+  if (purchase.appUserId) {
+    await db.entities.User.update(purchase.appUserId, { plan: "free" });
+  } else if (purchase.buyerEmail) {
+    const matched = await db.entities.User.filter({ email: purchase.buyerEmail });
+    if (matched?.length) {
+      await db.entities.User.update(matched[0].id, { plan: "free" });
+    }
+  }
   // ===== END APP-SPECIFIC =====
 
   // Mark canceled LAST, so "canceled" always implies access was actually revoked.

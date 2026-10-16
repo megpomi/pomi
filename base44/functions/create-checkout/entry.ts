@@ -86,11 +86,40 @@ Deno.serve(async (req: Request) => {
     //   const product = (await base44.asServiceRole.entities.Product.filter({ id: productId }))[0];
     //   if (!product) return new Response(JSON.stringify({ error: "Unknown product" }), { status: 400 });
     //   const productName = product.name; const price = String(product.price); const currency = product.currency ?? "USD";
-    const productName = "Purchase"; // TODO: from your trusted product source
-    const price = "0.00";           // TODO: authoritative per-unit price (major units), resolved server-side
-    const currency = "USD";
-    // For a SUBSCRIPTION set this to Wix's subscriptionInfo; leave null for a one-time payment.
-    const subscriptionInfo = null;
+    // Pomi's only paid product: the ad-free subscription, monthly or yearly. Prices live here
+    // (server-side) so a tampered client can never choose what it pays.
+    const PRODUCTS: Record<string, { name: string; price: string; subscriptionInfo: any }> = {
+      adfree_monthly: {
+        name: "Pomi Ad-Free — Monthly",
+        price: "3.99",
+        subscriptionInfo: {
+          subscriptionSettings: { frequency: "MONTH" },
+          title: "Pomi Ad-Free",
+          description: "Ad-free cycle tracking, billed monthly",
+        },
+      },
+      adfree_yearly: {
+        name: "Pomi Ad-Free — Yearly",
+        price: "34.99",
+        subscriptionInfo: {
+          subscriptionSettings: { frequency: "YEAR" },
+          title: "Pomi Ad-Free",
+          description: "Ad-free cycle tracking, billed yearly",
+        },
+      },
+    };
+
+    const product = PRODUCTS[productId];
+    if (!product) {
+      console.error("create-checkout: unknown productId", { productId });
+      return new Response(JSON.stringify({ error: "Unknown product" }), { status: 400 });
+    }
+
+    const productName = product.name;
+    const price = product.price;
+    const currency = "GBP";
+    // A subscription item — recurring billing for the ad-free plan.
+    const subscriptionInfo = product.subscriptionInfo;
     // Where Wix returns the buyer. Both MUST be real, PUBLICLY reachable routes in this app: the
     // returning buyer is often anonymous, so a missing or login-gated route strands a paid customer.
     // Match your router exactly — `/ThankYou`, not `/thank-you`.

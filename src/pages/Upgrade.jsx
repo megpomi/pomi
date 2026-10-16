@@ -11,6 +11,7 @@ import PlanPicker from "@/components/upgrade/PlanPicker";
 
 export default function Upgrade() {
   const [charityInterests, setCharityInterests] = useState([]);
+  const [starting, setStarting] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -20,12 +21,23 @@ export default function Upgrade() {
       .catch(() => setCharityInterests([]));
   }, []);
 
-  const handleSubscribe = () => {
-    toast({
-      title: "Ad-free is almost here",
-      description:
-        "Checkout isn't switched on yet — you'll be able to subscribe right here very soon.",
-    });
+  const handleSubscribe = async (cadence) => {
+    setStarting(true);
+    try {
+      const res = await base44.functions.invoke("create-checkout", {
+        productId: `adfree_${cadence}`,
+      });
+      const redirectUrl = res?.data?.redirectUrl;
+      if (!redirectUrl) throw new Error("Checkout didn't start");
+      window.location.href = redirectUrl;
+    } catch (e) {
+      toast({
+        title: "Couldn't start checkout",
+        description: e?.message || "Please try again in a moment.",
+        variant: "destructive",
+      });
+      setStarting(false);
+    }
   };
 
   return (
@@ -71,7 +83,7 @@ export default function Upgrade() {
             </div>
           </div>
           <div className="lg:col-span-2">
-            <PlanPicker onSubscribe={handleSubscribe} />
+            <PlanPicker onSubscribe={handleSubscribe} loading={starting} />
           </div>
         </div>
       </main>
