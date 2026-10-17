@@ -1,50 +1,14 @@
 import React, { useState } from "react";
 import { base44 } from "@/api/base44Client";
 import { Button } from "@/components/ui/button";
-import {
-  Droplet,
-  Flame,
-  Baby,
-  ArrowRight,
-  ArrowLeft,
-  Sparkles,
-} from "lucide-react";
+import { ArrowRight, ArrowLeft, Sparkles } from "lucide-react";
 import { Image } from "@/components/ui/image";
 import pomiLogo from "@/assets/pomi-logo.png";
-import LotusIcon from "@/components/icons/LotusIcon";
 import { CHARITY_OPTIONS } from "@/lib/charities";
+import { TRACKING_OPTIONS } from "@/lib/tracking";
 import ChoiceCard from "@/components/onboarding/ChoiceCard";
 import IntroStep from "@/components/onboarding/IntroStep";
 import SymptomHistoryStep from "@/components/onboarding/SymptomHistoryStep";
-
-const TRACKING_OPTIONS = [
-  {
-    value: "menstrual_cycles",
-    label: "Menstrual cycles",
-    desc: "Track periods, flow, and predictions.",
-    icon: Droplet,
-  },
-  {
-    value: "perimenopause_menopause",
-    label: "Perimenopausal or menopausal symptoms",
-    desc: "Track hot flashes, sleep, and mood shifts.",
-    icon: Flame,
-  },
-  {
-    value: "pregnancy_postpartum",
-    label: "Pregnancy or postpartum symptoms",
-    desc: "Follow your journey and how you feel.",
-    icon: Baby,
-  },
-  {
-    value: "general_wellbeing",
-    label: "General well-being",
-    desc: "Track mood, energy, and everyday health.",
-    icon: LotusIcon,
-  },
-];
-
-
 
 export default function OnboardingQuestionnaire({ onComplete }) {
   const [step, setStep] = useState(0);

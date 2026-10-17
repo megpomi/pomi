@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { base44 } from "@/api/base44Client";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
-import { Plus, Sparkles } from "lucide-react";
+import { Plus, Sparkles, UserRound } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Image } from "@/components/ui/image";
 import pomiLogo from "@/assets/pomi-logo.png";
@@ -105,12 +105,22 @@ export default function Home() {
             />
             <Button
               asChild
+              variant="ghost"
+              size="icon"
+              className="rounded-full text-pomegranate-600 hover:bg-pomegranate-50"
+            >
+              <Link to="/profile" aria-label="Your profile">
+                <UserRound className="h-5 w-5" />
+              </Link>
+            </Button>
+            <Button
+              asChild
               variant="outline"
               className="rounded-full border-pomegranate-200 px-4 text-pomegranate-600 hover:bg-pomegranate-50"
             >
-              <Link to="/upgrade">
+              <Link to="/upgrade" aria-label="Go ad-free">
                 <Sparkles className="mr-1.5 h-4 w-4" />
-                Go ad-free
+                <span className="hidden sm:inline">Go ad-free</span>
               </Link>
             </Button>
             <Button

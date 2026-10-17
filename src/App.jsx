@@ -15,6 +15,7 @@ import Home from '@/pages/Home';
 import Upgrade from '@/pages/Upgrade';
 import CycleCalendar from '@/pages/CycleCalendar';
 import CauseDetail from '@/pages/CauseDetail';
+import Profile from '@/pages/Profile';
 import ThankYou from '@/pages/ThankYou';
 // Add page imports here
 
@@ -53,6 +54,7 @@ const AuthenticatedApp = () => {
         <Route path="/" element={<Home />} />
         <Route path="/calendar" element={<CycleCalendar />} />
         <Route path="/causes/:causeValue" element={<CauseDetail />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/upgrade" element={<Upgrade />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />

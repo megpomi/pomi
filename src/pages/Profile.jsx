@@ -1,0 +1,128 @@
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
+import { base44 } from "@/api/base44Client";
+import { useToast } from "@/components/ui/use-toast";
+import { Button } from "@/components/ui/button";
+import { Image } from "@/components/ui/image";
+import pomiLogo from "@/assets/pomi-logo.png";
+import TrackingPreferences from "@/components/profile/TrackingPreferences";
+import CausePreferences from "@/components/profile/CausePreferences";
+
+export default function Profile() {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [tracking, setTracking] = useState([]);
+  const [causes, setCauses] = useState([]);
+  const [saving, setSaving] = useState(false);
+  const { toast } = useToast();
+
+  useEffect(() => {
+    base44.auth
+      .me()
+      .then((u) => {
+        setUser(u || null);
+        setTracking(u?.tracking_focus || []);
+        setCauses(u?.charity_interests || []);
+      })
+      .catch(() => setUser(null))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const handleSave = async () => {
+    setSaving(true);
+    try {
+      await base44.auth.updateMe({
+        tracking_focus: tracking,
+        charity_interests: causes,
+      });
+      toast({
+        title: "Preferences saved",
+        description: "Your tracking areas and causes are updated.",
+      });
+    } catch (e) {
+      toast({
+        title: "Couldn't save your preferences",
+        description: e?.message || "Please try again.",
+        variant: "destructive",
+      });
+    }
+    setSaving(false);
+  };
+
+  if (loading) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-background">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-pomegranate-100 border-t-pomegranate-600" />
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="flex min-h-screen flex-col items-center justify-center gap-3 bg-background px-6 text-center">
+        <p className="font-heading text-xl font-semibold text-slate-700">
+          We couldn't load your profile.
+        </p>
+        <Link
+          to="/"
+          className="text-sm font-medium text-pomegranate-600 hover:text-pomegranate-700"
+        >
+          Back to my cycle
+        </Link>
+      </div>
+    );
+  }
+
+  const canSave = tracking.length > 0 && causes.length > 0 && !saving;
+
+  return (
+    <div className="min-h-screen bg-background">
+      <header className="sticky top-0 z-30 border-b border-pomegranate-100/70 bg-background/85 backdrop-blur-md">
+        <div className="mx-auto flex max-w-3xl items-center justify-between px-5 py-4 sm:px-8">
+          <Image
+            src={pomiLogo}
+            alt="Pomi"
+            className="h-14 w-14"
+            fittingType="fit"
+          />
+          <Link
+            to="/"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-pomegranate-600 hover:text-pomegranate-700"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back to my cycle
+          </Link>
+        </div>
+      </header>
+
+      <main className="mx-auto max-w-3xl px-5 py-8 sm:px-8 sm:py-12">
+        <h1 className="font-heading text-3xl font-semibold text-slate-800 sm:text-4xl">
+          Your profile
+        </h1>
+        <p className="mt-1 text-sm text-slate-500">
+          {user.full_name ? `${user.full_name} · ` : ""}
+          {user.email}
+        </p>
+
+        <div className="mt-8 space-y-6">
+          <TrackingPreferences selected={tracking} onChange={setTracking} />
+          <CausePreferences selected={causes} onChange={setCauses} />
+        </div>
+
+        <Button
+          onClick={handleSave}
+          disabled={!canSave}
+          className="mt-8 w-full rounded-full bg-pomegranate-600 py-6 text-base hover:bg-pomegranate-700"
+        >
+          {saving ? "Saving…" : "Save preferences"}
+        </Button>
+        {!canSave && !saving && (
+          <p className="mt-3 text-center text-xs text-slate-400">
+            Choose at least one tracking area and one cause to save.
+          </p>
+        )}
+      </main>
+    </div>
+  );
+}
