@@ -28,7 +28,7 @@ export default function LoggedDayDetails({ date, log, cycleDay }) {
           {prettyDate(date)}
         </h3>
         {cycleDay ? (
-          <span className="text-xs uppercase tracking-[0.12em] text-pomegranate-400">
+          <span className="text-xs font-medium uppercase tracking-[0.12em] text-pomegranate-700">
             Day {cycleDay} of your cycle
           </span>
         ) : null}
