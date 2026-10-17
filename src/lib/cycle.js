@@ -25,7 +25,24 @@ export function computeCycleStats(logs) {
     ? Math.round(periodLengths.reduce((a, b) => a + b, 0) / periodLengths.length)
     : 5;
 
-  return { sorted, avgCycle, avgPeriod };
+  return { sorted, cycleLengths, periodLengths, avgCycle, avgPeriod };
+}
+
+// Summary of the logged history: the most recent completed cycle length, the
+// most recent period length, and the range cycle lengths have fallen in.
+export function getCycleStats(logs) {
+  const { sorted, cycleLengths, periodLengths } = computeCycleStats(logs);
+
+  const round = (value) => (value == null ? null : Math.round(value));
+
+  return {
+    lastCycleLength: round(cycleLengths[cycleLengths.length - 1]),
+    lastPeriodLength: round(periodLengths[periodLengths.length - 1]),
+    minCycle: cycleLengths.length ? round(Math.min(...cycleLengths)) : null,
+    maxCycle: cycleLengths.length ? round(Math.max(...cycleLengths)) : null,
+    cycleCount: cycleLengths.length,
+    hasHistory: sorted.length > 1,
+  };
 }
 
 export function getCurrentPhase(logs) {

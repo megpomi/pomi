@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { Image } from "@/components/ui/image";
 import pomiLogo from "@/assets/pomi-logo.png";
 import CycleStatus from "@/components/CycleStatus";
+import CycleStats from "@/components/dashboard/CycleStats";
 import LogPeriodSheet from "@/components/LogPeriodSheet";
 import CycleHistory from "@/components/CycleHistory";
 import CharityImpact from "@/components/CharityImpact";
@@ -158,6 +159,11 @@ export default function Home() {
 
         {/* Status */}
         <CycleStatus logs={logs} />
+
+        {/* Stats */}
+        <div className="mt-6">
+          <CycleStats logs={logs} />
+        </div>
 
         {/* Grid */}
         <div className="mt-6 grid gap-6 lg:grid-cols-5">
