@@ -147,14 +147,16 @@ async function handleOrderApproved(db: any, eventData: any): Promise<Response> {
   // naturally idempotent, so a duplicate delivery re-runs it harmlessly. Runs BEFORE the
   // purchase is marked paid, so a failure here leaves it pending for Wix's retry.
   const plan = purchase.productId === "adfree_yearly" ? "adfree_yearly" : "adfree_monthly";
+  // plan_started_at drives the daily donation accrual; a re-subscribe clears any previous end date.
+  const grant = { plan, plan_started_at: new Date().toISOString(), plan_ended_at: null };
 
   if (purchase.appUserId) {
-    await db.entities.User.update(purchase.appUserId, { plan });
+    await db.entities.User.update(purchase.appUserId, grant);
   } else if (buyerEmail) {
     // Anonymous buyer: match the email they used on Wix's checkout page.
     const matched = await db.entities.User.filter({ email: buyerEmail });
     if (matched?.length) {
-      await db.entities.User.update(matched[0].id, { plan });
+      await db.entities.User.update(matched[0].id, grant);
     } else {
       console.error("payments-webhook: paid purchase with no matching app user", {
         purchaseId: purchase.id,
@@ -219,12 +221,15 @@ async function handleSubscriptionEnded(db: any, eventData: any): Promise<Respons
   // ===== APP-SPECIFIC =====
   // Mirror of the grant: the subscription ended, so the buyer returns to the free
   // (ad-supported) plan. Idempotent — re-running just writes the same value.
+  // plan_ended_at stops the daily donation accrual; donations already earned stay counted.
+  const revoked = { plan: "free", plan_ended_at: new Date().toISOString() };
+
   if (purchase.appUserId) {
-    await db.entities.User.update(purchase.appUserId, { plan: "free" });
+    await db.entities.User.update(purchase.appUserId, revoked);
   } else if (purchase.buyerEmail) {
     const matched = await db.entities.User.filter({ email: purchase.buyerEmail });
     if (matched?.length) {
-      await db.entities.User.update(matched[0].id, { plan: "free" });
+      await db.entities.User.update(matched[0].id, revoked);
     }
   }
   // ===== END APP-SPECIFIC =====

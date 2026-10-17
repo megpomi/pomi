@@ -12,7 +12,7 @@ import CycleHistory from "@/components/CycleHistory";
 import CharityImpact from "@/components/CharityImpact";
 import CyclePatterns from "@/components/patterns/CyclePatterns";
 import DonationTracker from "@/components/DonationTracker";
-import { countTrackedDays } from "@/lib/donations";
+import { countTrackedDays, recordAdVisit } from "@/lib/donations";
 import OnboardingQuestionnaire from "@/components/OnboardingQuestionnaire";
 
 export default function Home() {
@@ -20,7 +20,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [sheetOpen, setSheetOpen] = useState(false);
   const [checkingProfile, setCheckingProfile] = useState(true);
-  const [trackingFocus, setTrackingFocus] = useState([]);
+  const [user, setUser] = useState(null);
   const { toast } = useToast();
 
   const loadLogs = useCallback(async () => {
@@ -49,8 +49,9 @@ export default function Home() {
   useEffect(() => {
     base44.auth
       .me()
-      .then((u) => setTrackingFocus(u?.tracking_focus || []))
-      .catch(() => setTrackingFocus([]))
+      .then((u) => (u ? recordAdVisit(u) : u))
+      .then((u) => setUser(u || null))
+      .catch(() => setUser(null))
       .finally(() => setCheckingProfile(false));
   }, []);
 
@@ -61,6 +62,7 @@ export default function Home() {
   };
 
   const daysTracked = countTrackedDays(logs);
+  const trackingFocus = user?.tracking_focus || [];
 
   if (checkingProfile) {
     return (
@@ -71,7 +73,13 @@ export default function Home() {
   }
 
   if (!trackingFocus.length) {
-    return <OnboardingQuestionnaire onComplete={setTrackingFocus} />;
+    return (
+      <OnboardingQuestionnaire
+        onComplete={(focus) =>
+          setUser((prev) => ({ ...prev, tracking_focus: focus }))
+        }
+      />
+    );
   }
 
   return (
@@ -135,7 +143,7 @@ export default function Home() {
 
         {/* Donations */}
         <div className="mt-6">
-          <DonationTracker logs={logs} />
+          <DonationTracker user={user} />
         </div>
 
         {/* Patterns */}

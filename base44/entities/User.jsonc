@@ -19,6 +19,21 @@
         "adfree_yearly"
       ],
       "default": "free"
+    },
+    "plan_started_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the ad-free subscription began; written by the payments webhook. Donations build daily from here."
+    },
+    "plan_ended_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the ad-free subscription ended; written by the payments webhook. Daily donation accrual stops here."
+    },
+    "ad_views_by_month": {
+      "type": "object",
+      "description": "Ad-supported visits per calendar month, keyed \"YYYY-MM\". Each visit adds one ad view.",
+      "default": {}
     }
   },
   "required": [
