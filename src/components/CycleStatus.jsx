@@ -24,8 +24,8 @@ const PHASE_COPY = {
   luteal: {
     title: "Luteal phase",
     sub: "Wind down — rest and reflect.",
-    color: "text-violet-500",
-    ring: "#8b5cf6",
+    color: "text-pomegranate-700",
+    ring: "#875c66",
   },
   unknown: {
     title: "Welcome to Pomi",
