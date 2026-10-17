@@ -6,8 +6,7 @@ import { Image } from "@/components/ui/image";
 import pomiLogo from "@/assets/pomi-logo.png";
 import { charityByValue } from "@/lib/charities";
 import { donationTotals, splitByCause } from "@/lib/donations";
-
-const money = (value) => `$${value.toFixed(2)}`;
+import { currencyOf, formatMoney } from "@/lib/currency";
 
 export default function CauseDetail() {
   const { causeValue } = useParams();
@@ -38,6 +37,7 @@ export default function CauseDetail() {
   }
 
   const Icon = cause.icon;
+  const money = (value) => formatMoney(value, currencyOf(user));
   const totals = donationTotals(user);
   const shareFor = (pot) =>
     splitByCause(user, pot).find((s) => s.value === cause.value)?.amount;

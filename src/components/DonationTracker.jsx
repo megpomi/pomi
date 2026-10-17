@@ -7,11 +7,12 @@ import {
   donationTotals,
 } from "@/lib/donations";
 import DonationCauses from "@/components/donations/DonationCauses";
+import { currencyOf, formatMoney } from "@/lib/currency";
 
-const money = (value) => `$${value.toFixed(2)}`;
 const percent = `${Math.round(DONATION_SHARE * 100)}%`;
 
 export default function DonationTracker({ user }) {
+  const money = (value) => formatMoney(value, currencyOf(user));
   const totals = donationTotals(user);
   const subscribed = totals.mode === "subscription";
 

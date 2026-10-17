@@ -8,12 +8,15 @@ import { Image } from "@/components/ui/image";
 import pomiLogo from "@/assets/pomi-logo.png";
 import TrackingPreferences from "@/components/profile/TrackingPreferences";
 import CausePreferences from "@/components/profile/CausePreferences";
+import CurrencyPreference from "@/components/profile/CurrencyPreference";
+import { DEFAULT_CURRENCY, currencyOf } from "@/lib/currency";
 
 export default function Profile() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [tracking, setTracking] = useState([]);
   const [causes, setCauses] = useState([]);
+  const [currency, setCurrency] = useState(DEFAULT_CURRENCY);
   const [saving, setSaving] = useState(false);
   const { toast } = useToast();
 
@@ -24,6 +27,7 @@ export default function Profile() {
         setUser(u || null);
         setTracking(u?.tracking_focus || []);
         setCauses(u?.charity_interests || []);
+        setCurrency(currencyOf(u));
       })
       .catch(() => setUser(null))
       .finally(() => setLoading(false));
@@ -35,10 +39,11 @@ export default function Profile() {
       await base44.auth.updateMe({
         tracking_focus: tracking,
         charity_interests: causes,
+        currency,
       });
       toast({
         title: "Preferences saved",
-        description: "Your tracking areas and causes are updated.",
+        description: "Your tracking areas, causes and currency are updated.",
       });
     } catch (e) {
       toast({
@@ -108,6 +113,7 @@ export default function Profile() {
         <div className="mt-8 space-y-6">
           <TrackingPreferences selected={tracking} onChange={setTracking} />
           <CausePreferences selected={causes} onChange={setCauses} />
+          <CurrencyPreference value={currency} onChange={setCurrency} />
         </div>
 
         <Button

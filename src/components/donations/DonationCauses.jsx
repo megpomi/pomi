@@ -2,10 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
 import { splitByCause } from "@/lib/donations";
-
-const money = (value) => `$${value.toFixed(2)}`;
+import { currencyOf, formatMoney } from "@/lib/currency";
 
 export default function DonationCauses({ user, pot }) {
+  const money = (value) => formatMoney(value, currencyOf(user));
   const shares = splitByCause(user, pot);
 
   if (!shares.length) {
