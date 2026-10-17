@@ -11,6 +11,8 @@ import LogPeriodSheet from "@/components/LogPeriodSheet";
 import CycleHistory from "@/components/CycleHistory";
 import CharityImpact from "@/components/CharityImpact";
 import CyclePatterns from "@/components/patterns/CyclePatterns";
+import DonationTracker from "@/components/DonationTracker";
+import { countTrackedDays } from "@/lib/donations";
 import OnboardingQuestionnaire from "@/components/OnboardingQuestionnaire";
 
 export default function Home() {
@@ -58,17 +60,7 @@ export default function Home() {
     toast({ title: "Period logged", description: "Your cycle is updated." });
   };
 
-  // Days tracked = sum of period durations (with end date) + 1 per open entry
-  const daysTracked = logs.reduce((acc, l) => {
-    if (l.end_date) {
-      const d =
-        Math.round(
-          (new Date(l.end_date) - new Date(l.start_date)) / 86400000
-        ) + 1;
-      return acc + Math.max(d, 1);
-    }
-    return acc + 1;
-  }, 0);
+  const daysTracked = countTrackedDays(logs);
 
   if (checkingProfile) {
     return (
@@ -139,6 +131,11 @@ export default function Home() {
           <div className="lg:col-span-2">
             <CharityImpact daysTracked={daysTracked} />
           </div>
+        </div>
+
+        {/* Donations */}
+        <div className="mt-6">
+          <DonationTracker logs={logs} />
         </div>
 
         {/* Patterns */}
