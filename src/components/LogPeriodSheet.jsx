@@ -39,6 +39,7 @@ const SYMPTOMS = [
   "backache",
   "mood_swings",
   "insomnia",
+  "sex",
 ];
 
 const pretty = (s) => s.replace(/_/g, " ");
