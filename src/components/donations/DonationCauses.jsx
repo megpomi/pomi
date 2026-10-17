@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { ChevronRight } from "lucide-react";
 import { splitByCause } from "@/lib/donations";
 
 const money = (value) => `$${value.toFixed(2)}`;
@@ -25,14 +27,19 @@ export default function DonationCauses({ user, pot }) {
       </div>
       <ul className="divide-y divide-slate-100">
         {shares.map((share) => (
-          <li
-            key={share.value}
-            className="flex items-center justify-between gap-4 py-2.5"
-          >
-            <span className="text-sm text-slate-600">{share.label}</span>
-            <span className="font-heading text-sm font-semibold text-pomegranate-600">
-              {money(share.amount)}
-            </span>
+          <li key={share.value}>
+            <Link
+              to={`/causes/${share.value}`}
+              className="group flex items-center justify-between gap-4 py-2.5"
+            >
+              <span className="flex items-center gap-1.5 text-sm text-slate-600 group-hover:text-pomegranate-700">
+                {share.label}
+                <ChevronRight className="h-3.5 w-3.5 text-slate-300 group-hover:text-pomegranate-500" />
+              </span>
+              <span className="font-heading text-sm font-semibold text-pomegranate-600">
+                {money(share.amount)}
+              </span>
+            </Link>
           </li>
         ))}
       </ul>
