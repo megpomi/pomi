@@ -1,9 +1,12 @@
 import { base44 } from "@/api/base44Client";
+import { charityLabel } from "@/lib/charities";
 
-// Free (ad-supported) plan: the ads shown on each visit fund the donation.
-export const AD_DONATION_PER_VISIT = 0.02;
-// Ad-free subscription: donations build every day, whether or not the app is opened.
-export const SUBSCRIPTION_DONATION_PER_DAY = 0.1;
+// Share of every revenue stream that goes into the donation pot.
+export const DONATION_SHARE = 0.2;
+// Free (ad-supported) plan: revenue from the ads shown on each visit.
+export const AD_REVENUE_PER_VISIT = 0.02;
+// Ad-free subscription: revenue accrues every day, whether or not the app is opened.
+export const SUBSCRIPTION_REVENUE_PER_DAY = 0.1;
 
 const DAY = 86400000;
 const VISIT_KEY = "pomi_ad_visit_recorded";
@@ -83,26 +86,47 @@ const subscriptionDays = (user, { thisMonth = false } = {}) => {
   return Math.round((end - overlapStart) / DAY) + 1;
 };
 
+// The revenue this user's activity generated, and the donation pot (20% of it) that follows.
 export const donationTotals = (user) => {
+  let mode;
+  let thisMonthCount;
+  let allTimeCount;
+  let thisMonthRevenue;
+  let allTimeRevenue;
+
   if (isSubscriber(user)) {
-    const thisMonthDays = subscriptionDays(user, { thisMonth: true });
-    const allTimeDays = subscriptionDays(user);
-    return {
-      mode: "subscription",
-      thisMonth: thisMonthDays * SUBSCRIPTION_DONATION_PER_DAY,
-      allTime: allTimeDays * SUBSCRIPTION_DONATION_PER_DAY,
-      thisMonthCount: thisMonthDays,
-      allTimeCount: allTimeDays,
-    };
+    mode = "subscription";
+    thisMonthCount = subscriptionDays(user, { thisMonth: true });
+    allTimeCount = subscriptionDays(user);
+    thisMonthRevenue = thisMonthCount * SUBSCRIPTION_REVENUE_PER_DAY;
+    allTimeRevenue = allTimeCount * SUBSCRIPTION_REVENUE_PER_DAY;
+  } else {
+    mode = "ads";
+    thisMonthCount = adViewsThisMonth(user);
+    allTimeCount = adViewsAllTime(user);
+    thisMonthRevenue = thisMonthCount * AD_REVENUE_PER_VISIT;
+    allTimeRevenue = allTimeCount * AD_REVENUE_PER_VISIT;
   }
 
-  const thisMonthViews = adViewsThisMonth(user);
-  const allTimeViews = adViewsAllTime(user);
   return {
-    mode: "ads",
-    thisMonth: thisMonthViews * AD_DONATION_PER_VISIT,
-    allTime: allTimeViews * AD_DONATION_PER_VISIT,
-    thisMonthCount: thisMonthViews,
-    allTimeCount: allTimeViews,
+    mode,
+    thisMonthRevenue,
+    allTimeRevenue,
+    thisMonth: thisMonthRevenue * DONATION_SHARE,
+    allTime: allTimeRevenue * DONATION_SHARE,
+    thisMonthCount,
+    allTimeCount,
   };
+};
+
+// The pot, split equally between the causes this user chose.
+export const splitByCause = (user, pot) => {
+  const causes = user?.charity_interests || [];
+  if (!causes.length) return [];
+  const share = pot / causes.length;
+  return causes.map((value) => ({
+    value,
+    label: charityLabel(value),
+    amount: share,
+  }));
 };
