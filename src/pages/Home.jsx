@@ -10,6 +10,7 @@ import CycleStatus from "@/components/CycleStatus";
 import LogPeriodSheet from "@/components/LogPeriodSheet";
 import CycleHistory from "@/components/CycleHistory";
 import CharityImpact from "@/components/CharityImpact";
+import CyclePatterns from "@/components/patterns/CyclePatterns";
 import OnboardingQuestionnaire from "@/components/OnboardingQuestionnaire";
 
 export default function Home() {
@@ -138,6 +139,11 @@ export default function Home() {
           <div className="lg:col-span-2">
             <CharityImpact daysTracked={daysTracked} />
           </div>
+        </div>
+
+        {/* Patterns */}
+        <div className="mt-6">
+          <CyclePatterns logs={logs} />
         </div>
 
         <p className="mt-10 text-center text-xs text-slate-400">
