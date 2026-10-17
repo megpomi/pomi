@@ -48,7 +48,11 @@
           "backache",
           "mood_swings",
           "insomnia",
-          "sex"
+          "sex",
+          "ovulation_cramps",
+          "cervical_mucus",
+          "spotting",
+          "increased_libido"
         ]
       },
       "default": [],
