@@ -14,6 +14,9 @@ import CyclePatterns from "@/components/patterns/CyclePatterns";
 import DonationTracker from "@/components/DonationTracker";
 import { countTrackedDays, recordAdVisit } from "@/lib/donations";
 import OnboardingQuestionnaire from "@/components/OnboardingQuestionnaire";
+import ReminderBanner from "@/components/reminders/ReminderBanner";
+import ReminderBell from "@/components/reminders/ReminderBell";
+import { useReminders } from "@/hooks/use-reminders";
 
 export default function Home() {
   const [logs, setLogs] = useState([]);
@@ -22,6 +25,7 @@ export default function Home() {
   const [checkingProfile, setCheckingProfile] = useState(true);
   const [user, setUser] = useState(null);
   const { toast } = useToast();
+  const { reminders, dismiss } = useReminders(logs);
 
   const loadLogs = useCallback(async () => {
     setLoading(true);
@@ -94,6 +98,11 @@ export default function Home() {
             fittingType="fit"
           />
           <div className="flex items-center gap-2">
+            <ReminderBell
+              reminders={reminders}
+              onDismiss={dismiss}
+              onLogPeriod={() => setSheetOpen(true)}
+            />
             <Button
               asChild
               variant="outline"
@@ -127,6 +136,15 @@ export default function Home() {
               : "Let's start tracking your cycle — and giving back."}
           </p>
         </div>
+
+        {/* Reminder */}
+        {reminders.length > 0 && (
+          <ReminderBanner
+            reminder={reminders[0]}
+            onDismiss={dismiss}
+            onLogPeriod={() => setSheetOpen(true)}
+          />
+        )}
 
         {/* Status */}
         <CycleStatus logs={logs} />
