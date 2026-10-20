@@ -17,6 +17,7 @@ import CycleCalendar from '@/pages/CycleCalendar';
 import CauseDetail from '@/pages/CauseDetail';
 import Profile from '@/pages/Profile';
 import ThankYou from '@/pages/ThankYou';
+import Mission from '@/pages/Mission';
 // Add page imports here
 
 const AuthenticatedApp = () => {
@@ -56,6 +57,7 @@ const AuthenticatedApp = () => {
         <Route path="/causes/:causeValue" element={<CauseDetail />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/upgrade" element={<Upgrade />} />
+        <Route path="/mission" element={<Mission />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>
