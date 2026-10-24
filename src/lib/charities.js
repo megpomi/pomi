@@ -108,7 +108,8 @@ export const CHARITY_OPTIONS = [
     icon: Dna,
     summary: "Research and support for a common hormonal and metabolic condition.",
     partners: [
-      { name: "PCOS Awareness Association", website: "https://www.pcosaa.org" },
+      { name: "Verity", website: "https://www.verity-pcos.org.uk" },
+      { name: "PCOS Relief", website: "https://www.pcosrelief.org" },
     ],
     about:
       "PMOS is a hormonal and metabolic condition affecting a large share of people who menstruate. It sits at the crossroads of reproductive and long-term metabolic health, and is often misunderstood by patients and clinicians alike.",
