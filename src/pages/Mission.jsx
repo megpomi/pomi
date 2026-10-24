@@ -88,46 +88,43 @@ export default function Mission() {
           </p>
 
           <div className="mt-5 grid gap-4 sm:grid-cols-2">
-            {CHARITY_OPTIONS.map((cause) => {
-              const Icon = cause.icon;
-              return (
-                <div
-                  key={cause.value}
-                  className="flex flex-col rounded-3xl border border-slate-100 bg-white p-5"
-                >
-                  <div className="flex items-start gap-3">
-                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-pomegranate-100 text-pomegranate-600">
-                      <Icon className="h-5 w-5" />
-                    </span>
-                    <div>
-                      <h3 className="font-heading text-base font-semibold text-slate-800">
-                        {cause.partners.map((p) => p.name).join(" & ")}
-                      </h3>
-                      <p className="text-xs uppercase tracking-wider text-pomegranate-400">
-                        {cause.label}
-                      </p>
+            {CHARITY_OPTIONS.flatMap((cause) =>
+              cause.partners.map((partner) => {
+                const Icon = cause.icon;
+                return (
+                  <div
+                    key={`${cause.value}-${partner.name}`}
+                    className="flex flex-col rounded-3xl border border-slate-100 bg-white p-5"
+                  >
+                    <div className="flex items-start gap-3">
+                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-pomegranate-100 text-pomegranate-600">
+                        <Icon className="h-5 w-5" />
+                      </span>
+                      <div>
+                        <h3 className="font-heading text-base font-semibold text-slate-800">
+                          {partner.name}
+                        </h3>
+                        <p className="text-xs uppercase tracking-wider text-pomegranate-400">
+                          {cause.label}
+                        </p>
+                      </div>
                     </div>
+                    <p className="mt-3 flex-1 text-sm leading-relaxed text-slate-600">
+                      {cause.summary}
+                    </p>
+                    <a
+                      href={partner.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-pomegranate-600 hover:text-pomegranate-700"
+                    >
+                      Visit website
+                      <ArrowUpRight className="h-4 w-4" />
+                    </a>
                   </div>
-                  <p className="mt-3 flex-1 text-sm leading-relaxed text-slate-600">
-                    {cause.summary}
-                  </p>
-                  <div className="mt-4 space-y-1.5">
-                    {cause.partners.map((partner) => (
-                      <a
-                        key={partner.website}
-                        href={partner.website}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-1.5 text-sm font-medium text-pomegranate-600 hover:text-pomegranate-700"
-                      >
-                        Visit {partner.name}
-                        <ArrowUpRight className="h-4 w-4" />
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
+                );
+              })
+            )}
           </div>
         </section>
 
