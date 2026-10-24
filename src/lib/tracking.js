@@ -1,5 +1,6 @@
-import { Baby, Droplet, Egg, Flame, HeartPulse } from "lucide-react";
+import { Baby, Droplet, Egg, Flame } from "lucide-react";
 import LotusIcon from "@/components/icons/LotusIcon";
+import MotherBabyIcon from "@/components/icons/MotherBabyIcon";
 
 // The areas a user can choose to track — shared by onboarding and the profile page.
 export const TRACKING_OPTIONS = [
@@ -31,7 +32,7 @@ export const TRACKING_OPTIONS = [
     value: "postpartum",
     label: "Postpartum recovery",
     desc: "Track recovery and changes after birth.",
-    icon: HeartPulse,
+    icon: MotherBabyIcon,
   },
   {
     value: "general_wellbeing",
