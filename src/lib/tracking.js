@@ -24,7 +24,7 @@ export const TRACKING_OPTIONS = [
   {
     value: "pregnancy",
     label: "Pregnancy journey",
-    desc: "Track pregnancy symptoms and growth",
+    desc: "Track pregnancy symptoms.",
     icon: Baby,
   },
   {
