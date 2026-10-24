@@ -2,6 +2,7 @@ import React, { useMemo, useState } from "react";
 import { base44 } from "@/api/base44Client";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
+import ImportFromScreenshot from "@/components/calendar/ImportFromScreenshot";
 import { groupBleedingDays } from "@/lib/cycle";
 
 // yyyy-MM-dd, built from local parts so days never shift by a timezone offset.
@@ -31,6 +32,25 @@ export default function PeriodHistoryCalendar({ logs, onSaved }) {
   const historyStart = new Date(today.getFullYear(), today.getMonth() - 11, 1);
 
   const loggedDays = useMemo(() => logs.flatMap(expandLog), [logs]);
+  const loggedKeys = useMemo(
+    () => new Set(loggedDays.map(formatDay)),
+    [loggedDays]
+  );
+
+  // Adds the days read from an imported screenshot, skipping anything already there.
+  const mergeImported = (values) => {
+    const keys = new Set(days.map(formatDay));
+    const next = [...days];
+    values.forEach((value) => {
+      const date = new Date(`${value}T00:00:00`);
+      const key = formatDay(date);
+      if (date > today || loggedKeys.has(key) || keys.has(key)) return;
+      keys.add(key);
+      next.push(date);
+    });
+    setDays(next);
+    return next.length - days.length;
+  };
 
   // Opens on the most recent month, with the earlier months scrolled above it.
   const scrollToLatest = (node) => {
@@ -55,51 +75,58 @@ export default function PeriodHistoryCalendar({ logs, onSaved }) {
   };
 
   return (
-    <div className="rounded-3xl border border-slate-100 bg-white p-1 sm:p-3">
-      <div
-        ref={scrollToLatest}
-        className="max-h-[23rem] overflow-y-auto rounded-2xl"
-      >
-        <Calendar
-          mode="multiple"
-          selected={days}
-          onSelect={(value) => setDays(value || [])}
-          numberOfMonths={12}
-          defaultMonth={historyStart}
-          disabled={[{ after: today }, ...loggedDays]}
-          modifiers={{ logged: loggedDays }}
-          classNames={{
-            months: "flex flex-col items-center",
-            month: "w-full space-y-3",
-            head_row: "flex w-full",
-            head_cell: "flex-1 font-normal text-[0.8rem] text-muted-foreground",
-            row: "flex w-full mt-1",
-            cell: "relative flex-1 p-0 text-center text-sm",
-            day: "inline-flex h-11 w-full items-center justify-center rounded-full p-0 text-sm font-normal hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring aria-selected:opacity-100",
-            day_selected:
-              "bg-pomegranate-600 text-primary-foreground hover:bg-pomegranate-600 focus:bg-pomegranate-600",
-            day_logged:
-              "bg-pomegranate-200/70 font-medium text-pomegranate-900",
-            day_today: "font-semibold",
-          }}
-          className="w-full p-3"
-        />
-      </div>
+    <div className="space-y-4">
+      <ImportFromScreenshot onImported={mergeImported} />
 
-      {error && <p className="px-4 pt-2 text-sm text-destructive">{error}</p>}
-
-      <div className="flex items-center gap-3 px-4 py-3">
-        <span className="flex-1 text-sm text-slate-500">
-          {days.length > 0 &&
-            `${days.length} day${days.length === 1 ? "" : "s"} selected`}
-        </span>
-        <Button
-          onClick={handleSave}
-          disabled={!days.length || saving}
-          className="rounded-full bg-pomegranate-600 px-6 hover:bg-pomegranate-700"
+      <div className="rounded-3xl border border-slate-100 bg-white p-1 sm:p-3">
+        <div
+          ref={scrollToLatest}
+          className="max-h-[23rem] overflow-y-auto rounded-2xl"
         >
-          {saving ? "Saving…" : "Save days"}
-        </Button>
+          <Calendar
+            mode="multiple"
+            selected={days}
+            onSelect={(value) => setDays(value || [])}
+            numberOfMonths={12}
+            defaultMonth={historyStart}
+            disabled={[{ after: today }, ...loggedDays]}
+            modifiers={{ logged: loggedDays }}
+            classNames={{
+              months: "flex flex-col items-center",
+              month: "w-full space-y-3",
+              head_row: "flex w-full",
+              head_cell:
+                "flex-1 font-normal text-[0.8rem] text-muted-foreground",
+              row: "flex w-full mt-1",
+              cell: "relative flex-1 p-0 text-center text-sm",
+              day: "inline-flex h-11 w-full items-center justify-center rounded-full p-0 text-sm font-normal hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring aria-selected:opacity-100",
+              day_selected:
+                "bg-pomegranate-600 text-primary-foreground hover:bg-pomegranate-600 focus:bg-pomegranate-600",
+              day_logged:
+                "bg-pomegranate-200/70 font-medium text-pomegranate-900",
+              day_today: "font-semibold",
+            }}
+            className="w-full p-3"
+          />
+        </div>
+
+        {error && (
+          <p className="px-4 pt-2 text-sm text-destructive">{error}</p>
+        )}
+
+        <div className="flex items-center gap-3 px-4 py-3">
+          <span className="flex-1 text-sm text-slate-500">
+            {days.length > 0 &&
+              `${days.length} day${days.length === 1 ? "" : "s"} selected`}
+          </span>
+          <Button
+            onClick={handleSave}
+            disabled={!days.length || saving}
+            className="rounded-full bg-pomegranate-600 px-6 hover:bg-pomegranate-700"
+          >
+            {saving ? "Saving…" : "Save days"}
+          </Button>
+        </div>
       </div>
     </div>
   );
