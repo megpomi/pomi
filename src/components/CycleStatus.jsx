@@ -1,6 +1,7 @@
 import React from "react";
 import { Droplet, CalendarHeart, Sparkles } from "lucide-react";
 import { getCurrentPhase, phaseLabel } from "@/lib/cycle";
+import MenstruatingToday from "@/components/dashboard/MenstruatingToday";
 
 const PHASE_COPY = {
   period: {
@@ -35,7 +36,7 @@ const PHASE_COPY = {
   },
 };
 
-export default function CycleStatus({ logs }) {
+export default function CycleStatus({ logs, showMenstruating, onChanged }) {
   const status = getCurrentPhase(logs);
   const meta = PHASE_COPY[status.phase] || PHASE_COPY.unknown;
 
@@ -69,7 +70,11 @@ export default function CycleStatus({ logs }) {
           <h2 className="font-heading text-3xl font-semibold text-slate-800 sm:text-4xl">
             {meta.title}
           </h2>
-          <p className="mt-2 max-w-xs text-sm text-slate-500">{meta.sub}</p>
+          {status.phase === "unknown" && showMenstruating ? (
+            <MenstruatingToday logs={logs} onChanged={onChanged} />
+          ) : (
+            <p className="mt-2 max-w-xs text-sm text-slate-500">{meta.sub}</p>
+          )}
 
           {status.phase !== "unknown" && (
             <div className="mt-6 flex flex-wrap gap-6">

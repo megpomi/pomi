@@ -17,7 +17,7 @@ const fmt = (d) =>
       })
     : "—";
 
-export default function CycleHistory({ logs, loading, children }) {
+export default function CycleHistory({ logs, loading }) {
   const items = [...logs]
     .sort((a, b) => new Date(b.start_date) - new Date(a.start_date))
     .slice(0, 6);
@@ -36,8 +36,6 @@ export default function CycleHistory({ logs, loading, children }) {
           View calendar
         </Link>
       </div>
-
-      {children}
 
       {loading ? (
         <div className="space-y-3">

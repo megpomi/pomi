@@ -56,25 +56,25 @@ export default function MenstruatingToday({ logs, onChanged }) {
   };
 
   return (
-    <div className="mb-5 flex items-center justify-between gap-4 rounded-2xl border border-pomegranate-100 bg-pomegranate-50/40 px-4 py-3">
-      <div>
-        <p className="text-sm font-medium text-slate-700">
+    <div className="mt-4 max-w-xs rounded-2xl border border-pomegranate-100 bg-white/70 px-4 py-3">
+      <div className="flex items-center justify-between gap-4">
+        <span className="text-sm font-medium text-slate-700">
           Are you menstruating today?
-        </p>
-        <p className="text-xs text-slate-500">
-          Yes logs today as day 1 of your cycle.
-        </p>
+        </span>
+        <div className="flex items-center gap-2">
+          {saving && (
+            <Loader2 className="h-4 w-4 animate-spin text-pomegranate-400" />
+          )}
+          <Switch
+            checked={checked}
+            onCheckedChange={handleChange}
+            disabled={saving}
+          />
+        </div>
       </div>
-      <div className="flex items-center gap-2">
-        {saving && (
-          <Loader2 className="h-4 w-4 animate-spin text-pomegranate-400" />
-        )}
-        <Switch
-          checked={checked}
-          onCheckedChange={handleChange}
-          disabled={saving}
-        />
-      </div>
+      <p className="mt-1 text-xs text-slate-500">
+        Yes logs today as day 1 of your cycle.
+      </p>
     </div>
   );
 }
