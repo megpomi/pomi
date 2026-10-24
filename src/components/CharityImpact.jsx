@@ -20,8 +20,8 @@ export default function CharityImpact({ daysTracked }) {
       </h3>
       <p className="mt-3 max-w-md text-sm leading-relaxed text-white/85">
         Pomi is free with ads, or ad-free with a subscription. A share of every
-        dollar we earn is donated to nonprofits supporting menstrual equity,
-        research, and maternal care.
+        amount of money earned from these revenues is donated to your selected
+        nonprofits, supporting women and LGBTQ+ in a range of areas.
       </p>
 
       <div className="mt-7 rounded-2xl bg-white/15 p-5 backdrop-blur-sm">
