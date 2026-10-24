@@ -65,13 +65,19 @@ export default function OnboardingQuestionnaire({ draft, onComplete }) {
       allCharitiesSelected ? [] : CHARITY_OPTIONS.map((o) => o.value)
     );
 
-  const handleSocialSignIn = (name, provider) => {
+  // Answers are parked before leaving this page, so the account that gets
+  // created (Google/Apple/Facebook or email) can pick them up straight after.
+  const handleAccountReady = (name, provider) => {
     writeOnboardingDraft({
       preferred_name: name,
       tracking_focus: trackingFocus,
       charity_interests: charityInterests,
     });
-    base44.auth.loginWithProvider(provider, "/");
+    if (provider) {
+      base44.auth.loginWithProvider(provider, "/");
+    } else {
+      window.location.href = "/";
+    }
   };
 
   const isFirst = step === 1;
@@ -93,7 +99,7 @@ export default function OnboardingQuestionnaire({ draft, onComplete }) {
 
   if (step === 3) {
     return (
-      <AccountStep onBack={() => setStep(2)} onContinue={handleSocialSignIn} />
+      <AccountStep onBack={() => setStep(2)} onContinue={handleAccountReady} />
     );
   }
 
