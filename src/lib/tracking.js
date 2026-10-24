@@ -1,4 +1,4 @@
-import { Baby, Droplet, Flame } from "lucide-react";
+import { Baby, Droplet, Egg, Flame, HeartHandshake } from "lucide-react";
 import LotusIcon from "@/components/icons/LotusIcon";
 
 // The areas a user can choose to track — shared by onboarding and the profile page.
@@ -16,14 +16,26 @@ export const TRACKING_OPTIONS = [
     icon: Flame,
   },
   {
-    value: "pregnancy_postpartum",
-    label: "Pregnant, postpartum or trying for a baby",
-    desc: "Follow your journey and how you feel.",
+    value: "pregnancy",
+    label: "Pregnancy symptoms",
+    desc: "Follow your pregnancy and how you feel.",
     icon: Baby,
   },
   {
+    value: "postpartum",
+    label: "Postpartum symptoms",
+    desc: "Track recovery and changes after birth.",
+    icon: HeartHandshake,
+  },
+  {
+    value: "trying_to_conceive",
+    label: "I'm trying for a baby",
+    desc: "Watch for ovulation and fertile days.",
+    icon: Egg,
+  },
+  {
     value: "general_wellbeing",
-    label: "General well-being",
+    label: "General wellbeing",
     desc: "Track mood, energy, and everyday health.",
     icon: LotusIcon,
   },
