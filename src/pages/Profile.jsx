@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { base44 } from "@/api/base44Client";
-import { useAuth } from "@/lib/AuthContext";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import { Image } from "@/components/ui/image";
@@ -20,7 +19,10 @@ export default function Profile() {
   const [currency, setCurrency] = useState(DEFAULT_CURRENCY);
   const [saving, setSaving] = useState(false);
   const { toast } = useToast();
-  const { logout } = useAuth();
+  // Clears the stored session and reloads, so the app opens as a new visitor.
+  const handleLogout = () => {
+    window.location.replace("/?clear_access_token=true");
+  };
 
   useEffect(() => {
     base44.auth
@@ -133,7 +135,7 @@ export default function Profile() {
 
         <button
           type="button"
-          onClick={() => logout()}
+          onClick={handleLogout}
           className="mx-auto mt-8 block text-sm font-medium text-slate-500 hover:text-pomegranate-600"
         >
           Log out
