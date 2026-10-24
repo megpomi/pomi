@@ -1,6 +1,6 @@
 import React from "react";
 
-// A woman with a baby bump — used for the pregnancy journey option.
+// A pregnant silhouette with a small heart — used for the pregnancy journey option.
 export default function PregnancyIcon({ className }) {
   return (
     <svg
@@ -20,6 +20,7 @@ export default function PregnancyIcon({ className }) {
       <path d="M14.6 8.4c1.1 1.5 1.4 3.4.8 5.2-.6 1.8-1.9 3.1-3.5 3.6" />
       <path d="M10.9 17.5v2.4" />
       <path d="M11.9 17.2v2.7" />
+      <path d="M11.8 14.2 10.2 12.6a1.15 1.15 0 0 1 1.6-1.8 1.15 1.15 0 0 1 1.6 1.8z" />
     </svg>
   );
 }
