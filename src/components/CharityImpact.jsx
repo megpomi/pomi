@@ -19,9 +19,9 @@ export default function CharityImpact({ daysTracked }) {
         Every day you track helps fund women's health.
       </h3>
       <p className="mt-3 max-w-md text-sm leading-relaxed text-white/85">
-        Pomi is free with ads, or ad-free with a subscription. A share of every
-        amount of money earned from these revenues is donated to your selected
-        nonprofits, supporting women and LGBTQ+ in a range of areas.
+        Pomi is free with ads, or ad-free with a subscription. A share of the
+        revenue earned is donated to your selected nonprofits, supporting women
+        and LGBTQ+ in a range of areas.
       </p>
 
       <div className="mt-7 rounded-2xl bg-white/15 p-5 backdrop-blur-sm">
