@@ -62,6 +62,12 @@ export const CHARITY_OPTIONS = [
         blurb:
           "The UK's infertility charity giving IVF grants to low-income individuals and couples who can't afford private treatment.",
       },
+      {
+        name: "Tommy's",
+        website: "https://www.tommys.org",
+        blurb:
+          "Funds research into miscarriage, stillbirth and premature birth, and runs midwife-led pregnancy information and clinics.",
+      },
     ],
     about:
       "Fertility care is expensive and unevenly accessible, and much of it is not covered by insurance or public health systems. Research into the causes of infertility and more affordable treatment lags behind demand.",
