@@ -23,13 +23,13 @@ export const TRACKING_OPTIONS = [
   },
   {
     value: "pregnancy",
-    label: "Pregnancy",
-    desc: "Follow your pregnancy and how you feel.",
+    label: "Pregnancy journey",
+    desc: "Track pregnancy symptoms and growth",
     icon: Baby,
   },
   {
     value: "postpartum",
-    label: "Postpartum",
+    label: "Postpartum recovery",
     desc: "Track recovery and changes after birth.",
     icon: HeartHandshake,
   },
