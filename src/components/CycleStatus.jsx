@@ -95,6 +95,10 @@ export default function CycleStatus({ logs, showMenstruating, onChanged }) {
               />
             </div>
           )}
+
+          {status.phase !== "unknown" && showMenstruating && (
+            <MenstruatingToday logs={logs} onChanged={onChanged} />
+          )}
         </div>
 
         <div className="order-1 sm:order-2">
