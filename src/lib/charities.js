@@ -89,6 +89,10 @@ export const CHARITY_OPTIONS = [
         name: "Endometriosis Foundation of America",
         website: "https://www.endofound.org",
       },
+      {
+        name: "Endometriosis UK",
+        website: "https://www.endometriosis-uk.org",
+      },
     ],
     about:
       "Endometriosis affects roughly one in ten people who menstruate, yet diagnosis still takes an average of seven to eight years. Research into its causes, better diagnostic tools and effective treatments remains chronically underfunded.",
