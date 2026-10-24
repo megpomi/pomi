@@ -75,16 +75,16 @@ export default function Home() {
       {/* Header */}
       <header className="sticky top-0 z-30 border-b border-pomegranate-100/70 bg-background/85 backdrop-blur-md">
         <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-5 py-4 sm:px-8">
-          <div className="flex min-w-0 items-center gap-4">
+          <div className="flex min-w-0 flex-1 items-center gap-4">
             <Image
               src={pomiLogo}
               alt="Pomi"
               className="h-14 w-14 shrink-0"
               fittingType="fit"
             />
-            {!isSubscriber(user) && <AdBanner />}
+            {!isSubscriber(user) && <AdBanner className="flex-1" />}
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex shrink-0 items-center gap-2">
             <ReminderBell
               reminders={reminders}
               onDismiss={dismiss}

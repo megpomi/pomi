@@ -26,7 +26,7 @@ export default function AdBanner({ className = "" }) {
   if (!adsConfigured()) {
     return (
       <div
-        className={`hidden h-[50px] items-center justify-center rounded-lg border border-dashed border-pomegranate-200 bg-pomegranate-50/60 px-4 text-[11px] uppercase tracking-[0.18em] text-pomegranate-400 sm:flex ${className}`}
+        className={`hidden h-[50px] w-full min-w-0 items-center justify-center rounded-lg border border-dashed border-pomegranate-200 bg-pomegranate-50/60 px-4 text-[11px] uppercase tracking-[0.18em] text-pomegranate-400 sm:flex ${className}`}
       >
         Google ad space
       </div>
@@ -35,7 +35,7 @@ export default function AdBanner({ className = "" }) {
 
   return (
     <ins
-      className={`adsbygoogle block h-[50px] w-[468px] max-w-full ${className}`}
+      className={`adsbygoogle block min-h-[50px] w-full min-w-0 ${className}`}
       style={{ display: "block" }}
       data-ad-client={ADSENSE_CLIENT}
       data-ad-slot={ADSENSE_SLOT}
