@@ -61,6 +61,11 @@ export const CHARITY_OPTIONS = [
         name: "Ovarian Cancer Research Alliance",
         website: "https://ocrahope.org",
       },
+      { name: "The Eve Appeal", website: "https://eveappeal.org.uk" },
+      {
+        name: "UK Cervical Cancer",
+        website: "https://www.ukcervicalcancer.org.uk",
+      },
     ],
     about:
       "Ovarian cancer is often found late, when treatment options are narrower. Cervical cancer is largely preventable through screening and vaccination. Both depend on awareness, screening access and research.",
