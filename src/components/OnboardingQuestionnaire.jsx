@@ -63,6 +63,7 @@ export default function OnboardingQuestionnaire({ onComplete }) {
       <SymptomHistoryStep
         trackingFocus={trackingFocus}
         onComplete={onComplete}
+        onBack={() => setStep(2)}
       />
     );
   }

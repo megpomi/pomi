@@ -5,7 +5,7 @@ import { Switch } from "@/components/ui/switch";
 import { Calendar } from "@/components/ui/calendar";
 import { Image } from "@/components/ui/image";
 import pomiLogo from "@/assets/pomi-logo.png";
-import { ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { groupBleedingDays } from "@/lib/cycle";
 
 const COPY = {
@@ -28,7 +28,7 @@ const formatDay = (date) => {
   return `${d.getFullYear()}-${month}-${day}`;
 };
 
-export default function SymptomHistoryStep({ trackingFocus, onComplete }) {
+export default function SymptomHistoryStep({ trackingFocus, onComplete, onBack }) {
   const isMenstrual = (trackingFocus || []).includes("menstrual_cycles");
   const copy = isMenstrual ? COPY.menstrual_cycles : COPY.default;
   const [currentlyActive, setCurrentlyActive] = useState(false);
@@ -137,14 +137,25 @@ export default function SymptomHistoryStep({ trackingFocus, onComplete }) {
 
         {error && <p className="mt-4 text-sm text-destructive">{error}</p>}
 
-        <Button
-          onClick={handleFinish}
-          disabled={saving}
-          className="mt-6 w-full rounded-full bg-pomegranate-600 py-6 text-base hover:bg-pomegranate-700"
-        >
-          {saving ? "Saving…" : "Finish"}
-          {!saving && <ArrowRight className="ml-2 h-4 w-4" />}
-        </Button>
+        <div className="mt-6 flex items-center gap-3">
+          <Button
+            variant="outline"
+            onClick={onBack}
+            disabled={saving}
+            className="rounded-full border-pomegranate-200 px-5 text-pomegranate-600 hover:bg-pomegranate-50"
+          >
+            <ArrowLeft className="mr-1.5 h-4 w-4" />
+            Back
+          </Button>
+          <Button
+            onClick={handleFinish}
+            disabled={saving}
+            className="flex-1 rounded-full bg-pomegranate-600 py-6 text-base hover:bg-pomegranate-700"
+          >
+            {saving ? "Saving…" : "Finish"}
+            {!saving && <ArrowRight className="ml-2 h-4 w-4" />}
+          </Button>
+        </div>
       </div>
     </div>
   );
