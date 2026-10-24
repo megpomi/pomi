@@ -23,6 +23,12 @@ export const CHARITY_OPTIONS = [
         blurb:
           "Sewing and distributing washable menstrual kits, and teaching menstrual health in schools, so girls don't miss class for lack of a pad.",
       },
+      {
+        name: "ActionAid",
+        website: "https://www.actionaid.org.uk",
+        blurb:
+          "Works with local partners to end period poverty, from making period products available in schools to campaigning for them to be free and accessible.",
+      },
     ],
     about:
       "Period poverty is the lack of access to menstrual products, sanitation and education. It keeps girls out of school and adults out of work, and it exists in every country, not only in low-income ones.",
