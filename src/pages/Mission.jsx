@@ -110,7 +110,7 @@ export default function Mission() {
                       </div>
                     </div>
                     <p className="mt-3 flex-1 text-sm leading-relaxed text-slate-600">
-                      {cause.summary}
+                      {partner.blurb}
                     </p>
                     <a
                       href={partner.website}

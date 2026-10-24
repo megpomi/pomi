@@ -17,7 +17,12 @@ export const CHARITY_OPTIONS = [
     icon: Globe,
     summary: "Menstrual products and dignity for people who can't afford them.",
     partners: [
-      { name: "Days for Girls", website: "https://www.daysforgirls.org" },
+      {
+        name: "Days for Girls",
+        website: "https://www.daysforgirls.org",
+        blurb:
+          "Sewing and distributing washable menstrual kits, and teaching menstrual health in schools, so girls don't miss class for lack of a pad.",
+      },
     ],
     about:
       "Period poverty is the lack of access to menstrual products, sanitation and education. It keeps girls out of school and adults out of work, and it exists in every country, not only in low-income ones.",
@@ -36,11 +41,20 @@ export const CHARITY_OPTIONS = [
       {
         name: "RESOLVE: The National Infertility Association",
         website: "https://resolve.org",
+        blurb:
+          "Runs peer support groups, a helpline and advocacy that pushes insurers and lawmakers to cover fertility care.",
       },
-      { name: "Fertility Network UK", website: "https://fertilitynetworkuk.org" },
+      {
+        name: "Fertility Network UK",
+        website: "https://fertilitynetworkuk.org",
+        blurb:
+          "Free, impartial support and information for anyone in the UK struggling to conceive, including those going through treatment and loss.",
+      },
       {
         name: "The Fertility Foundation",
         website: "https://www.fertilityfoundation.org",
+        blurb:
+          "The UK's infertility charity giving IVF grants to low-income individuals and couples who can't afford private treatment.",
       },
     ],
     about:
@@ -60,15 +74,26 @@ export const CHARITY_OPTIONS = [
       {
         name: "Ovarian Cancer Research Alliance",
         website: "https://ocrahope.org",
+        blurb:
+          "The largest funder of ovarian cancer research, pairing it with advocacy and support programmes for people in treatment.",
       },
-      { name: "The Eve Appeal", website: "https://eveappeal.org.uk" },
+      {
+        name: "The Eve Appeal",
+        website: "https://eveappeal.org.uk",
+        blurb:
+          "Funds research into the early detection and prevention of all five gynaecological cancers, and runs awareness work on symptoms.",
+      },
       {
         name: "UK Cervical Cancer",
         website: "https://www.ukcervicalcancer.org.uk",
+        blurb:
+          "Works towards a world free from cervical cancer through awareness of screening and HPV vaccination, and support for those affected.",
       },
       {
         name: "Target Ovarian Cancer",
         website: "https://targetovariancancer.org.uk",
+        blurb:
+          "Campaigns for faster diagnosis of ovarian cancer in the UK and funds research into better tests and treatments.",
       },
     ],
     about:
@@ -88,10 +113,14 @@ export const CHARITY_OPTIONS = [
       {
         name: "Endometriosis Foundation of America",
         website: "https://www.endofound.org",
+        blurb:
+          "Raises awareness and funds research, and trains clinicians so endometriosis is recognised and treated sooner.",
       },
       {
         name: "Endometriosis UK",
         website: "https://www.endometriosis-uk.org",
+        blurb:
+          "The UK's leading endometriosis charity, running support groups and campaigning to cut the average diagnosis time.",
       },
     ],
     about:
@@ -108,8 +137,18 @@ export const CHARITY_OPTIONS = [
     icon: Dna,
     summary: "Research and support for a common hormonal and metabolic condition.",
     partners: [
-      { name: "Verity", website: "https://www.verity-pcos.org.uk" },
-      { name: "PCOS Relief", website: "https://www.pcosrelief.org" },
+      {
+        name: "Verity",
+        website: "https://www.verity-pcos.org.uk",
+        blurb:
+          "The UK charity for PMOS: evidenced information booklets, expert webinars and peer support for thousands of people living with the condition.",
+      },
+      {
+        name: "PCOS Relief",
+        website: "https://www.pcosrelief.org",
+        blurb:
+          "Provides tailored resources and advice to help people understand a PCOS diagnosis and manage their long-term health.",
+      },
     ],
     about:
       "PMOS is a hormonal and metabolic condition affecting a large share of people who menstruate. It sits at the crossroads of reproductive and long-term metabolic health, and is often misunderstood by patients and clinicians alike.",
@@ -125,8 +164,18 @@ export const CHARITY_OPTIONS = [
     icon: HeartHandshake,
     summary: "Healthcare, safety and dignity for trans people.",
     partners: [
-      { name: "Trans Lifeline", website: "https://translifeline.org" },
-      { name: "Mermaids", website: "https://mermaidsuk.org.uk" },
+      {
+        name: "Trans Lifeline",
+        website: "https://translifeline.org",
+        blurb:
+          "A trans-led peer support and crisis hotline staffed by trans people, plus microgrants for name and gender marker changes.",
+      },
+      {
+        name: "Mermaids",
+        website: "https://mermaidsuk.org.uk",
+        blurb:
+          "Supports trans, non-binary and gender-diverse young people and their families in the UK with helplines, groups and advocacy.",
+      },
     ],
     about:
       "Trans people face barriers to healthcare, housing and employment, and the organisations supporting them are often small and underfunded. Direct, practical aid makes an immediate difference.",
@@ -142,13 +191,30 @@ export const CHARITY_OPTIONS = [
     icon: Scale,
     summary: "Shelter, legal help and counselling for survivors.",
     partners: [
-      { name: "RAINN", website: "https://www.rainn.org" },
-      { name: "Refuge", website: "https://refuge.org.uk" },
+      {
+        name: "RAINN",
+        website: "https://www.rainn.org",
+        blurb:
+          "Runs the US National Sexual Assault Hotline and works with police, hospitals and campuses to improve how survivors are treated.",
+      },
+      {
+        name: "Refuge",
+        website: "https://refuge.org.uk",
+        blurb:
+          "Provides safe accommodation and specialist support for women and children escaping domestic abuse, and runs the National Domestic Abuse Helpline.",
+      },
       {
         name: "Rape Crisis England & Wales",
         website: "https://rapecrisis.org.uk",
+        blurb:
+          "Funds a network of rape crisis centres and a 24/7 support line for anyone affected by rape, sexual assault or childhood abuse.",
       },
-      { name: "Galop", website: "https://www.galop.org.uk" },
+      {
+        name: "Galop",
+        website: "https://www.galop.org.uk",
+        blurb:
+          "The UK's LGBT+ anti-abuse charity, giving advocacy and casework to LGBTQ+ people who have experienced abuse and violence.",
+      },
     ],
     about:
       "Survivors of sexual and domestic violence often need shelter, legal support and counselling at the same time, while services are frequently oversubscribed. Funding keeps refuges open and helplines staffed.",
