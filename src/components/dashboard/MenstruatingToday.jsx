@@ -72,9 +72,6 @@ export default function MenstruatingToday({ logs, onChanged }) {
           />
         </div>
       </div>
-      <p className="mt-1 text-xs text-slate-500">
-        Yes logs today as day 1 of your cycle.
-      </p>
     </div>
   );
 }
