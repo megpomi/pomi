@@ -83,8 +83,8 @@ export default function Mission() {
             The causes we support
           </h2>
           <p className="mt-1 text-sm text-slate-500">
-            Each cause is delivered through a partner organisation. Here is what
-            they do and where to find them.
+            Each cause is delivered through one or more partner organisations.
+            Here is what they do and where to find them.
           </p>
 
           <div className="mt-5 grid gap-4 sm:grid-cols-2">
@@ -101,7 +101,7 @@ export default function Mission() {
                     </span>
                     <div>
                       <h3 className="font-heading text-base font-semibold text-slate-800">
-                        {cause.partner}
+                        {cause.partners.map((p) => p.name).join(" & ")}
                       </h3>
                       <p className="text-xs uppercase tracking-wider text-pomegranate-400">
                         {cause.label}
@@ -111,15 +111,20 @@ export default function Mission() {
                   <p className="mt-3 flex-1 text-sm leading-relaxed text-slate-600">
                     {cause.summary}
                   </p>
-                  <a
-                    href={cause.website}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-pomegranate-600 hover:text-pomegranate-700"
-                  >
-                    Visit website
-                    <ArrowUpRight className="h-4 w-4" />
-                  </a>
+                  <div className="mt-4 space-y-1.5">
+                    {cause.partners.map((partner) => (
+                      <a
+                        key={partner.website}
+                        href={partner.website}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1.5 text-sm font-medium text-pomegranate-600 hover:text-pomegranate-700"
+                      >
+                        Visit {partner.name}
+                        <ArrowUpRight className="h-4 w-4" />
+                      </a>
+                    ))}
+                  </div>
                 </div>
               );
             })}

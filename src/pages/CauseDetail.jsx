@@ -68,15 +68,20 @@ export default function CauseDetail() {
               {cause.label}
             </h1>
             <p className="mt-2 text-sm text-slate-500">{cause.summary}</p>
-            <a
-              href={cause.website}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-pomegranate-600 hover:text-pomegranate-700"
-            >
-              Visit {cause.partner}
-              <ArrowUpRight className="h-3.5 w-3.5" />
-            </a>
+            <div className="mt-3 space-y-1.5">
+              {cause.partners.map((partner) => (
+                <a
+                  key={partner.website}
+                  href={partner.website}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center gap-1.5 text-sm font-medium text-pomegranate-600 hover:text-pomegranate-700"
+                >
+                  Visit {partner.name}
+                  <ArrowUpRight className="h-3.5 w-3.5" />
+                </a>
+              ))}
+            </div>
           </div>
         </div>
 

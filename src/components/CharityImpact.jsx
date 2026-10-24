@@ -57,7 +57,9 @@ export default function CharityImpact({ daysTracked }) {
               className="flex items-center justify-between rounded-xl bg-white/10 px-4 py-2.5 transition-colors hover:bg-white/20"
             >
               <div>
-                <p className="text-sm font-medium">{c.partner}</p>
+                <p className="text-sm font-medium">
+                  {c.partners.map((p) => p.name).join(" & ")}
+                </p>
                 <p className="text-xs text-white/70">{c.label}</p>
               </div>
               <ArrowUpRight className="h-4 w-4 shrink-0 text-white/60" />

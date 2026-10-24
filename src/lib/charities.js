@@ -8,14 +8,17 @@ import {
   Scale,
 } from "lucide-react";
 
+// Each cause can be delivered through one or more partner organisations.
+// Donations to a cause are split equally between its partners.
 export const CHARITY_OPTIONS = [
   {
     value: "period_poverty",
     label: "International period poverty aid",
     icon: Globe,
     summary: "Menstrual products and dignity for people who can't afford them.",
-    partner: "Days for Girls",
-    website: "https://www.daysforgirls.org",
+    partners: [
+      { name: "Days for Girls", website: "https://www.daysforgirls.org" },
+    ],
     about:
       "Period poverty is the lack of access to menstrual products, sanitation and education. It keeps girls out of school and adults out of work, and it exists in every country, not only in low-income ones.",
     impact: [
@@ -29,8 +32,12 @@ export const CHARITY_OPTIONS = [
     label: "Fertility research and treatment grants",
     icon: Baby,
     summary: "Treatment grants and research for people trying to conceive.",
-    partner: "RESOLVE: The National Infertility Association",
-    website: "https://resolve.org",
+    partners: [
+      {
+        name: "RESOLVE: The National Infertility Association",
+        website: "https://resolve.org",
+      },
+    ],
     about:
       "Fertility care is expensive and unevenly accessible, and much of it is not covered by insurance or public health systems. Research into the causes of infertility and more affordable treatment lags behind demand.",
     impact: [
@@ -44,8 +51,12 @@ export const CHARITY_OPTIONS = [
     label: "Ovarian and cervical cancer research and support",
     icon: Ribbon,
     summary: "Earlier detection and support for gynaecological cancers.",
-    partner: "Ovarian Cancer Research Alliance",
-    website: "https://ocrahope.org",
+    partners: [
+      {
+        name: "Ovarian Cancer Research Alliance",
+        website: "https://ocrahope.org",
+      },
+    ],
     about:
       "Ovarian cancer is often found late, when treatment options are narrower. Cervical cancer is largely preventable through screening and vaccination. Both depend on awareness, screening access and research.",
     impact: [
@@ -59,8 +70,12 @@ export const CHARITY_OPTIONS = [
     label: "Endometriosis research",
     icon: Microscope,
     summary: "Funding research into a condition that takes years to diagnose.",
-    partner: "Endometriosis Foundation of America",
-    website: "https://www.endofound.org",
+    partners: [
+      {
+        name: "Endometriosis Foundation of America",
+        website: "https://www.endofound.org",
+      },
+    ],
     about:
       "Endometriosis affects roughly one in ten people who menstruate, yet diagnosis still takes an average of seven to eight years. Research into its causes, better diagnostic tools and effective treatments remains chronically underfunded.",
     impact: [
@@ -74,8 +89,9 @@ export const CHARITY_OPTIONS = [
     label: "PMOS (Polyendocrine Metabolic Ovarian Syndrome) research",
     icon: Dna,
     summary: "Research and support for a common hormonal and metabolic condition.",
-    partner: "PCOS Awareness Association",
-    website: "https://www.pcosaa.org",
+    partners: [
+      { name: "PCOS Awareness Association", website: "https://www.pcosaa.org" },
+    ],
     about:
       "PMOS is a hormonal and metabolic condition affecting a large share of people who menstruate. It sits at the crossroads of reproductive and long-term metabolic health, and is often misunderstood by patients and clinicians alike.",
     impact: [
@@ -89,8 +105,10 @@ export const CHARITY_OPTIONS = [
     label: "Trans lives matter aid",
     icon: HeartHandshake,
     summary: "Healthcare, safety and dignity for trans people.",
-    partner: "Trans Lifeline",
-    website: "https://translifeline.org",
+    partners: [
+      { name: "Trans Lifeline", website: "https://translifeline.org" },
+      { name: "Mermaids", website: "https://mermaidsuk.org.uk" },
+    ],
     about:
       "Trans people face barriers to healthcare, housing and employment, and the organisations supporting them are often small and underfunded. Direct, practical aid makes an immediate difference.",
     impact: [
@@ -104,8 +122,7 @@ export const CHARITY_OPTIONS = [
     label: "Sexual and domestic violence survivors aid",
     icon: Scale,
     summary: "Shelter, legal help and counselling for survivors.",
-    partner: "RAINN",
-    website: "https://www.rainn.org",
+    partners: [{ name: "RAINN", website: "https://www.rainn.org" }],
     about:
       "Survivors of sexual and domestic violence often need shelter, legal support and counselling at the same time, while services are frequently oversubscribed. Funding keeps refuges open and helplines staffed.",
     impact: [
