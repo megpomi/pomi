@@ -77,10 +77,7 @@ export default function SymptomHistoryStep({ trackingFocus, onComplete, onBack }
             className="h-12 w-12"
             fittingType="fit"
           />
-          <span className="mt-4 text-xs font-medium uppercase tracking-[0.18em] text-pomegranate-400">
-            Step 3 of 3
-          </span>
-          <h1 className="mt-2 font-heading text-3xl font-semibold text-slate-800">
+          <h1 className="mt-4 font-heading text-3xl font-semibold text-slate-800">
             {copy.question}
           </h1>
           <p className="mt-2 max-w-md text-sm text-slate-500">

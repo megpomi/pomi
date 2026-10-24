@@ -8,12 +8,14 @@ import { CHARITY_OPTIONS } from "@/lib/charities";
 import { TRACKING_OPTIONS } from "@/lib/tracking";
 import ChoiceCard from "@/components/onboarding/ChoiceCard";
 import IntroStep from "@/components/onboarding/IntroStep";
+import AccountStep from "@/components/onboarding/AccountStep";
 import SymptomHistoryStep from "@/components/onboarding/SymptomHistoryStep";
 
 export default function OnboardingQuestionnaire({ onComplete }) {
   const [step, setStep] = useState(0);
   const [trackingFocus, setTrackingFocus] = useState([]);
   const [charityInterests, setCharityInterests] = useState([]);
+  const [accountCreated, setAccountCreated] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
@@ -30,23 +32,45 @@ export default function OnboardingQuestionnaire({ onComplete }) {
       allCharitiesSelected ? [] : CHARITY_OPTIONS.map((o) => o.value)
     );
 
-  const handleContinue = async () => {
-    if (step === 1) {
-      setStep(2);
-      return;
+  const savePreferences = () =>
+    base44.auth.updateMe({
+      tracking_focus: trackingFocus,
+      charity_interests: charityInterests,
+    });
+
+  // Period history is only asked of people tracking menstrual cycles.
+  const advance = () => {
+    if (trackingFocus.includes("menstrual_cycles")) {
+      setStep(4);
+    } else {
+      onComplete(trackingFocus);
     }
+  };
+
+  const saveAndAdvance = async () => {
     setSaving(true);
     setError("");
     try {
-      await base44.auth.updateMe({
-        tracking_focus: trackingFocus,
-        charity_interests: charityInterests,
-      });
-      setStep(3);
+      await savePreferences();
+      setAccountCreated(true);
+      advance();
     } catch (e) {
       setError(e?.message || "Couldn't save your preferences. Please try again.");
     }
     setSaving(false);
+  };
+
+  const handleContinue = () => {
+    if (step === 1) {
+      setStep(2);
+      return;
+    }
+    // Back on this step after the account exists — just refresh the choices.
+    if (accountCreated) {
+      saveAndAdvance();
+      return;
+    }
+    setStep(3);
   };
 
   const isFirst = step === 1;
@@ -59,6 +83,10 @@ export default function OnboardingQuestionnaire({ onComplete }) {
   }
 
   if (step === 3) {
+    return <AccountStep onBack={() => setStep(2)} onComplete={saveAndAdvance} />;
+  }
+
+  if (step === 4) {
     return (
       <SymptomHistoryStep
         trackingFocus={trackingFocus}

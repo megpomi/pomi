@@ -11,7 +11,7 @@ import Login from '@/pages/Login';
 import Register from '@/pages/Register';
 import ForgotPassword from '@/pages/ForgotPassword';
 import ResetPassword from '@/pages/ResetPassword';
-import Home from '@/pages/Home';
+import Start from '@/pages/Start';
 import Upgrade from '@/pages/Upgrade';
 import CycleCalendar from '@/pages/CycleCalendar';
 import CauseDetail from '@/pages/CauseDetail';
@@ -51,8 +51,8 @@ const AuthenticatedApp = () => {
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/ThankYou" element={<ThankYou />} />
+      <Route path="/" element={<Start />} />
       <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>
-        <Route path="/" element={<Home />} />
         <Route path="/calendar" element={<CycleCalendar />} />
         <Route path="/causes/:causeValue" element={<CauseDetail />} />
         <Route path="/profile" element={<Profile />} />

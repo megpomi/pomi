@@ -14,7 +14,6 @@ import CharityImpact from "@/components/CharityImpact";
 import CyclePatterns from "@/components/patterns/CyclePatterns";
 import DonationTracker from "@/components/DonationTracker";
 import { countTrackedDays, recordAdVisit } from "@/lib/donations";
-import OnboardingQuestionnaire from "@/components/OnboardingQuestionnaire";
 import ReminderBanner from "@/components/reminders/ReminderBanner";
 import ReminderBell from "@/components/reminders/ReminderBell";
 import { useReminders } from "@/hooks/use-reminders";
@@ -67,23 +66,12 @@ export default function Home() {
   };
 
   const daysTracked = countTrackedDays(logs);
-  const trackingFocus = user?.tracking_focus || [];
 
   if (checkingProfile) {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-background">
         <div className="h-8 w-8 animate-spin rounded-full border-4 border-pomegranate-100 border-t-pomegranate-600" />
       </div>
-    );
-  }
-
-  if (!trackingFocus.length) {
-    return (
-      <OnboardingQuestionnaire
-        onComplete={(focus) =>
-          setUser((prev) => ({ ...prev, tracking_focus: focus }))
-        }
-      />
     );
   }
 
