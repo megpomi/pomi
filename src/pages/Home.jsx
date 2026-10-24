@@ -146,11 +146,7 @@ export default function Home() {
         )}
 
         {/* Status */}
-        <CycleStatus
-          logs={logs}
-          showMenstruating={user?.tracking_focus?.includes("menstrual_cycles")}
-          onChanged={loadLogs}
-        />
+        <CycleStatus logs={logs} />
 
         {/* Stats */}
         <div className="mt-6">
