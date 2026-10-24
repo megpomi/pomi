@@ -83,6 +83,9 @@ export default function SymptomHistoryStep({ trackingFocus, onComplete }) {
           <h1 className="mt-2 font-heading text-3xl font-semibold text-slate-800">
             {copy.question}
           </h1>
+          <p className="mt-2 max-w-md text-sm text-slate-500">
+            Let's enter some data.
+          </p>
         </div>
 
         <div className="flex items-center justify-between rounded-2xl border border-pomegranate-100 bg-white px-5 py-4">
