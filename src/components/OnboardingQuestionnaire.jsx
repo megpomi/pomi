@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { base44 } from "@/api/base44Client";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, ArrowLeft, Sparkles } from "lucide-react";
@@ -6,18 +6,51 @@ import { Image } from "@/components/ui/image";
 import pomiLogo from "@/assets/pomi-logo.png";
 import { CHARITY_OPTIONS } from "@/lib/charities";
 import { TRACKING_OPTIONS } from "@/lib/tracking";
+import {
+  clearOnboardingDraft,
+  writeOnboardingDraft,
+} from "@/lib/onboardingDraft";
 import ChoiceCard from "@/components/onboarding/ChoiceCard";
 import IntroStep from "@/components/onboarding/IntroStep";
 import AccountStep from "@/components/onboarding/AccountStep";
 import SymptomHistoryStep from "@/components/onboarding/SymptomHistoryStep";
 
-export default function OnboardingQuestionnaire({ onComplete }) {
+export default function OnboardingQuestionnaire({ draft, onComplete }) {
   const [step, setStep] = useState(0);
-  const [trackingFocus, setTrackingFocus] = useState([]);
-  const [charityInterests, setCharityInterests] = useState([]);
-  const [accountCreated, setAccountCreated] = useState(false);
-  const [saving, setSaving] = useState(false);
-  const [error, setError] = useState("");
+  const [trackingFocus, setTrackingFocus] = useState(
+    draft?.tracking_focus || []
+  );
+  const [charityInterests, setCharityInterests] = useState(
+    draft?.charity_interests || []
+  );
+  const [restoring, setRestoring] = useState(Boolean(draft));
+
+  // Back from Google/Apple sign-in: the account exists now, so save the answers
+  // chosen before the redirect and pick the flow up where it left off.
+  useEffect(() => {
+    if (!draft) return;
+    base44.auth
+      .updateMe({
+        tracking_focus: draft.tracking_focus,
+        charity_interests: draft.charity_interests,
+        preferred_name: draft.preferred_name,
+      })
+      .then(() => {
+        clearOnboardingDraft();
+        setRestoring(false);
+        if (draft.tracking_focus.includes("menstrual_cycles")) {
+          setStep(4);
+        } else {
+          onComplete(draft.tracking_focus);
+        }
+      })
+      .catch(() => {
+        clearOnboardingDraft();
+        setRestoring(false);
+        setStep(1);
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const toggle = (setter) => (value) =>
     setter((prev) =>
@@ -32,45 +65,13 @@ export default function OnboardingQuestionnaire({ onComplete }) {
       allCharitiesSelected ? [] : CHARITY_OPTIONS.map((o) => o.value)
     );
 
-  const savePreferences = () =>
-    base44.auth.updateMe({
+  const handleSocialSignIn = (name, provider) => {
+    writeOnboardingDraft({
+      preferred_name: name,
       tracking_focus: trackingFocus,
       charity_interests: charityInterests,
     });
-
-  // Period history is only asked of people tracking menstrual cycles.
-  const advance = () => {
-    if (trackingFocus.includes("menstrual_cycles")) {
-      setStep(4);
-    } else {
-      onComplete(trackingFocus);
-    }
-  };
-
-  const saveAndAdvance = async () => {
-    setSaving(true);
-    setError("");
-    try {
-      await savePreferences();
-      setAccountCreated(true);
-      advance();
-    } catch (e) {
-      setError(e?.message || "Couldn't save your preferences. Please try again.");
-    }
-    setSaving(false);
-  };
-
-  const handleContinue = () => {
-    if (step === 1) {
-      setStep(2);
-      return;
-    }
-    // Back on this step after the account exists — just refresh the choices.
-    if (accountCreated) {
-      saveAndAdvance();
-      return;
-    }
-    setStep(3);
+    base44.auth.loginWithProvider(provider, "/");
   };
 
   const isFirst = step === 1;
@@ -78,12 +79,22 @@ export default function OnboardingQuestionnaire({ onComplete }) {
   const selected = isFirst ? trackingFocus : charityInterests;
   const toggleCurrent = toggle(isFirst ? setTrackingFocus : setCharityInterests);
 
+  if (restoring) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-background">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-pomegranate-100 border-t-pomegranate-600" />
+      </div>
+    );
+  }
+
   if (step === 0) {
     return <IntroStep onStart={() => setStep(1)} />;
   }
 
   if (step === 3) {
-    return <AccountStep onBack={() => setStep(2)} onComplete={saveAndAdvance} />;
+    return (
+      <AccountStep onBack={() => setStep(2)} onContinue={handleSocialSignIn} />
+    );
   }
 
   if (step === 4) {
@@ -142,14 +153,11 @@ export default function OnboardingQuestionnaire({ onComplete }) {
           )}
         </div>
 
-        {error && <p className="mt-4 text-sm text-destructive">{error}</p>}
-
         <div className="mt-6 flex items-center gap-3">
           {!isFirst && (
             <Button
               variant="outline"
               onClick={() => setStep(step - 1)}
-              disabled={saving}
               className="rounded-full border-pomegranate-200 px-5 text-pomegranate-600 hover:bg-pomegranate-50"
             >
               <ArrowLeft className="mr-1.5 h-4 w-4" />
@@ -157,12 +165,12 @@ export default function OnboardingQuestionnaire({ onComplete }) {
             </Button>
           )}
           <Button
-            onClick={handleContinue}
-            disabled={!selected.length || saving}
+            onClick={() => setStep(step + 1)}
+            disabled={!selected.length}
             className="flex-1 rounded-full bg-pomegranate-600 py-6 text-base hover:bg-pomegranate-700"
           >
-            {saving ? "Saving…" : "Continue"}
-            {!saving && <ArrowRight className="ml-2 h-4 w-4" />}
+            Continue
+            <ArrowRight className="ml-2 h-4 w-4" />
           </Button>
         </div>
       </div>
