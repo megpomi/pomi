@@ -58,7 +58,7 @@ export default function PeriodHistoryCalendar({ logs, onSaved }) {
     <div className="rounded-3xl border border-slate-100 bg-white p-1 sm:p-3">
       <div
         ref={scrollToLatest}
-        className="max-h-[30rem] overflow-y-auto rounded-2xl"
+        className="max-h-[23rem] overflow-y-auto rounded-2xl"
       >
         <Calendar
           mode="multiple"

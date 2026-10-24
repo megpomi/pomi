@@ -107,11 +107,11 @@ export default function CycleCalendar() {
         {logMode ? (
           <>
             <h1 className="font-heading text-3xl font-semibold text-slate-800 sm:text-4xl">
-              Log past days
+              Log historical data
             </h1>
             <p className="mt-2 text-sm text-slate-500">
-              Tap the days you were bleeding — scroll back through the months to
-              build your history.
+              Tap days you were menstruating to build your history - Scroll back
+              through the months to add as much data as possible.
             </p>
 
             <div className="mt-6">
@@ -149,7 +149,7 @@ export default function CycleCalendar() {
                 className="rounded-full bg-pomegranate-600 hover:bg-pomegranate-700"
               >
                 <CalendarPlus className="mr-1.5 h-4 w-4" />
-                Log past days
+                Log historical data
               </Button>
             </div>
 
