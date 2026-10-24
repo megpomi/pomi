@@ -47,7 +47,7 @@ export default function CharityImpact({ daysTracked }) {
 
       <div className="mt-6">
         <p className="mb-3 text-xs uppercase tracking-wider text-white/70">
-          Causes we support
+          Featured causes we support
         </p>
         <div className="space-y-2">
           {featured.map((c) => (
