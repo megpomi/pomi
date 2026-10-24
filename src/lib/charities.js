@@ -121,3 +121,17 @@ export const charityByValue = (value) =>
 
 export const charityLabel = (value) =>
   charityByValue(value)?.label || value;
+
+// The causes featured on the home page: three a day, rotating daily so a new
+// set of charities surfaces each day.
+export const featuredCauses = (date = new Date(), count = 3) => {
+  const total = CHARITY_OPTIONS.length;
+  const dayIndex = Math.floor(
+    Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) / 86400000
+  );
+  const start = (((dayIndex * count) % total) + total) % total;
+  return Array.from(
+    { length: Math.min(count, total) },
+    (_, i) => CHARITY_OPTIONS[(start + i) % total]
+  );
+};

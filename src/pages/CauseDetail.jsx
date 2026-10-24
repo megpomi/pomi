@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { ArrowLeft, Heart } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Heart } from "lucide-react";
 import { base44 } from "@/api/base44Client";
 import { Image } from "@/components/ui/image";
 import pomiLogo from "@/assets/pomi-logo.png";
@@ -72,6 +72,15 @@ export default function CauseDetail() {
               {cause.label}
             </h1>
             <p className="mt-2 text-sm text-slate-500">{cause.summary}</p>
+            <a
+              href={cause.website}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-pomegranate-600 hover:text-pomegranate-700"
+            >
+              Visit {cause.partner}
+              <ArrowUpRight className="h-3.5 w-3.5" />
+            </a>
           </div>
         </div>
 

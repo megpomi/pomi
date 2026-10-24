@@ -1,23 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Heart, Sparkles, ArrowUpRight, ArrowRight } from "lucide-react";
-
-const CHARITIES = [
-  {
-    name: "Days for Girls",
-    focus: "Menstrual equity & access",
-  },
-  {
-    name: "Endometriosis Foundation",
-    focus: "Research & awareness",
-  },
-  {
-    name: "Maternal Health Initiatives",
-    focus: "Safe maternal care",
-  },
-];
+import { featuredCauses } from "@/lib/charities";
 
 export default function CharityImpact({ daysTracked }) {
+  const featured = featuredCauses();
   return (
     <div className="overflow-hidden rounded-3xl border border-pomegranate-100 bg-gradient-to-br from-pomegranate-500 to-pomegranate-800 p-8 text-white sm:p-10">
       <Link to="/mission" className="group mb-6 inline-flex items-center gap-2">
@@ -63,17 +50,18 @@ export default function CharityImpact({ daysTracked }) {
           Causes we support
         </p>
         <div className="space-y-2">
-          {CHARITIES.map((c) => (
-            <div
-              key={c.name}
-              className="flex items-center justify-between rounded-xl bg-white/10 px-4 py-2.5"
+          {featured.map((c) => (
+            <Link
+              key={c.value}
+              to={`/causes/${c.value}`}
+              className="flex items-center justify-between rounded-xl bg-white/10 px-4 py-2.5 transition-colors hover:bg-white/20"
             >
               <div>
-                <p className="text-sm font-medium">{c.name}</p>
-                <p className="text-xs text-white/70">{c.focus}</p>
+                <p className="text-sm font-medium">{c.partner}</p>
+                <p className="text-xs text-white/70">{c.label}</p>
               </div>
-              <ArrowUpRight className="h-4 w-4 text-white/60" />
-            </div>
+              <ArrowUpRight className="h-4 w-4 shrink-0 text-white/60" />
+            </Link>
           ))}
         </div>
         <Link
@@ -84,7 +72,7 @@ export default function CharityImpact({ daysTracked }) {
           <ArrowRight className="h-4 w-4" />
         </Link>
         <p className="mt-3 text-[11px] text-white/60">
-          Featured partners — donation distributions are made by Pomi
+          New partners featured daily — donation distributions are made by Pomi
           periodically.
         </p>
       </div>
