@@ -1,11 +1,11 @@
 import {
   Activity,
   Baby,
-  Gavel,
   Globe,
   HeartHandshake,
   Microscope,
   Ribbon,
+  Scale,
 } from "lucide-react";
 
 export const CHARITY_OPTIONS = [
@@ -102,7 +102,7 @@ export const CHARITY_OPTIONS = [
   {
     value: "violence_survivors",
     label: "Sexual and domestic violence survivors aid",
-    icon: Gavel,
+    icon: Scale,
     summary: "Shelter, legal help and counselling for survivors.",
     partner: "RAINN",
     website: "https://www.rainn.org",
