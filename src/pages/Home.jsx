@@ -12,7 +12,8 @@ import CycleHistory from "@/components/CycleHistory";
 import CharityImpact from "@/components/CharityImpact";
 import CyclePatterns from "@/components/patterns/CyclePatterns";
 import DonationTracker from "@/components/DonationTracker";
-import { countTrackedDays, recordAdVisit } from "@/lib/donations";
+import { countTrackedDays, isSubscriber, recordAdVisit } from "@/lib/donations";
+import AdBanner from "@/components/ads/AdBanner";
 import ReminderBanner from "@/components/reminders/ReminderBanner";
 import ReminderBell from "@/components/reminders/ReminderBell";
 import { useReminders } from "@/hooks/use-reminders";
@@ -73,13 +74,16 @@ export default function Home() {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="sticky top-0 z-30 border-b border-pomegranate-100/70 bg-background/85 backdrop-blur-md">
-        <div className="mx-auto flex max-w-5xl items-center justify-between px-5 py-4 sm:px-8">
-          <Image
-            src={pomiLogo}
-            alt="Pomi"
-            className="h-14 w-14"
-            fittingType="fit"
-          />
+        <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-5 py-4 sm:px-8">
+          <div className="flex min-w-0 items-center gap-4">
+            <Image
+              src={pomiLogo}
+              alt="Pomi"
+              className="h-14 w-14 shrink-0"
+              fittingType="fit"
+            />
+            {!isSubscriber(user) && <AdBanner />}
+          </div>
           <div className="flex items-center gap-2">
             <ReminderBell
               reminders={reminders}
