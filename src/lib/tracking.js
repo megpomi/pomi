@@ -18,7 +18,7 @@ export const TRACKING_OPTIONS = [
   {
     value: "trying_to_conceive",
     label: "I'm trying for a baby",
-    desc: "Watch for ovulation and fertile days.",
+    desc: "Watch for ovulation and your fertile window with the intention of conception.",
     icon: Egg,
   },
   {
