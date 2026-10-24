@@ -25,36 +25,6 @@ export const CHARITY_OPTIONS = [
     ],
   },
   {
-    value: "endometriosis",
-    label: "Endometriosis research",
-    icon: Microscope,
-    summary: "Funding research into a condition that takes years to diagnose.",
-    partner: "Endometriosis Foundation of America",
-    website: "https://www.endofound.org",
-    about:
-      "Endometriosis affects roughly one in ten people who menstruate, yet diagnosis still takes an average of seven to eight years. Research into its causes, better diagnostic tools and effective treatments remains chronically underfunded.",
-    impact: [
-      "Research grants for non-invasive diagnosis",
-      "Studies into pain management and treatment options",
-      "Awareness campaigns that shorten the path to diagnosis",
-    ],
-  },
-  {
-    value: "pmos",
-    label: "PMOS (Polyendocrine Metabolic Ovarian Syndrome) research",
-    icon: Dna,
-    summary: "Research and support for a common hormonal and metabolic condition.",
-    partner: "PCOS Awareness Association",
-    website: "https://www.pcosaa.org",
-    about:
-      "PMOS is a hormonal and metabolic condition affecting a large share of people who menstruate. It sits at the crossroads of reproductive and long-term metabolic health, and is often misunderstood by patients and clinicians alike.",
-    impact: [
-      "Research into hormonal and metabolic drivers",
-      "Better clinical guidance for diagnosis and ongoing care",
-      "Patient education and peer support",
-    ],
-  },
-  {
     value: "fertility",
     label: "Fertility research and treatment grants",
     icon: Baby,
@@ -82,6 +52,36 @@ export const CHARITY_OPTIONS = [
       "Screening and vaccination access programmes",
       "Research into earlier detection",
       "Practical support for people in treatment and recovery",
+    ],
+  },
+  {
+    value: "endometriosis",
+    label: "Endometriosis research",
+    icon: Microscope,
+    summary: "Funding research into a condition that takes years to diagnose.",
+    partner: "Endometriosis Foundation of America",
+    website: "https://www.endofound.org",
+    about:
+      "Endometriosis affects roughly one in ten people who menstruate, yet diagnosis still takes an average of seven to eight years. Research into its causes, better diagnostic tools and effective treatments remains chronically underfunded.",
+    impact: [
+      "Research grants for non-invasive diagnosis",
+      "Studies into pain management and treatment options",
+      "Awareness campaigns that shorten the path to diagnosis",
+    ],
+  },
+  {
+    value: "pmos",
+    label: "PMOS (Polyendocrine Metabolic Ovarian Syndrome) research",
+    icon: Dna,
+    summary: "Research and support for a common hormonal and metabolic condition.",
+    partner: "PCOS Awareness Association",
+    website: "https://www.pcosaa.org",
+    about:
+      "PMOS is a hormonal and metabolic condition affecting a large share of people who menstruate. It sits at the crossroads of reproductive and long-term metabolic health, and is often misunderstood by patients and clinicians alike.",
+    impact: [
+      "Research into hormonal and metabolic drivers",
+      "Better clinical guidance for diagnosis and ongoing care",
+      "Patient education and peer support",
     ],
   },
   {
