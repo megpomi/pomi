@@ -107,11 +107,10 @@ export default function CycleCalendar() {
         {logMode ? (
           <>
             <h1 className="font-heading text-3xl font-semibold text-slate-800 sm:text-4xl">
-              Log historical data
+              Log historical menstrual days
             </h1>
             <p className="mt-2 text-sm text-slate-500">
-              Tap days you were menstruating to build your history - Scroll back
-              through the months to add as much data as possible.
+              Tap days you were menstruating to build up your history.
             </p>
 
             <div className="mt-6">

@@ -86,20 +86,12 @@ export default function PeriodHistoryCalendar({ logs, onSaved }) {
         />
       </div>
 
-      <div className="flex items-center gap-2 px-4 pt-2 pb-1 text-xs text-slate-500">
-        <span className="relative inline-flex h-4 w-4 items-center justify-center rounded-full bg-pomegranate-200/70">
-          <span className="h-1 w-1 rounded-full bg-pomegranate-600" />
-        </span>
-        Already logged — tap any other day to add it
-      </div>
-
       {error && <p className="px-4 pt-2 text-sm text-destructive">{error}</p>}
 
       <div className="flex items-center gap-3 px-4 py-3">
         <span className="flex-1 text-sm text-slate-500">
-          {days.length
-            ? `${days.length} day${days.length === 1 ? "" : "s"} selected`
-            : "Tap the days you were bleeding"}
+          {days.length > 0 &&
+            `${days.length} day${days.length === 1 ? "" : "s"} selected`}
         </span>
         <Button
           onClick={handleSave}
