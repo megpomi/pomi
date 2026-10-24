@@ -29,7 +29,7 @@ const PHASE_COPY = {
   },
   unknown: {
     title: "Welcome to Pomi",
-    sub: "Log your first period to start tracking.",
+    sub: "Log your first period above to start tracking.",
     color: "text-pomegranate-500",
     ring: "#b7888f",
   },
