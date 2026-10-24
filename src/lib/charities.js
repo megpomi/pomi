@@ -141,7 +141,15 @@ export const CHARITY_OPTIONS = [
     label: "Sexual and domestic violence survivors aid",
     icon: Scale,
     summary: "Shelter, legal help and counselling for survivors.",
-    partners: [{ name: "RAINN", website: "https://www.rainn.org" }],
+    partners: [
+      { name: "RAINN", website: "https://www.rainn.org" },
+      { name: "Refuge", website: "https://refuge.org.uk" },
+      {
+        name: "Rape Crisis England & Wales",
+        website: "https://rapecrisis.org.uk",
+      },
+      { name: "Galop", website: "https://www.galop.org.uk" },
+    ],
     about:
       "Survivors of sexual and domestic violence often need shelter, legal support and counselling at the same time, while services are frequently oversubscribed. Funding keeps refuges open and helplines staffed.",
     impact: [
