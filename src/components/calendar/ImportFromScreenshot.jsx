@@ -1,54 +1,75 @@
 import React, { useRef, useState } from "react";
 import { base44 } from "@/api/base44Client";
 import { Button } from "@/components/ui/button";
-import { ImageUp, Loader2 } from "lucide-react";
+import { Images, Loader2 } from "lucide-react";
 
 const MAX_BYTES = 10 * 1024 * 1024;
 
 export default function ImportFromScreenshot({ onImported }) {
   const inputRef = useRef(null);
   const [busy, setBusy] = useState(false);
+  const [progress, setProgress] = useState({ done: 0, total: 0 });
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
+  const [readCount, setReadCount] = useState(0);
 
-  const handleFile = async (file) => {
-    if (!file) return;
+  const handleFiles = async (files) => {
+    const list = Array.from(files || []);
+    if (!list.length) return;
     setError("");
     setMessage("");
 
-    if (!file.type.startsWith("image/")) {
-      setError("Please choose an image file.");
+    if (list.some((file) => !file.type.startsWith("image/"))) {
+      setError("Please choose image files.");
       return;
     }
-    if (file.size > MAX_BYTES) {
-      setError("That image is too large — please choose one under 10 MB.");
+    if (list.some((file) => file.size > MAX_BYTES)) {
+      setError("Each image needs to be under 10 MB.");
       return;
     }
 
     setBusy(true);
-    try {
-      const { file_uri } = await base44.integrations.Core.UploadPrivateFile({ file });
-      const response = await base44.functions.invoke("importCycleScreenshot", {
-        file_uri,
-      });
-      const days = response?.data?.days || [];
+    setProgress({ done: 0, total: list.length });
 
-      if (!days.length) {
-        setError(
-          "We couldn't spot any period days in that screenshot. Try a clearer one."
-        );
-      } else {
-        const added = onImported(days);
-        setMessage(
-          added
-            ? `${added} day${added === 1 ? "" : "s"} added — check them below, then save.`
-            : "Those days are already on your calendar."
-        );
+    let imported = 0;
+    let read = 0;
+    let failed = 0;
+
+    for (let i = 0; i < list.length; i += 1) {
+      setProgress({ done: i, total: list.length });
+      try {
+        const { file_uri } = await base44.integrations.Core.UploadPrivateFile({
+          file: list[i],
+        });
+        const response = await base44.functions.invoke("importCycleScreenshot", {
+          file_uri,
+        });
+        const days = response?.data?.days || [];
+        if (days.length) read += 1;
+        imported += onImported(days);
+      } catch (e) {
+        failed += 1;
       }
-    } catch (e) {
-      setError("Couldn't read that screenshot. Please try again.");
-    } finally {
-      setBusy(false);
+    }
+
+    setProgress({ done: list.length, total: list.length });
+    setBusy(false);
+    setReadCount((prev) => prev + read);
+
+    const failedNote = failed
+      ? ` ${failed} couldn't be read.`
+      : "";
+
+    if (failed === list.length) {
+      setError("We couldn't read those screenshots. Please try again.");
+    } else if (!imported) {
+      setMessage(
+        `No new period days found in ${list.length === 1 ? "that screenshot" : "those screenshots"}.${failedNote}`
+      );
+    } else {
+      setMessage(
+        `${imported} day${imported === 1 ? "" : "s"} added — check them below, then save.${failedNote}`
+      );
     }
   };
 
@@ -56,16 +77,21 @@ export default function ImportFromScreenshot({ onImported }) {
     <div className="rounded-3xl border border-slate-100 bg-white p-5 sm:p-6">
       <div className="flex flex-wrap items-center gap-4">
         <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-pomegranate-100 text-pomegranate-600">
-          <ImageUp className="h-5 w-5" />
+          <Images className="h-5 w-5" />
         </div>
         <div className="min-w-[12rem] flex-1">
           <h2 className="font-heading text-lg font-semibold text-slate-800">
-            Import from a screenshot
+            Import from screenshots
           </h2>
           <p className="mt-1 text-sm text-slate-500">
-            Already tracking elsewhere? Upload a screenshot of your other app's
-            calendar and we'll mark those days for you.
+            Already tracking elsewhere? Upload as many screenshots of your other
+            app's calendar as you like and we'll mark those days for you.
           </p>
+          {readCount > 0 && (
+            <p className="mt-2 text-xs uppercase tracking-wider text-pomegranate-400">
+              {readCount} screenshot{readCount === 1 ? "" : "s"} read
+            </p>
+          )}
         </div>
         <Button
           type="button"
@@ -77,10 +103,13 @@ export default function ImportFromScreenshot({ onImported }) {
           {busy ? (
             <>
               <Loader2 className="mr-1.5 h-4 w-4 animate-spin" />
-              Reading screenshot…
+              Reading {Math.min(progress.done + 1, progress.total)} of{" "}
+              {progress.total}…
             </>
+          ) : readCount > 0 ? (
+            "Add more screenshots"
           ) : (
-            "Choose screenshot"
+            "Choose screenshots"
           )}
         </Button>
       </div>
@@ -89,11 +118,12 @@ export default function ImportFromScreenshot({ onImported }) {
         ref={inputRef}
         type="file"
         accept="image/*"
+        multiple
         className="hidden"
         onChange={(e) => {
-          const file = e.target.files?.[0];
+          const files = e.target.files;
           e.target.value = "";
-          handleFile(file);
+          handleFiles(files);
         }}
       />
 
