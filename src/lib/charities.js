@@ -66,6 +66,10 @@ export const CHARITY_OPTIONS = [
         name: "UK Cervical Cancer",
         website: "https://www.ukcervicalcancer.org.uk",
       },
+      {
+        name: "Target Ovarian Cancer",
+        website: "https://targetovariancancer.org.uk",
+      },
     ],
     about:
       "Ovarian cancer is often found late, when treatment options are narrower. Cervical cancer is largely preventable through screening and vaccination. Both depend on awareness, screening access and research.",
