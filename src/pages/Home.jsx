@@ -4,16 +4,14 @@ import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import { Plus, Sparkles, UserRound } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import { Image } from "@/components/ui/image";
-import pomiLogo from "@/assets/pomi-logo.png";
+import AppHeader from "@/components/AppHeader";
 import CycleStatus from "@/components/CycleStatus";
 import CycleStats from "@/components/dashboard/CycleStats";
 import CycleHistory from "@/components/CycleHistory";
 import CharityImpact from "@/components/CharityImpact";
 import CyclePatterns from "@/components/patterns/CyclePatterns";
 import DonationTracker from "@/components/DonationTracker";
-import { countTrackedDays, isSubscriber, recordAdVisit } from "@/lib/donations";
-import AdBanner from "@/components/ads/AdBanner";
+import { countTrackedDays, recordAdVisit } from "@/lib/donations";
 import ReminderBanner from "@/components/reminders/ReminderBanner";
 import ReminderBell from "@/components/reminders/ReminderBell";
 import { useReminders } from "@/hooks/use-reminders";
@@ -73,53 +71,40 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="sticky top-0 z-30 border-b border-pomegranate-100/70 bg-background/85 backdrop-blur-md">
-        <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-5 py-4 sm:px-8">
-          <div className="flex min-w-0 flex-1 items-center gap-4">
-            <Image
-              src={pomiLogo}
-              alt="Pomi"
-              className="h-14 w-14 shrink-0"
-              fittingType="fit"
-            />
-            {!isSubscriber(user) && <AdBanner className="flex-1" />}
-          </div>
-          <div className="flex shrink-0 items-center gap-2">
-            <ReminderBell
-              reminders={reminders}
-              onDismiss={dismiss}
-              onLogPeriod={goToLogPeriod}
-            />
-            <Button
-              asChild
-              variant="ghost"
-              size="icon"
-              className="rounded-full text-pomegranate-600 hover:bg-pomegranate-50"
-            >
-              <Link to="/profile" aria-label="Your profile">
-                <UserRound className="h-5 w-5" />
-              </Link>
-            </Button>
-            <Button
-              asChild
-              variant="outline"
-              className="rounded-full border-pomegranate-200 px-4 text-pomegranate-600 hover:bg-pomegranate-50"
-            >
-              <Link to="/upgrade" aria-label="Go ad-free">
-                <Sparkles className="mr-1.5 h-4 w-4" />
-                <span className="hidden sm:inline">Go ad-free</span>
-              </Link>
-            </Button>
-            <Button
-              onClick={goToLogPeriod}
-              className="rounded-full bg-pomegranate-600 px-4 hover:bg-pomegranate-700"
-            >
-              <Plus className="mr-1.5 h-4 w-4" />
-              Log period
-            </Button>
-          </div>
-        </div>
-      </header>
+      <AppHeader>
+        <ReminderBell
+          reminders={reminders}
+          onDismiss={dismiss}
+          onLogPeriod={goToLogPeriod}
+        />
+        <Button
+          asChild
+          variant="ghost"
+          size="icon"
+          className="rounded-full text-pomegranate-600 hover:bg-pomegranate-50"
+        >
+          <Link to="/profile" aria-label="Your profile">
+            <UserRound className="h-5 w-5" />
+          </Link>
+        </Button>
+        <Button
+          asChild
+          variant="outline"
+          className="rounded-full border-pomegranate-200 px-4 text-pomegranate-600 hover:bg-pomegranate-50"
+        >
+          <Link to="/upgrade" aria-label="Go ad-free">
+            <Sparkles className="mr-1.5 h-4 w-4" />
+            <span className="hidden sm:inline">Go ad-free</span>
+          </Link>
+        </Button>
+        <Button
+          onClick={goToLogPeriod}
+          className="rounded-full bg-pomegranate-600 px-4 hover:bg-pomegranate-700"
+        >
+          <Plus className="mr-1.5 h-4 w-4" />
+          Log period
+        </Button>
+      </AppHeader>
 
       <main className="mx-auto max-w-5xl px-5 py-8 sm:px-8 sm:py-12">
         {/* Greeting */}

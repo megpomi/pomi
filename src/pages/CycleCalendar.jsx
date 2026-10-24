@@ -2,8 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import { ArrowLeft, CalendarPlus } from "lucide-react";
 import { base44 } from "@/api/base44Client";
-import { Image } from "@/components/ui/image";
-import pomiLogo from "@/assets/pomi-logo.png";
+import AppHeader from "@/components/AppHeader";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { Calendar } from "@/components/ui/calendar";
@@ -85,23 +84,15 @@ export default function CycleCalendar() {
 
   return (
     <div className="min-h-screen bg-background">
-      <header className="sticky top-0 z-30 border-b border-pomegranate-100/70 bg-background/85 backdrop-blur-md">
-        <div className="mx-auto flex max-w-3xl items-center justify-between px-5 py-4 sm:px-8">
-          <Image
-            src={pomiLogo}
-            alt="Pomi"
-            className="h-14 w-14"
-            fittingType="fit"
-          />
-          <Link
-            to="/"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-pomegranate-600 hover:text-pomegranate-700"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to my cycle
-          </Link>
-        </div>
-      </header>
+      <AppHeader maxWidth="max-w-3xl">
+        <Link
+          to="/"
+          className="inline-flex items-center gap-1.5 text-sm font-medium text-pomegranate-600 hover:text-pomegranate-700"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Back to my cycle
+        </Link>
+      </AppHeader>
 
       <main className="mx-auto max-w-3xl px-5 py-8 sm:px-8 sm:py-12">
         {logMode ? (

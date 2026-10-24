@@ -1,8 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, ArrowUpRight, Heart } from "lucide-react";
-import { Image } from "@/components/ui/image";
-import pomiLogo from "@/assets/pomi-logo.png";
+import AppHeader from "@/components/AppHeader";
 import { CHARITY_OPTIONS } from "@/lib/charities";
 import { DONATION_SHARE } from "@/lib/donations";
 
@@ -26,18 +25,15 @@ const STEPS = [
 export default function Mission() {
   return (
     <div className="min-h-screen bg-background">
-      <header className="sticky top-0 z-30 border-b border-pomegranate-100/70 bg-background/85 backdrop-blur-md">
-        <div className="mx-auto flex max-w-4xl items-center justify-between px-5 py-4 sm:px-8">
-          <Image src={pomiLogo} alt="Pomi" className="h-14 w-14" fittingType="fit" />
-          <Link
-            to="/"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-pomegranate-600 hover:text-pomegranate-700"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back to my cycle
-          </Link>
-        </div>
-      </header>
+      <AppHeader maxWidth="max-w-4xl">
+        <Link
+          to="/"
+          className="inline-flex items-center gap-1.5 text-sm font-medium text-pomegranate-600 hover:text-pomegranate-700"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Back to my cycle
+        </Link>
+      </AppHeader>
 
       <main className="mx-auto max-w-4xl px-5 py-8 sm:px-8 sm:py-12">
         <div className="overflow-hidden rounded-3xl border border-pomegranate-100 bg-gradient-to-br from-pomegranate-500 to-pomegranate-800 p-8 text-white sm:p-10">
