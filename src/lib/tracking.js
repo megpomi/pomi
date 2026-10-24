@@ -16,6 +16,12 @@ export const TRACKING_OPTIONS = [
     icon: Flame,
   },
   {
+    value: "trying_to_conceive",
+    label: "I'm trying for a baby",
+    desc: "Watch for ovulation and fertile days.",
+    icon: Egg,
+  },
+  {
     value: "pregnancy",
     label: "Pregnancy",
     desc: "Follow your pregnancy and how you feel.",
@@ -26,12 +32,6 @@ export const TRACKING_OPTIONS = [
     label: "Postpartum",
     desc: "Track recovery and changes after birth.",
     icon: HeartHandshake,
-  },
-  {
-    value: "trying_to_conceive",
-    label: "I'm trying for a baby",
-    desc: "Watch for ovulation and fertile days.",
-    icon: Egg,
   },
   {
     value: "general_wellbeing",
