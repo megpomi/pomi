@@ -1,11 +1,13 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
+import { ArrowLeft, CalendarPlus } from "lucide-react";
 import { base44 } from "@/api/base44Client";
 import { Image } from "@/components/ui/image";
 import pomiLogo from "@/assets/pomi-logo.png";
+import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import LoggedDayDetails from "@/components/calendar/LoggedDayDetails";
+import PeriodHistoryCalendar from "@/components/calendar/PeriodHistoryCalendar";
 import { getCycleDay } from "@/lib/cycle";
 
 const dayKey = (value) => {
@@ -45,12 +47,20 @@ export default function CycleCalendar() {
   const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState(new Date());
+  const [searchParams, setSearchParams] = useSearchParams();
+  const logMode = searchParams.get("log") === "1";
+
+  const loadLogs = useCallback(
+    () =>
+      base44.entities.CycleLog.filter({}, { sort: "-start_date", limit: 200 })
+        .then((res) => setLogs(res.items))
+        .finally(() => setLoading(false)),
+    []
+  );
 
   useEffect(() => {
-    base44.entities.CycleLog.filter({}, { sort: "-start_date", limit: 200 })
-      .then((res) => setLogs(res.items))
-      .finally(() => setLoading(false));
-  }, []);
+    loadLogs();
+  }, [loadLogs]);
 
   const loggedDays = useMemo(() => logs.flatMap(expandLog), [logs]);
 
@@ -92,59 +102,98 @@ export default function CycleCalendar() {
       </header>
 
       <main className="mx-auto max-w-3xl px-5 py-8 sm:px-8 sm:py-12">
-        <h1 className="font-heading text-3xl font-semibold text-slate-800 sm:text-4xl">
-          Your calendar
-        </h1>
-        <p className="mt-2 text-sm text-slate-500">
-          Every day you've logged, in one place. Tap a day to see what you
-          recorded.
-        </p>
+        {logMode ? (
+          <>
+            <h1 className="font-heading text-3xl font-semibold text-slate-800 sm:text-4xl">
+              Log past days
+            </h1>
+            <p className="mt-2 text-sm text-slate-500">
+              Tap the days you were bleeding — scroll back through the months to
+              build your history.
+            </p>
 
-        <div className="mt-6 rounded-3xl border border-slate-100 bg-white p-1 sm:p-3">
-          <Calendar
-            mode="single"
-            selected={selected}
-            onSelect={(value) => value && setSelected(value)}
-            modifiers={{ logged: loggedDays }}
-            components={{ DayContent: CalendarDay }}
-            disabled={{ after: new Date() }}
-            classNames={{
-              months: "flex flex-col items-center",
-              month: "w-full space-y-3",
-              head_row: "flex w-full",
-              head_cell:
-                "flex-1 font-normal text-[0.8rem] text-muted-foreground",
-              row: "flex w-full mt-1",
-              cell: "relative flex-1 p-0 text-center text-sm",
-              day: "inline-flex h-11 w-full items-center justify-center rounded-full p-0 text-sm font-normal hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring aria-selected:opacity-100",
-              day_logged:
-                "bg-pomegranate-200/70 font-medium text-pomegranate-900 hover:bg-pomegranate-200",
-              day_selected:
-                "bg-pomegranate-600 text-primary-foreground hover:bg-pomegranate-600 focus:bg-pomegranate-600",
-              day_today: "font-semibold",
-            }}
-            className="w-full p-3"
-          />
+            <div className="mt-6">
+              {loading ? (
+                <div className="h-64 animate-pulse rounded-3xl bg-white" />
+              ) : (
+                <PeriodHistoryCalendar
+                  logs={logs}
+                  onSaved={() => {
+                    loadLogs();
+                    setSearchParams({});
+                  }}
+                />
+              )}
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="flex flex-wrap items-start justify-between gap-4">
+              <div>
+                <h1 className="font-heading text-3xl font-semibold text-slate-800 sm:text-4xl">
+                  Your calendar
+                </h1>
+                <p className="mt-2 text-sm text-slate-500">
+                  Every day you've logged, in one place. Tap a day to see what
+                  you recorded.
+                </p>
+              </div>
+              <Button
+                onClick={() => setSearchParams({ log: "1" })}
+                className="rounded-full bg-pomegranate-600 hover:bg-pomegranate-700"
+              >
+                <CalendarPlus className="mr-1.5 h-4 w-4" />
+                Log past days
+              </Button>
+            </div>
 
-          <div className="flex items-center gap-2 px-4 pb-3 text-xs text-slate-500">
-            <span className="relative inline-flex h-4 w-4 items-center justify-center rounded-full bg-pomegranate-200/70">
-              <span className="h-1 w-1 rounded-full bg-pomegranate-600" />
-            </span>
-            Day with logged data — tap to view
-          </div>
-        </div>
+            <div className="mt-6 rounded-3xl border border-slate-100 bg-white p-1 sm:p-3">
+              <Calendar
+                mode="single"
+                selected={selected}
+                onSelect={(value) => value && setSelected(value)}
+                modifiers={{ logged: loggedDays }}
+                components={{ DayContent: CalendarDay }}
+                disabled={{ after: new Date() }}
+                classNames={{
+                  months: "flex flex-col items-center",
+                  month: "w-full space-y-3",
+                  head_row: "flex w-full",
+                  head_cell:
+                    "flex-1 font-normal text-[0.8rem] text-muted-foreground",
+                  row: "flex w-full mt-1",
+                  cell: "relative flex-1 p-0 text-center text-sm",
+                  day: "inline-flex h-11 w-full items-center justify-center rounded-full p-0 text-sm font-normal hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring aria-selected:opacity-100",
+                  day_logged:
+                    "bg-pomegranate-200/70 font-medium text-pomegranate-900 hover:bg-pomegranate-200",
+                  day_selected:
+                    "bg-pomegranate-600 text-primary-foreground hover:bg-pomegranate-600 focus:bg-pomegranate-600",
+                  day_today: "font-semibold",
+                }}
+                className="w-full p-3"
+              />
 
-        <div className="mt-6">
-          {loading ? (
-            <div className="h-32 animate-pulse rounded-3xl bg-white" />
-          ) : (
-            <LoggedDayDetails
-              date={selected}
-              log={selectedLog}
-              cycleDay={cycleDay}
-            />
-          )}
-        </div>
+              <div className="flex items-center gap-2 px-4 pb-3 text-xs text-slate-500">
+                <span className="relative inline-flex h-4 w-4 items-center justify-center rounded-full bg-pomegranate-200/70">
+                  <span className="h-1 w-1 rounded-full bg-pomegranate-600" />
+                </span>
+                Day with logged data — tap to view
+              </div>
+            </div>
+
+            <div className="mt-6">
+              {loading ? (
+                <div className="h-32 animate-pulse rounded-3xl bg-white" />
+              ) : (
+                <LoggedDayDetails
+                  date={selected}
+                  log={selectedLog}
+                  cycleDay={cycleDay}
+                />
+              )}
+            </div>
+          </>
+        )}
       </main>
     </div>
   );

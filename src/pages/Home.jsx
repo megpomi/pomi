@@ -3,12 +3,11 @@ import { base44 } from "@/api/base44Client";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import { Plus, Sparkles, UserRound } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Image } from "@/components/ui/image";
 import pomiLogo from "@/assets/pomi-logo.png";
 import CycleStatus from "@/components/CycleStatus";
 import CycleStats from "@/components/dashboard/CycleStats";
-import LogPeriodSheet from "@/components/LogPeriodSheet";
 import CycleHistory from "@/components/CycleHistory";
 import CharityImpact from "@/components/CharityImpact";
 import CyclePatterns from "@/components/patterns/CyclePatterns";
@@ -21,11 +20,12 @@ import { useReminders } from "@/hooks/use-reminders";
 export default function Home() {
   const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [sheetOpen, setSheetOpen] = useState(false);
   const [checkingProfile, setCheckingProfile] = useState(true);
   const [user, setUser] = useState(null);
   const { toast } = useToast();
   const { reminders, dismiss } = useReminders(logs);
+  const navigate = useNavigate();
+  const goToLogPeriod = () => navigate("/calendar?log=1");
 
   const loadLogs = useCallback(async () => {
     setLoading(true);
@@ -59,12 +59,6 @@ export default function Home() {
       .finally(() => setCheckingProfile(false));
   }, []);
 
-  const handleSaved = () => {
-    setSheetOpen(false);
-    loadLogs();
-    toast({ title: "Period logged", description: "Your cycle is updated." });
-  };
-
   const daysTracked = countTrackedDays(logs);
 
   if (checkingProfile) {
@@ -90,7 +84,7 @@ export default function Home() {
             <ReminderBell
               reminders={reminders}
               onDismiss={dismiss}
-              onLogPeriod={() => setSheetOpen(true)}
+              onLogPeriod={goToLogPeriod}
             />
             <Button
               asChild
@@ -113,7 +107,7 @@ export default function Home() {
               </Link>
             </Button>
             <Button
-              onClick={() => setSheetOpen(true)}
+              onClick={goToLogPeriod}
               className="rounded-full bg-pomegranate-600 px-4 hover:bg-pomegranate-700"
             >
               <Plus className="mr-1.5 h-4 w-4" />
@@ -141,7 +135,7 @@ export default function Home() {
           <ReminderBanner
             reminder={reminders[0]}
             onDismiss={dismiss}
-            onLogPeriod={() => setSheetOpen(true)}
+            onLogPeriod={goToLogPeriod}
           />
         )}
 
@@ -179,11 +173,6 @@ export default function Home() {
         </p>
       </main>
 
-      <LogPeriodSheet
-        open={sheetOpen}
-        onOpenChange={setSheetOpen}
-        onSaved={handleSaved}
-      />
     </div>
   );
 }
