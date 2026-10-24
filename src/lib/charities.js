@@ -1,11 +1,11 @@
 import {
   Activity,
+  Baby,
   Gavel,
   Globe,
   HeartHandshake,
-  HeartPulse,
+  Microscope,
   Ribbon,
-  Sprout,
 } from "lucide-react";
 
 export const CHARITY_OPTIONS = [
@@ -27,7 +27,7 @@ export const CHARITY_OPTIONS = [
   {
     value: "endometriosis",
     label: "Endometriosis research",
-    icon: HeartPulse,
+    icon: Microscope,
     summary: "Funding research into a condition that takes years to diagnose.",
     partner: "Endometriosis Foundation of America",
     website: "https://www.endofound.org",
@@ -57,7 +57,7 @@ export const CHARITY_OPTIONS = [
   {
     value: "fertility",
     label: "Fertility research and treatment grants",
-    icon: Sprout,
+    icon: Baby,
     summary: "Treatment grants and research for people trying to conceive.",
     partner: "RESOLVE: The National Infertility Association",
     website: "https://resolve.org",
