@@ -30,7 +30,7 @@ const PHASE_COPY = {
   },
   unknown: {
     title: "Welcome to Pomi",
-    sub: "Log your symptoms.",
+    sub: "Log your first period to start tracking.",
     color: "text-pomegranate-500",
     ring: "#b7888f",
   },
@@ -70,7 +70,11 @@ export default function CycleStatus({ logs, showMenstruating, onChanged }) {
           <h2 className="font-heading text-3xl font-semibold text-slate-800 sm:text-4xl">
             {meta.title}
           </h2>
-          <p className="mt-2 max-w-xs text-sm text-slate-500">{meta.sub}</p>
+          {status.phase === "unknown" && showMenstruating ? (
+            <MenstruatingToday logs={logs} onChanged={onChanged} />
+          ) : (
+            <p className="mt-2 max-w-xs text-sm text-slate-500">{meta.sub}</p>
+          )}
 
           {status.phase !== "unknown" && (
             <div className="mt-6 flex flex-wrap gap-6">
@@ -92,7 +96,7 @@ export default function CycleStatus({ logs, showMenstruating, onChanged }) {
             </div>
           )}
 
-          {showMenstruating && (
+          {status.phase !== "unknown" && showMenstruating && (
             <MenstruatingToday logs={logs} onChanged={onChanged} />
           )}
         </div>
