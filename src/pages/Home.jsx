@@ -146,11 +146,6 @@ export default function Home() {
           />
         )}
 
-        {/* Menstruating today */}
-        {user?.tracking_focus?.includes("menstrual_cycles") && (
-          <MenstruatingToday initialValue={user?.currently_menstruating} />
-        )}
-
         {/* Status */}
         <CycleStatus logs={logs} />
 
@@ -162,7 +157,11 @@ export default function Home() {
         {/* Grid */}
         <div className="mt-6 grid gap-6 lg:grid-cols-5">
           <div className="lg:col-span-3">
-            <CycleHistory logs={logs} loading={loading} />
+            <CycleHistory logs={logs} loading={loading}>
+              {user?.tracking_focus?.includes("menstrual_cycles") && (
+                <MenstruatingToday logs={logs} onChanged={loadLogs} />
+              )}
+            </CycleHistory>
           </div>
           <div className="lg:col-span-2">
             <CharityImpact daysTracked={daysTracked} />
