@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { Image } from "@/components/ui/image";
 import pomiLogo from "@/assets/pomi-logo.png";
 import CycleStatus from "@/components/CycleStatus";
+import MenstruatingToday from "@/components/dashboard/MenstruatingToday";
 import CycleStats from "@/components/dashboard/CycleStats";
 import LogPeriodSheet from "@/components/LogPeriodSheet";
 import CycleHistory from "@/components/CycleHistory";
@@ -143,6 +144,11 @@ export default function Home() {
             onDismiss={dismiss}
             onLogPeriod={() => setSheetOpen(true)}
           />
+        )}
+
+        {/* Menstruating today */}
+        {user?.tracking_focus?.includes("menstrual_cycles") && (
+          <MenstruatingToday initialValue={user?.currently_menstruating} />
         )}
 
         {/* Status */}
