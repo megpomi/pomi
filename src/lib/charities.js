@@ -37,6 +37,11 @@ export const CHARITY_OPTIONS = [
         name: "RESOLVE: The National Infertility Association",
         website: "https://resolve.org",
       },
+      { name: "Fertility Network UK", website: "https://fertilitynetworkuk.org" },
+      {
+        name: "The Fertility Foundation",
+        website: "https://www.fertilityfoundation.org",
+      },
     ],
     about:
       "Fertility care is expensive and unevenly accessible, and much of it is not covered by insurance or public health systems. Research into the causes of infertility and more affordable treatment lags behind demand.",
