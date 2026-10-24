@@ -5,6 +5,7 @@ import { base44 } from "@/api/base44Client";
 import { Image } from "@/components/ui/image";
 import pomiLogo from "@/assets/pomi-logo.png";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 import { Calendar } from "@/components/ui/calendar";
 import LoggedDayDetails from "@/components/calendar/LoggedDayDetails";
 import PeriodHistoryCalendar from "@/components/calendar/PeriodHistoryCalendar";
@@ -49,6 +50,7 @@ export default function CycleCalendar() {
   const [selected, setSelected] = useState(new Date());
   const [searchParams, setSearchParams] = useSearchParams();
   const logMode = searchParams.get("log") === "1";
+  const { toast } = useToast();
 
   const loadLogs = useCallback(
     () =>
@@ -120,6 +122,10 @@ export default function CycleCalendar() {
                   logs={logs}
                   onSaved={() => {
                     loadLogs();
+                    toast({
+                      title: "Days added",
+                      description: "Your calendar is updated.",
+                    });
                     setSearchParams({});
                   }}
                 />
