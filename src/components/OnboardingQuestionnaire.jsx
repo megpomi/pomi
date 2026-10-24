@@ -88,7 +88,7 @@ export default function OnboardingQuestionnaire({ onComplete }) {
           <p className="mt-2 max-w-md text-sm text-slate-500">
             {isFirst
               ? "Choose what matters to you — this shapes your personalised insights and symptoms predictions and can be updated at any point."
-              : "A share of what Pomi earns is donated to these areas. Pick the ones you'd like to support directly."}
+              : "A share of what Pomi earns is donated to these areas. Pick the ones you'd like to support directly, these can be updated at any point."}
           </p>
         </div>
 
