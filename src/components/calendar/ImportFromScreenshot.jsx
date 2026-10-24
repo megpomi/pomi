@@ -1,12 +1,21 @@
 import React, { useRef, useState } from "react";
 import { base44 } from "@/api/base44Client";
 import { Button } from "@/components/ui/button";
-import { Images, Loader2 } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { FolderOpen, Images, ImageIcon, Loader2 } from "lucide-react";
 
 const MAX_BYTES = 10 * 1024 * 1024;
 
 export default function ImportFromScreenshot({ onImported }) {
-  const inputRef = useRef(null);
+  const albumRef = useRef(null);
+  const fileRef = useRef(null);
+  const [pickerOpen, setPickerOpen] = useState(false);
   const [busy, setBusy] = useState(false);
   const [progress, setProgress] = useState({ done: 0, total: 0 });
   const [error, setError] = useState("");
@@ -56,21 +65,57 @@ export default function ImportFromScreenshot({ onImported }) {
     setBusy(false);
     setReadCount((prev) => prev + read);
 
-    const failedNote = failed
-      ? ` ${failed} couldn't be read.`
-      : "";
+    const failedNote = failed ? ` ${failed} couldn't be read.` : "";
 
     if (failed === list.length) {
       setError("We couldn't read those screenshots. Please try again.");
     } else if (!imported) {
       setMessage(
-        `No new period days found in ${list.length === 1 ? "that screenshot" : "those screenshots"}.${failedNote}`
+        `No new period days found in ${
+          list.length === 1 ? "that screenshot" : "those screenshots"
+        }.${failedNote}`
       );
     } else {
       setMessage(
         `${imported} day${imported === 1 ? "" : "s"} added — check them below, then save.${failedNote}`
       );
     }
+  };
+
+  const openAlbum = () => {
+    setPickerOpen(false);
+    albumRef.current?.click();
+  };
+
+  const openFileBrowser = async () => {
+    setPickerOpen(false);
+    if (typeof window.showOpenFilePicker === "function") {
+      try {
+        const handles = await window.showOpenFilePicker({
+          multiple: true,
+          types: [
+            {
+              description: "Images",
+              accept: {
+                "image/*": [".png", ".jpg", ".jpeg", ".webp", ".gif", ".heic"],
+              },
+            },
+          ],
+        });
+        const files = await Promise.all(handles.map((handle) => handle.getFile()));
+        handleFiles(files);
+        return;
+      } catch (e) {
+        if (e?.name === "AbortError") return;
+      }
+    }
+    fileRef.current?.click();
+  };
+
+  const onInputChange = (e) => {
+    const files = e.target.files;
+    e.target.value = "";
+    handleFiles(files);
   };
 
   return (
@@ -96,7 +141,7 @@ export default function ImportFromScreenshot({ onImported }) {
         <Button
           type="button"
           variant="outline"
-          onClick={() => inputRef.current?.click()}
+          onClick={() => setPickerOpen(true)}
           disabled={busy}
           className="rounded-full border-pomegranate-200 px-5 text-pomegranate-600 hover:bg-pomegranate-50"
         >
@@ -114,23 +159,78 @@ export default function ImportFromScreenshot({ onImported }) {
         </Button>
       </div>
 
-      <input
-        ref={inputRef}
-        type="file"
-        accept="image/*"
-        multiple
-        className="hidden"
-        onChange={(e) => {
-          const files = e.target.files;
-          e.target.value = "";
-          handleFiles(files);
-        }}
-      />
-
       {error && <p className="mt-3 text-sm text-destructive">{error}</p>}
       {message && (
         <p className="mt-3 text-sm text-pomegranate-700">{message}</p>
       )}
+
+      <input
+        ref={albumRef}
+        type="file"
+        accept="image/*"
+        multiple
+        className="hidden"
+        onChange={onInputChange}
+      />
+      <input
+        ref={fileRef}
+        type="file"
+        accept="image/*"
+        multiple
+        className="hidden"
+        onChange={onInputChange}
+      />
+
+      <Dialog open={pickerOpen} onOpenChange={setPickerOpen}>
+        <DialogContent className="max-w-sm rounded-3xl">
+          <DialogHeader>
+            <DialogTitle className="font-heading text-lg">
+              Add screenshots
+            </DialogTitle>
+            <DialogDescription>
+              Where are your screenshots? You can add as many as you like.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="grid gap-2">
+            <button
+              type="button"
+              onClick={openAlbum}
+              className="flex items-center gap-3 rounded-2xl border border-slate-100 bg-white p-4 text-left transition-colors hover:bg-pomegranate-50"
+            >
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-pomegranate-100 text-pomegranate-600">
+                <ImageIcon className="h-5 w-5" />
+              </span>
+              <span>
+                <span className="block text-sm font-medium text-slate-800">
+                  Photo album
+                </span>
+                <span className="block text-xs text-slate-500">
+                  Your camera roll and saved photos
+                </span>
+              </span>
+            </button>
+
+            <button
+              type="button"
+              onClick={openFileBrowser}
+              className="flex items-center gap-3 rounded-2xl border border-slate-100 bg-white p-4 text-left transition-colors hover:bg-pomegranate-50"
+            >
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-pomegranate-100 text-pomegranate-600">
+                <FolderOpen className="h-5 w-5" />
+              </span>
+              <span>
+                <span className="block text-sm font-medium text-slate-800">
+                  Choose a file
+                </span>
+                <span className="block text-xs text-slate-500">
+                  Browse your files and folders
+                </span>
+              </span>
+            </button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
