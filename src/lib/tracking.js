@@ -11,13 +11,13 @@ export const TRACKING_OPTIONS = [
   },
   {
     value: "perimenopause_menopause",
-    label: "Perimenopausal or menopausal symptoms",
+    label: "Perimenopausal or menopausal",
     desc: "Track hot flashes, sleep, and mood shifts.",
     icon: Flame,
   },
   {
     value: "pregnancy_postpartum",
-    label: "Pregnancy or postpartum symptoms",
+    label: "Pregnant, postpartum or trying for a baby",
     desc: "Follow your journey and how you feel.",
     icon: Baby,
   },
