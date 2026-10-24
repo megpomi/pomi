@@ -1,6 +1,6 @@
 import {
-  Activity,
   Baby,
+  Dna,
   Globe,
   HeartHandshake,
   Microscope,
@@ -42,7 +42,7 @@ export const CHARITY_OPTIONS = [
   {
     value: "pmos",
     label: "PMOS (Polyendocrine Metabolic Ovarian Syndrome) research",
-    icon: Activity,
+    icon: Dna,
     summary: "Research and support for a common hormonal and metabolic condition.",
     partner: "PCOS Awareness Association",
     website: "https://www.pcosaa.org",
