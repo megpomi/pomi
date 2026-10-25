@@ -2,12 +2,12 @@ import React, { useState, useEffect, useCallback } from "react";
 import { base44 } from "@/api/base44Client";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
-import { Plus, Sparkles, UserRound } from "lucide-react";
+import { CalendarPlus, Plus, Sparkles, UserRound } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import AppHeader from "@/components/AppHeader";
 import CycleStatus from "@/components/CycleStatus";
 import CycleStats from "@/components/dashboard/CycleStats";
-import CycleHistory from "@/components/CycleHistory";
+import CalendarPanel from "@/components/calendar/CalendarPanel";
 import CharityImpact from "@/components/CharityImpact";
 import CyclePatterns from "@/components/patterns/CyclePatterns";
 import DonationTracker from "@/components/DonationTracker";
@@ -157,7 +157,24 @@ export default function Home() {
         {/* Grid */}
         <div className="mt-6 grid gap-6 lg:grid-cols-5">
           <div className="lg:col-span-3">
-            <CycleHistory logs={logs} loading={loading} />
+            <CalendarPanel
+              logs={logs}
+              loading={loading}
+              title="Your calendar"
+              action={
+                <Button
+                  asChild
+                  variant="outline"
+                  size="sm"
+                  className="rounded-full border-pomegranate-200 text-pomegranate-600 hover:bg-pomegranate-50"
+                >
+                  <Link to="/calendar?log=1">
+                    <CalendarPlus className="mr-1.5 h-4 w-4" />
+                    Log historical data
+                  </Link>
+                </Button>
+              }
+            />
           </div>
           <div className="lg:col-span-2">
             <CharityImpact daysTracked={daysTracked} />
