@@ -86,8 +86,9 @@ export default function Mission() {
             The causes we support
           </h2>
           <p className="mt-1 text-sm text-slate-500">
-            Each cause is delivered through one or more partner organisations.
-            Here is what they do and where to find them.
+            Each cause is delivered through more than one charitable
+            organisation. Here is what they do and links to find out more
+            information.
           </p>
 
           <div className="mt-5 grid gap-4 sm:grid-cols-2">
