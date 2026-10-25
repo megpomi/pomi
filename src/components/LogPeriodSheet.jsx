@@ -36,6 +36,7 @@ const SYMPTOMS = [
   "breast_tenderness",
   "acne",
   "cravings",
+  "appetite_loss",
   "backache",
   "mood_swings",
   "insomnia",

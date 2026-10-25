@@ -23,6 +23,7 @@ export const SYMPTOM_OPTIONS = [
   "breast_tenderness",
   "acne",
   "cravings",
+  "appetite_loss",
   "backache",
   "mood_swings",
   "insomnia",
