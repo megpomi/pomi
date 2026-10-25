@@ -35,4 +35,10 @@ export const SYMPTOM_OPTIONS = [
   "dreams",
 ];
 
-export const prettySymptom = (symptom) => symptom.replace(/_/g, " ");
+// Symptom labels that differ from the stored value.
+const SYMPTOM_LABELS = {
+  cramps: "Menstrual Cramps",
+};
+
+export const prettySymptom = (symptom) =>
+  SYMPTOM_LABELS[symptom] || symptom.replace(/_/g, " ");
