@@ -6,6 +6,8 @@ import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import AppHeader from "@/components/AppHeader";
 import TrackingPreferences from "@/components/profile/TrackingPreferences";
+import ProfileNameForm from "@/components/profile/ProfileNameForm";
+import PasswordForm from "@/components/profile/PasswordForm";
 import CausePreferences from "@/components/profile/CausePreferences";
 import CurrencyPreference from "@/components/profile/CurrencyPreference";
 import NotificationPreferences from "@/components/profile/NotificationPreferences";
@@ -113,11 +115,20 @@ export default function Profile() {
           Your profile
         </h1>
         <p className="mt-1 text-sm text-slate-500">
-          {user.full_name ? `${user.full_name} · ` : ""}
+          {user.preferred_name || user.full_name
+            ? `${user.preferred_name || user.full_name} · `
+            : ""}
           {user.email}
         </p>
 
         <div className="mt-8 space-y-6">
+          <ProfileNameForm
+            user={user}
+            onSaved={(name) =>
+              setUser((current) => ({ ...current, preferred_name: name }))
+            }
+          />
+          <PasswordForm user={user} />
           <TrackingPreferences selected={tracking} onChange={setTracking} />
           <CausePreferences selected={causes} onChange={setCauses} />
           <CurrencyPreference value={currency} onChange={setCurrency} />
