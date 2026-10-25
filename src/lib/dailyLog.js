@@ -17,6 +17,7 @@ export const MOOD_OPTIONS = [
 
 export const SYMPTOM_OPTIONS = [
   "cramps",
+  "ovulation_cramps",
   "headache",
   "bloating",
   "fatigue",
@@ -28,7 +29,6 @@ export const SYMPTOM_OPTIONS = [
   "mood_swings",
   "insomnia",
   "sex",
-  "ovulation_cramps",
   "cervical_mucus",
   "spotting",
   "increased_libido",

@@ -39,6 +39,7 @@
         "type": "string",
         "enum": [
           "cramps",
+          "ovulation_cramps",
           "headache",
           "bloating",
           "fatigue",
@@ -50,7 +51,6 @@
           "mood_swings",
           "insomnia",
           "sex",
-          "ovulation_cramps",
           "cervical_mucus",
           "spotting",
           "increased_libido",
