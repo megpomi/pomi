@@ -40,8 +40,8 @@ export default function IntroStep({ onStart }) {
                 Welcome to Pomi
               </h1>
               <p className="mt-3 max-w-md text-sm leading-relaxed text-slate-500">
-                as in the pomegranate - Symbolic of health, abundance and natural
-                cycles
+                As in the pomegranate - Symbolic of health, abundance and natural
+                cycles.
               </p>
             </motion.div>
           )}
@@ -58,20 +58,20 @@ export default function IntroStep({ onStart }) {
                 <Heart className="mt-0.5 h-5 w-5 shrink-0 fill-pomegranate-400 text-pomegranate-400" />
                 <p className="text-sm leading-relaxed text-slate-600">
                   Our purpose is built on the simple idea that every cycle is
-                  powerful
+                  powerful and can be used for good.
                 </p>
               </div>
               <div className="flex items-start gap-3 rounded-2xl border border-pomegranate-100 bg-white p-5">
                 <Droplet className="mt-0.5 h-5 w-5 shrink-0 fill-pomegranate-400 text-pomegranate-400" />
                 <p className="text-sm leading-relaxed text-slate-600">
-                  Your data powers your own personalised health insights
+                  Your data powers personalised health insights.
                 </p>
               </div>
               <div className="flex items-start gap-3 rounded-2xl border border-pomegranate-100 bg-white p-5">
                 <Navigation className="mt-0.5 h-5 w-5 shrink-0 fill-pomegranate-400 text-pomegranate-400" />
                 <p className="text-sm leading-relaxed text-slate-600">
-                  App revenue generates trackable donations for the causes you
-                  choose
+                  Your account generates trackable donations made to charitable
+                  causes important to you.
                 </p>
               </div>
             </div>
