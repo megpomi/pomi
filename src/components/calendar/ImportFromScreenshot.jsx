@@ -12,6 +12,20 @@ import { FolderOpen, Images, ImageIcon, Loader2 } from "lucide-react";
 
 const MAX_BYTES = 10 * 1024 * 1024;
 
+// Read the image as base64 so the function can upload it itself — the file it
+// signs is then always the one just sent, never a caller-supplied URI.
+const toBase64 = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = typeof reader.result === "string" ? reader.result : "";
+      const comma = result.indexOf(",");
+      resolve(comma >= 0 ? result.slice(comma + 1) : result);
+    };
+    reader.onerror = () => reject(reader.error || new Error("read failed"));
+    reader.readAsDataURL(file);
+  });
+
 export default function ImportFromScreenshot({ onImported }) {
   const albumRef = useRef(null);
   const fileRef = useRef(null);
@@ -47,11 +61,10 @@ export default function ImportFromScreenshot({ onImported }) {
     for (let i = 0; i < list.length; i += 1) {
       setProgress({ done: i, total: list.length });
       try {
-        const { file_uri } = await base44.integrations.Core.UploadPrivateFile({
-          file: list[i],
-        });
+        const image_base64 = await toBase64(list[i]);
         const response = await base44.functions.invoke("importCycleScreenshot", {
-          file_uri,
+          image_base64,
+          mime_type: list[i].type,
         });
         const days = response?.data?.days || [];
         if (days.length) read += 1;

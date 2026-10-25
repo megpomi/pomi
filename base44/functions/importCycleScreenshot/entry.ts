@@ -6,6 +6,19 @@ const isoDay = (date) => {
   return `${date.getFullYear()}-${month}-${day}`;
 };
 
+const EXTENSIONS = {
+  'image/png': 'png',
+  'image/jpeg': 'jpg',
+  'image/jpg': 'jpg',
+  'image/webp': 'webp',
+  'image/gif': 'gif',
+  'image/heic': 'heic',
+  'image/heif': 'heif',
+};
+
+// Roughly a 10 MB image once decoded — keeps the request body bounded.
+const MAX_BASE64_LENGTH = 14 * 1024 * 1024;
+
 export default async function (req) {
   try {
     const base44 = createClientFromRequest(req);
@@ -13,9 +26,38 @@ export default async function (req) {
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
 
     const body = await req.json().catch(() => ({}));
-    const fileUri = typeof body.file_uri === 'string' ? body.file_uri.trim() : '';
-    if (!fileUri) {
+    const imageBase64 =
+      typeof body.image_base64 === 'string' ? body.image_base64.trim() : '';
+    const mimeType =
+      typeof body.mime_type === 'string' ? body.mime_type.trim().toLowerCase() : '';
+
+    if (!imageBase64) {
       return Response.json({ error: 'Missing screenshot' }, { status: 400 });
+    }
+    if (imageBase64.length > MAX_BASE64_LENGTH) {
+      return Response.json({ error: 'That screenshot is too large' }, { status: 413 });
+    }
+    if (mimeType && !EXTENSIONS[mimeType]) {
+      return Response.json({ error: 'Please upload an image file' }, { status: 400 });
+    }
+
+    let bytes;
+    try {
+      bytes = Uint8Array.from(atob(imageBase64), (char) => char.charCodeAt(0));
+    } catch {
+      return Response.json({ error: 'Could not read that screenshot' }, { status: 400 });
+    }
+
+    // The upload happens here, from the bytes this caller just sent, so the file
+    // we sign is always the caller's own — no caller-supplied file URI is trusted.
+    const upload = await base44.asServiceRole.integrations.Core.UploadPrivateFile({
+      file: new File([bytes], `screenshot.${EXTENSIONS[mimeType] || 'png'}`, {
+        type: mimeType || 'image/png',
+      }),
+    });
+    const fileUri = upload?.file_uri;
+    if (!fileUri) {
+      return Response.json({ error: 'Could not read that screenshot' }, { status: 500 });
     }
 
     const signed = await base44.asServiceRole.integrations.Core.CreateFileSignedUrl({
