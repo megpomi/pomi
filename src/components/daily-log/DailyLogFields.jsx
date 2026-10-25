@@ -94,14 +94,29 @@ export function SymptomPicker({ value, onChange }) {
 
 export function SexToggle({ value, onChange }) {
   return (
-    <div className="flex items-center justify-between gap-4">
-      <Label htmlFor="had-sex">Had sex today</Label>
-      <Switch
-        id="had-sex"
-        checked={value}
-        onCheckedChange={onChange}
-        className="data-[state=checked]:bg-pomegranate-600"
-      />
+    <div className="flex justify-start">
+      <div
+        className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 transition ${
+          value
+            ? "border-pomegranate-400 bg-pomegranate-50"
+            : "border-slate-200 hover:border-pomegranate-200"
+        }`}
+      >
+        <Switch
+          id="had-sex"
+          checked={value}
+          onCheckedChange={onChange}
+          className="h-4 w-7 [&>span]:h-3 [&>span]:w-3 [&>span]:data-[state=checked]:translate-x-3 data-[state=checked]:bg-pomegranate-600"
+        />
+        <Label
+          htmlFor="had-sex"
+          className={`cursor-pointer text-xs ${
+            value ? "text-pomegranate-700" : "text-slate-600"
+          }`}
+        >
+          Sex
+        </Label>
+      </div>
     </div>
   );
 }
