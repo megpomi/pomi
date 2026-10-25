@@ -1,0 +1,66 @@
+{
+  "name": "DailyLog",
+  "type": "object",
+  "properties": {
+    "date": {
+      "type": "string",
+      "format": "date",
+      "title": "Date"
+    },
+    "flow_intensity": {
+      "type": "string",
+      "enum": [
+        "none",
+        "light",
+        "medium",
+        "heavy"
+      ],
+      "default": "none",
+      "title": "Flow"
+    },
+    "mood": {
+      "type": "string",
+      "enum": [
+        "great",
+        "good",
+        "okay",
+        "low",
+        "anxious"
+      ],
+      "title": "Mood"
+    },
+    "symptoms": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "cramps",
+          "headache",
+          "bloating",
+          "fatigue",
+          "breast_tenderness",
+          "acne",
+          "cravings",
+          "backache",
+          "mood_swings",
+          "insomnia",
+          "sex",
+          "ovulation_cramps",
+          "cervical_mucus",
+          "spotting",
+          "increased_libido"
+        ]
+      },
+      "default": [],
+      "title": "Symptoms"
+    },
+    "notes": {
+      "type": "string",
+      "title": "Notes",
+      "maxLength": 1000
+    }
+  },
+  "required": [
+    "date"
+  ]
+}
