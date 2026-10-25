@@ -12,6 +12,13 @@ const dayKey = (value) => {
   return `${d.getFullYear()}-${month}-${day}`;
 };
 
+// A stored yyyy-MM-dd day, rebuilt from local parts so it lands on the right
+// square in every timezone.
+const parseDayKey = (value) => {
+  const [year, month, day] = String(value).split("-").map(Number);
+  return new Date(year, month - 1, day);
+};
+
 // Every calendar day a log covers: start_date through end_date (a single day when open).
 const expandLog = (log) => {
   const days = [];
@@ -24,10 +31,26 @@ const expandLog = (log) => {
 
 // The month calendar with a dot on every day that has data, plus the details of
 // the day you tap. `title`/`action` fill an optional header row.
-export default function CalendarPanel({ logs, loading, title, action }) {
+export default function CalendarPanel({
+  logs,
+  dailyLogs = [],
+  loading,
+  title,
+  action,
+}) {
   const [selected, setSelected] = useState(new Date());
 
   const loggedDays = useMemo(() => logs.flatMap(expandLog), [logs]);
+
+  // Days the daily check-in recorded a symptom on, so a day that isn't part of
+  // a period can still be spotted and opened.
+  const symptomDays = useMemo(
+    () =>
+      dailyLogs
+        .filter((entry) => entry.symptoms?.length > 0)
+        .map((entry) => parseDayKey(entry.date)),
+    [dailyLogs]
+  );
 
   const selectedLog = useMemo(() => {
     if (!selected) return null;
@@ -40,6 +63,13 @@ export default function CalendarPanel({ logs, loading, title, action }) {
       }) || null
     );
   }, [logs, selected]);
+
+  const selectedDailyLog = useMemo(
+    () =>
+      (selected && dailyLogs.find((entry) => entry.date === dayKey(selected))) ||
+      null,
+    [dailyLogs, selected]
+  );
 
   const cycleDay = useMemo(
     () => (selected ? getCycleDay(logs, selected) : null),
@@ -64,7 +94,7 @@ export default function CalendarPanel({ logs, loading, title, action }) {
           mode="single"
           selected={selected}
           onSelect={(value) => value && setSelected(value)}
-          modifiers={{ logged: loggedDays }}
+          modifiers={{ logged: loggedDays, symptom: symptomDays }}
           components={{ DayContent: CalendarDay }}
           disabled={{ after: new Date() }}
           classNames={{
@@ -85,11 +115,19 @@ export default function CalendarPanel({ logs, loading, title, action }) {
           className="w-full p-3"
         />
 
-        <div className="flex items-center gap-2 px-4 pb-3 text-xs text-slate-500">
-          <span className="relative inline-flex h-4 w-4 items-center justify-center rounded-full bg-pomegranate-200/70">
-            <span className="h-1 w-1 rounded-full bg-pomegranate-600" />
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 px-4 pb-3 text-xs text-slate-500">
+          <span className="flex items-center gap-2">
+            <span className="relative inline-flex h-4 w-4 items-center justify-center rounded-full bg-pomegranate-200/70">
+              <span className="h-1 w-1 rounded-full bg-pomegranate-600" />
+            </span>
+            Period day
           </span>
-          Day with logged data — tap to view
+          <span className="flex items-center gap-2">
+            <span className="inline-flex h-4 w-4 items-center justify-center rounded-full border border-slate-200">
+              <span className="h-1.5 w-1.5 rounded-full bg-blue-500" />
+            </span>
+            Symptom logged, no period
+          </span>
         </div>
       </div>
 
@@ -97,7 +135,12 @@ export default function CalendarPanel({ logs, loading, title, action }) {
         {loading ? (
           <div className="h-32 animate-pulse rounded-3xl bg-white" />
         ) : (
-          <LoggedDayDetails date={selected} log={selectedLog} cycleDay={cycleDay} />
+          <LoggedDayDetails
+            date={selected}
+            log={selectedLog}
+            dailyLog={selectedDailyLog}
+            cycleDay={cycleDay}
+          />
         )}
       </div>
     </div>

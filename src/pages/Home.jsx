@@ -22,6 +22,7 @@ const PERIOD_REMINDERS = ["first_log", "period_due"];
 
 export default function Home() {
   const [logs, setLogs] = useState([]);
+  const [dailyLogs, setDailyLogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [checkingProfile, setCheckingProfile] = useState(true);
   const [user, setUser] = useState(null);
@@ -43,11 +44,15 @@ export default function Home() {
   const loadLogs = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await base44.entities.CycleLog.filter(
-        {},
-        { sort: "-start_date", limit: 100 }
-      );
-      setLogs(res.items);
+      const [cycles, dailies] = await Promise.all([
+        base44.entities.CycleLog.filter(
+          {},
+          { sort: "-start_date", limit: 100 }
+        ),
+        base44.entities.DailyLog.filter({}, { sort: "-date", limit: 200 }),
+      ]);
+      setLogs(cycles.items);
+      setDailyLogs(dailies.items);
     } catch (e) {
       toast({
         title: "Couldn't load your cycles",
@@ -159,6 +164,7 @@ export default function Home() {
           <div className="lg:col-span-3">
             <CalendarPanel
               logs={logs}
+              dailyLogs={dailyLogs}
               loading={loading}
               title="Your calendar"
               action={

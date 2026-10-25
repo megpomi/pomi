@@ -1,18 +1,26 @@
 import React from "react";
 
-// A pomegranate dot marks every day that has data stored, so it reads as tappable.
+// A pomegranate dot marks every day that has a period logged, and a blue dot
+// marks a day with a symptom logged but no period, so it reads as tappable.
 export default function CalendarDay({ date, activeModifiers }) {
+  const dots = [];
+  if (activeModifiers.logged) dots.push("bg-pomegranate-600");
+  if (activeModifiers.symptom) dots.push("bg-blue-500");
+
   return (
     <div className="relative flex h-full w-full items-center justify-center">
       <span>{date.getDate()}</span>
-      {activeModifiers.logged && (
-        <span
-          className={`absolute bottom-1 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full ${
-            activeModifiers.selected
-              ? "bg-primary-foreground"
-              : "bg-pomegranate-600"
-          }`}
-        />
+      {dots.length > 0 && (
+        <span className="absolute bottom-1 left-1/2 flex -translate-x-1/2 items-center gap-0.5">
+          {dots.map((color) => (
+            <span
+              key={color}
+              className={`h-1.5 w-1.5 rounded-full ${
+                activeModifiers.selected ? "bg-primary-foreground" : color
+              }`}
+            />
+          ))}
+        </span>
       )}
     </div>
   );
