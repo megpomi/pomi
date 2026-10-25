@@ -23,9 +23,13 @@ const EMPTY = {
   notes: "",
 };
 
-// Daily check-in for today. One entry per day: saving again updates it.
+// Daily check-in. One entry per day: saving again updates it. Opened with a
+// ?date= param it edits that day instead of today.
 export default function LogToday() {
-  const date = format(new Date(), "yyyy-MM-dd");
+  const today = format(new Date(), "yyyy-MM-dd");
+  const requestedDate = new URLSearchParams(window.location.search).get("date");
+  const date = requestedDate || today;
+  const isToday = date === today;
   const [form, setForm] = useState(EMPTY);
   const [entryId, setEntryId] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -49,7 +53,7 @@ export default function LogToday() {
           notes: entry?.notes || "",
         });
       })
-      .catch(() => active && setError("Couldn't load today's entry."))
+      .catch(() => active && setError("Couldn't load this day's entry."))
       .finally(() => active && setLoading(false));
     return () => {
       active = false;
@@ -76,8 +80,10 @@ export default function LogToday() {
         await base44.entities.DailyLog.create(payload);
       }
       toast({
-        title: "Today's entry saved",
-        description: "Thanks for checking in.",
+        title: isToday ? "Today's entry saved" : "Entry saved",
+        description: isToday
+          ? "Thanks for checking in."
+          : "Thanks for filling in that day.",
       });
       navigate("/");
     } catch (e) {
@@ -100,11 +106,13 @@ export default function LogToday() {
 
       <main className="mx-auto max-w-2xl px-5 py-8 sm:px-8 sm:py-12">
         <h1 className="font-heading text-3xl font-semibold text-slate-800 sm:text-4xl">
-          How are you today?
+          {isToday ? "How are you today?" : "Edit this day"}
         </h1>
         <p className="mt-2 text-sm text-slate-500">
-          {format(new Date(), "EEEE d MMMM")} — log your flow, mood and symptoms
-          for today.
+          {format(new Date(`${date}T00:00:00`), "EEEE d MMMM")} —{" "}
+          {isToday
+            ? "log your flow, mood and symptoms for today."
+            : "update the flow, mood and symptoms you logged for this day."}
         </p>
 
         {loading ? (

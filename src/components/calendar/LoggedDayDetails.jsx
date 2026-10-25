@@ -1,5 +1,7 @@
 import React from "react";
-import { Droplet } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Droplet, PencilLine } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { prettySymptom } from "@/lib/dailyLog";
 
 const FLOW_LABEL = { light: "Light", medium: "Medium", heavy: "Heavy" };
@@ -20,6 +22,14 @@ const prettyDate = (d) =>
         year: "numeric",
       })
     : "";
+
+// yyyy-MM-dd from local parts, so the day never shifts by a timezone offset.
+const dayKey = (d) => {
+  if (!d) return "";
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${d.getFullYear()}-${month}-${day}`;
+};
 
 export default function LoggedDayDetails({ date, log, dailyLog, cycleDay }) {
   // A period entry and the daily check-in are separate records for the same
@@ -95,6 +105,20 @@ export default function LoggedDayDetails({ date, log, dailyLog, cycleDay }) {
           )}
         </div>
       )}
+
+      <div className="mt-5">
+        <Button
+          asChild
+          variant="outline"
+          size="sm"
+          className="rounded-full border-pomegranate-200 text-pomegranate-600 hover:bg-pomegranate-50"
+        >
+          <Link to={`/log-today?date=${dayKey(date)}`}>
+            <PencilLine className="mr-1.5 h-4 w-4" />
+            Add or edit symptoms
+          </Link>
+        </Button>
+      </div>
     </div>
   );
 }
