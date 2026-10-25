@@ -70,7 +70,7 @@ export default function ReminderBell({ reminders, onDismiss, onLogPeriod }) {
                 {reminder.cta && (
                   <Button
                     size="sm"
-                    onClick={onLogPeriod}
+                    onClick={() => onLogPeriod(reminder)}
                     className="mt-2.5 h-7 rounded-full bg-pomegranate-600 px-3 text-xs hover:bg-pomegranate-700"
                   >
                     {reminder.cta}

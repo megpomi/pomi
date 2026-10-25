@@ -15,7 +15,9 @@ import { countTrackedDays, recordAdVisit } from "@/lib/donations";
 import ReminderBanner from "@/components/reminders/ReminderBanner";
 import ReminderBell from "@/components/reminders/ReminderBell";
 import { useReminders } from "@/hooks/use-reminders";
-import DailyLogSheet from "@/components/daily-log/DailyLogSheet";
+
+// Reminders that are about logging a period still open the calendar.
+const PERIOD_REMINDERS = ["first_log", "period_due"];
 
 export default function Home() {
   const [logs, setLogs] = useState([]);
@@ -24,16 +26,18 @@ export default function Home() {
   const [user, setUser] = useState(null);
   const { toast } = useToast();
   const { reminders, dismiss } = useReminders(logs);
-  const [logOpen, setLogOpen] = useState(false);
   const navigate = useNavigate();
   const goToLogPeriod = () => navigate("/calendar?log=1");
   const hasHistory = logs.length > 0;
 
-  // Until there's any history, the button starts the historical entry flow.
-  // Once history exists it becomes the daily check-in for today, and the
-  // historical entry page is reached from the calendar instead.
+  // Until there's any history, logging starts the historical entry flow. Once
+  // history exists it opens the daily check-in for today, and the historical
+  // entry page is reached from the calendar instead.
   const openLogger = () =>
-    hasHistory ? setLogOpen(true) : goToLogPeriod();
+    navigate(hasHistory ? "/log-today" : "/calendar?log=1");
+
+  const openFromReminder = (reminder) =>
+    PERIOD_REMINDERS.includes(reminder?.id) ? goToLogPeriod() : openLogger();
 
   const loadLogs = useCallback(async () => {
     setLoading(true);
@@ -84,7 +88,7 @@ export default function Home() {
         <ReminderBell
           reminders={reminders}
           onDismiss={dismiss}
-          onLogPeriod={goToLogPeriod}
+          onLogPeriod={openFromReminder}
         />
         <Button
           asChild
@@ -133,7 +137,7 @@ export default function Home() {
           <ReminderBanner
             reminder={reminders[0]}
             onDismiss={dismiss}
-            onLogPeriod={goToLogPeriod}
+            onLogPeriod={openFromReminder}
           />
         )}
 
@@ -170,18 +174,6 @@ export default function Home() {
           healthcare professional.
         </p>
       </main>
-
-      <DailyLogSheet
-        open={logOpen}
-        onOpenChange={setLogOpen}
-        onSaved={() => {
-          setLogOpen(false);
-          toast({
-            title: "Today's entry saved",
-            description: "Your check-in has been added.",
-          });
-        }}
-      />
     </div>
   );
 }

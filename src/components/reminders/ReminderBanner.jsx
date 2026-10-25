@@ -48,7 +48,7 @@ export default function ReminderBanner({
         {reminder.cta && (
           <Button
             size="sm"
-            onClick={onLogPeriod}
+            onClick={() => onLogPeriod(reminder)}
             className="mt-3 h-8 rounded-full bg-pomegranate-600 px-4 text-xs hover:bg-pomegranate-700"
           >
             {reminder.cta}
