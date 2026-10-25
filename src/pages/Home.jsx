@@ -83,6 +83,12 @@ export default function Home() {
 
   const daysTracked = countTrackedDays(logs);
 
+  // The name given during onboarding greets them here; accounts made another way
+  // fall back to the first word of their account name.
+  const firstName = (user?.preferred_name || user?.full_name || "")
+    .trim()
+    .split(/\s+/)[0];
+
   if (checkingProfile) {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-background">
@@ -133,7 +139,7 @@ export default function Home() {
         {/* Greeting */}
         <div className="mb-8">
           <h1 className="font-heading text-3xl font-semibold text-slate-800 sm:text-4xl">
-            Hello{logs.length ? "" : ", welcome"}
+            Hello{firstName ? `, ${firstName}` : logs.length ? "" : ", welcome"}
           </h1>
           <p className="mt-1 text-sm text-slate-500">
             {logs.length
