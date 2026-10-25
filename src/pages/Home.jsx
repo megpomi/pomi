@@ -170,7 +170,7 @@ export default function Home() {
                 >
                   <Link to="/calendar?log=1">
                     <CalendarPlus className="mr-1.5 h-4 w-4" />
-                    Log historical data
+                    Log historical menstrual days
                   </Link>
                 </Button>
               }
