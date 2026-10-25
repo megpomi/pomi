@@ -17,15 +17,15 @@ const readDismissed = () => {
   }
 };
 
-export function useReminders(logs) {
+export function useReminders(logs, dailyLogs) {
   const [dismissed, setDismissed] = useState(readDismissed);
 
   const reminders = useMemo(
     () =>
-      buildReminders(logs).filter(
+      buildReminders(logs, dailyLogs).filter(
         (r) => !dismissed.includes(`${r.id}@${dayKey()}`)
       ),
-    [logs, dismissed]
+    [logs, dailyLogs, dismissed]
   );
 
   const dismiss = (id) => {

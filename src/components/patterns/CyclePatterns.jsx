@@ -4,24 +4,44 @@ import MoodTrendChart from "@/components/patterns/MoodTrendChart";
 import SymptomTrendChart from "@/components/patterns/SymptomTrendChart";
 
 const MOOD_SCORE = { anxious: 1, low: 2, okay: 3, good: 4, great: 5 };
-const CYCLES_SHOWN = 6;
+const DAYS_SHOWN = 10;
 
-// One point per logged cycle, oldest to newest.
-const toCycleData = (logs) =>
-  [...logs]
-    .sort((a, b) => String(a.start_date).localeCompare(String(b.start_date)))
-    .slice(-CYCLES_SHOWN)
-    .map((log) => ({
-      label: new Date(log.start_date).toLocaleDateString(undefined, {
+// One point per day the user logged something — a period day or a daily
+// check-in — oldest to newest, so the charts always show the latest data.
+const toDayData = (logs, dailyLogs) => {
+  const byDay = new Map();
+
+  const add = (date, mood, symptoms) => {
+    const key = String(date || "").slice(0, 10);
+    if (!key) return;
+    const day = byDay.get(key) || { mood: null, symptoms: 0 };
+    byDay.set(key, {
+      mood: MOOD_SCORE[mood] ?? day.mood,
+      symptoms: Math.max(day.symptoms, symptoms),
+    });
+  };
+
+  logs.forEach((log) =>
+    add(log.start_date, log.mood, log.symptoms?.length || 0)
+  );
+  dailyLogs.forEach((entry) =>
+    add(entry.date, entry.mood, entry.symptoms?.length || 0)
+  );
+
+  return [...byDay.entries()]
+    .sort(([a], [b]) => a.localeCompare(b))
+    .slice(-DAYS_SHOWN)
+    .map(([key, day]) => ({
+      label: new Date(`${key}T00:00:00`).toLocaleDateString(undefined, {
         month: "short",
         day: "numeric",
       }),
-      mood: MOOD_SCORE[log.mood] ?? null,
-      symptoms: log.symptoms?.length || 0,
+      ...day,
     }));
+};
 
-export default function CyclePatterns({ logs }) {
-  const data = toCycleData(logs);
+export default function CyclePatterns({ logs, dailyLogs = [] }) {
+  const data = toDayData(logs, dailyLogs);
 
   return (
     <div className="rounded-3xl border border-slate-100 bg-white p-6 sm:p-8">
@@ -32,12 +52,12 @@ export default function CyclePatterns({ logs }) {
         </h2>
       </div>
       <p className="mb-5 text-sm text-slate-500">
-        How you felt and what you logged across your last cycles.
+        How you felt and what you logged on your most recent days.
       </p>
 
       {data.length < 2 ? (
         <p className="rounded-2xl bg-pomegranate-50 p-4 text-sm text-pomegranate-700">
-          Log a couple more cycles and your trends will appear here.
+          Log a few more days and your trends will appear here.
         </p>
       ) : (
         <div className="grid gap-6 sm:grid-cols-2">

@@ -22,7 +22,7 @@ const startOfDay = (value) => {
 
 const daysBetween = (from, to) => Math.round((to - from) / DAY);
 
-export function buildReminders(logs = []) {
+export function buildReminders(logs = [], dailyLogs = []) {
   const today = startOfDay(new Date());
   const phase = getCurrentPhase(logs);
 
@@ -43,6 +43,12 @@ export function buildReminders(logs = []) {
     const end = log.end_date ? startOfDay(log.end_date) : start;
     return start <= today && today <= end;
   });
+
+  // The daily check-in counts as a log too: logging symptoms is logging data.
+  const checkedInToday = dailyLogs.some(
+    (entry) => String(entry.date).slice(0, 10) === dayKey(today)
+  );
+  const loggedSomethingToday = loggedToday || checkedInToday;
 
   const reminders = [];
 
@@ -86,7 +92,7 @@ export function buildReminders(logs = []) {
 
   if (
     daysSinceLog >= 5 &&
-    !loggedToday &&
+    !loggedSomethingToday &&
     phase.phase !== "period" &&
     (phase.daysUntilNext == null || phase.daysUntilNext > 2)
   ) {
@@ -96,6 +102,15 @@ export function buildReminders(logs = []) {
       title: `It's been ${daysSinceLog} days since your last log`,
       body: "A quick check-in on mood or symptoms keeps your patterns — and your impact tracking — consistent.",
       cta: "Log today",
+    });
+  }
+
+  if (loggedSomethingToday) {
+    reminders.push({
+      id: "logged_today",
+      tone: "info",
+      title: "Thanks for logging today",
+      body: "Your entry is saved — it keeps your patterns and your impact up to date.",
     });
   }
 

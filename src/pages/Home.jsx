@@ -27,7 +27,7 @@ export default function Home() {
   const [checkingProfile, setCheckingProfile] = useState(true);
   const [user, setUser] = useState(null);
   const { toast } = useToast();
-  const { reminders, dismiss } = useReminders(logs);
+  const { reminders, dismiss } = useReminders(logs, dailyLogs);
   const navigate = useNavigate();
   const goToLogPeriod = () => navigate("/calendar?log=1");
   const hasHistory = logs.length > 0;
@@ -194,7 +194,7 @@ export default function Home() {
 
         {/* Patterns */}
         <div className="mt-6">
-          <CyclePatterns logs={logs} />
+          <CyclePatterns logs={logs} dailyLogs={dailyLogs} />
         </div>
 
         <p className="mt-10 text-center text-xs text-slate-400">
