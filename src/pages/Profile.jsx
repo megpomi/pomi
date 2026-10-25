@@ -8,6 +8,7 @@ import AppHeader from "@/components/AppHeader";
 import TrackingPreferences from "@/components/profile/TrackingPreferences";
 import CausePreferences from "@/components/profile/CausePreferences";
 import CurrencyPreference from "@/components/profile/CurrencyPreference";
+import NotificationPreferences from "@/components/profile/NotificationPreferences";
 import { DEFAULT_CURRENCY, currencyOf } from "@/lib/currency";
 
 export default function Profile() {
@@ -16,6 +17,10 @@ export default function Profile() {
   const [tracking, setTracking] = useState([]);
   const [causes, setCauses] = useState([]);
   const [currency, setCurrency] = useState(DEFAULT_CURRENCY);
+  const [notifications, setNotifications] = useState({
+    email: true,
+    push: false,
+  });
   const [saving, setSaving] = useState(false);
   const { toast } = useToast();
   // Clears the stored session and reloads, so the app opens as a new visitor.
@@ -31,6 +36,10 @@ export default function Profile() {
         setTracking(u?.tracking_focus || []);
         setCauses(u?.charity_interests || []);
         setCurrency(currencyOf(u));
+        setNotifications({
+          email: u?.notify_email ?? true,
+          push: u?.notify_push ?? false,
+        });
       })
       .catch(() => setUser(null))
       .finally(() => setLoading(false));
@@ -43,10 +52,13 @@ export default function Profile() {
         tracking_focus: tracking,
         charity_interests: causes,
         currency,
+        notify_email: notifications.email,
+        notify_push: notifications.push,
       });
       toast({
         title: "Preferences saved",
-        description: "Your tracking areas, causes and currency are updated.",
+        description:
+          "Your tracking areas, causes, currency and notifications are updated.",
       });
     } catch (e) {
       toast({
@@ -109,6 +121,10 @@ export default function Profile() {
           <TrackingPreferences selected={tracking} onChange={setTracking} />
           <CausePreferences selected={causes} onChange={setCauses} />
           <CurrencyPreference value={currency} onChange={setCurrency} />
+          <NotificationPreferences
+            preferences={notifications}
+            onChange={setNotifications}
+          />
         </div>
 
         <Button

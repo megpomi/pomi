@@ -34,6 +34,16 @@
       "type": "object",
       "description": "Ad-supported visits per calendar month, keyed \"YYYY-MM\". Each visit adds one ad view.",
       "default": {}
+    },
+    "notify_email": {
+      "type": "boolean",
+      "description": "Whether the user wants reminder emails, such as the daily check-in prompt.",
+      "default": true
+    },
+    "notify_push": {
+      "type": "boolean",
+      "description": "Whether the user wants push notifications on their phone.",
+      "default": false
     }
   },
   "required": [
