@@ -19,8 +19,6 @@ const toDate = (value) => {
 export const monthKey = (date = new Date()) =>
   `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}`;
 
-export const isSubscriber = (user) => !!user?.plan && user.plan !== "free";
-
 // --- days tracked (shown as the tracking stat) ---
 
 // Days covered by one log — an open entry counts as a single day.
@@ -47,8 +45,9 @@ export const adViewsAllTime = (user) =>
   );
 
 // One ad view per app visit, recorded once per browser session for ad-supported users.
-export const recordAdVisit = async (user) => {
-  if (!user || isSubscriber(user) || sessionStorage.getItem(VISIT_KEY)) {
+// `subscriber` is the server-derived ad-free flag (useIsSubscriber), not a User field.
+export const recordAdVisit = async (user, subscriber) => {
+  if (!user || subscriber || sessionStorage.getItem(VISIT_KEY)) {
     return user;
   }
   sessionStorage.setItem(VISIT_KEY, "1");
@@ -71,8 +70,8 @@ export const recordAdVisit = async (user) => {
 // --- subscription donations (ad-free plans) ---
 
 // Whole days of subscription, optionally only those inside the current month.
-const subscriptionDays = (user, { thisMonth = false } = {}) => {
-  if (!isSubscriber(user) || !user.plan_started_at) return 0;
+const subscriptionDays = (user, subscriber, { thisMonth = false } = {}) => {
+  if (!subscriber || !user?.plan_started_at) return 0;
 
   const start = toDate(user.plan_started_at);
   const today = toDate(new Date());
@@ -87,17 +86,17 @@ const subscriptionDays = (user, { thisMonth = false } = {}) => {
 };
 
 // The revenue this user's activity generated, and the donation pot (20% of it) that follows.
-export const donationTotals = (user) => {
+export const donationTotals = (user, subscriber) => {
   let mode;
   let thisMonthCount;
   let allTimeCount;
   let thisMonthRevenue;
   let allTimeRevenue;
 
-  if (isSubscriber(user)) {
+  if (subscriber) {
     mode = "subscription";
-    thisMonthCount = subscriptionDays(user, { thisMonth: true });
-    allTimeCount = subscriptionDays(user);
+    thisMonthCount = subscriptionDays(user, subscriber, { thisMonth: true });
+    allTimeCount = subscriptionDays(user, subscriber);
     thisMonthRevenue = thisMonthCount * SUBSCRIPTION_REVENUE_PER_DAY;
     allTimeRevenue = allTimeCount * SUBSCRIPTION_REVENUE_PER_DAY;
   } else {

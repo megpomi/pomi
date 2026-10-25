@@ -15,6 +15,7 @@ import { countTrackedDays, recordAdVisit } from "@/lib/donations";
 import ReminderBanner from "@/components/reminders/ReminderBanner";
 import ReminderBell from "@/components/reminders/ReminderBell";
 import { useReminders } from "@/hooks/use-reminders";
+import useIsSubscriber from "@/hooks/use-is-subscriber";
 
 // Reminders that are about logging a period still open the calendar.
 const PERIOD_REMINDERS = ["first_log", "period_due"];
@@ -62,14 +63,18 @@ export default function Home() {
     loadLogs();
   }, [loadLogs]);
 
+  const subscriber = useIsSubscriber();
+
   useEffect(() => {
+    // Wait for the server's ad-free answer, so a subscriber's visit is never logged as an ad view.
+    if (subscriber === null) return;
     base44.auth
       .me()
-      .then((u) => (u ? recordAdVisit(u) : u))
+      .then((u) => (u ? recordAdVisit(u, subscriber) : u))
       .then((u) => setUser(u || null))
       .catch(() => setUser(null))
       .finally(() => setCheckingProfile(false));
-  }, []);
+  }, [subscriber]);
 
   const daysTracked = countTrackedDays(logs);
 

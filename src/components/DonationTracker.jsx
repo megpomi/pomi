@@ -8,12 +8,14 @@ import {
 } from "@/lib/donations";
 import DonationCauses from "@/components/donations/DonationCauses";
 import { currencyOf, formatMoney } from "@/lib/currency";
+import useIsSubscriber from "@/hooks/use-is-subscriber";
 
 const percent = `${Math.round(DONATION_SHARE * 100)}%`;
 
 export default function DonationTracker({ user }) {
   const money = (value) => formatMoney(value, currencyOf(user));
-  const totals = donationTotals(user);
+  const subscriber = useIsSubscriber();
+  const totals = donationTotals(user, subscriber);
   const subscribed = totals.mode === "subscription";
 
   const countLabel = (count) =>

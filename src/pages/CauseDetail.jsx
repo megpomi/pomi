@@ -6,11 +6,13 @@ import AppHeader from "@/components/AppHeader";
 import { charityByValue } from "@/lib/charities";
 import { donationTotals, splitByCause } from "@/lib/donations";
 import { currencyOf, formatMoney } from "@/lib/currency";
+import useIsSubscriber from "@/hooks/use-is-subscriber";
 
 export default function CauseDetail() {
   const { causeValue } = useParams();
   const cause = charityByValue(causeValue);
   const [user, setUser] = useState(null);
+  const subscriber = useIsSubscriber();
 
   useEffect(() => {
     base44.auth
@@ -37,7 +39,7 @@ export default function CauseDetail() {
 
   const Icon = cause.icon;
   const money = (value) => formatMoney(value, currencyOf(user));
-  const totals = donationTotals(user);
+  const totals = donationTotals(user, subscriber);
   const shareFor = (pot) =>
     splitByCause(user, pot).find((s) => s.value === cause.value)?.amount;
   const allTime = shareFor(totals.allTime);
