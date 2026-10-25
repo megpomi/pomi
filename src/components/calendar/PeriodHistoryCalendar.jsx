@@ -2,6 +2,7 @@ import React, { useCallback, useMemo, useRef, useState } from "react";
 import { base44 } from "@/api/base44Client";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
+import CalendarDay from "@/components/calendar/CalendarDay";
 import ImportFromScreenshot from "@/components/calendar/ImportFromScreenshot";
 import { groupBleedingDays } from "@/lib/cycle";
 
@@ -97,11 +98,17 @@ export default function PeriodHistoryCalendar({ logs, onSaved }) {
           <Calendar
             mode="multiple"
             selected={days}
-            onSelect={(value) => selectDays(value || [])}
+            onSelect={(value) =>
+              // Days already logged stay as they are, so they can't be saved twice.
+              selectDays(
+                (value || []).filter((day) => !loggedKeys.has(formatDay(day)))
+              )
+            }
             numberOfMonths={12}
             defaultMonth={historyStart}
-            disabled={[{ after: today }, ...loggedDays]}
+            disabled={{ after: today }}
             modifiers={{ logged: loggedDays }}
+            components={{ DayContent: CalendarDay }}
             classNames={{
               months: "flex flex-col items-center",
               month: "w-full space-y-3",
@@ -114,11 +121,18 @@ export default function PeriodHistoryCalendar({ logs, onSaved }) {
               day_selected:
                 "bg-pomegranate-600 text-primary-foreground hover:bg-pomegranate-600 focus:bg-pomegranate-600",
               day_logged:
-                "bg-pomegranate-200/70 font-medium text-pomegranate-900",
+                "bg-pomegranate-200 font-semibold text-pomegranate-900 hover:bg-pomegranate-200",
               day_today: "font-semibold",
             }}
             className="w-full p-3"
           />
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2 px-4 pt-3 text-xs text-slate-500">
+          <span className="h-3.5 w-3.5 rounded-full bg-pomegranate-200" />
+          Already logged
+          <span className="ml-2 h-3.5 w-3.5 rounded-full bg-pomegranate-600" />
+          Selected now
         </div>
 
         {error && (

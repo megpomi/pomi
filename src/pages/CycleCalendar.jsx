@@ -6,6 +6,7 @@ import AppHeader from "@/components/AppHeader";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { Calendar } from "@/components/ui/calendar";
+import CalendarDay from "@/components/calendar/CalendarDay";
 import LoggedDayDetails from "@/components/calendar/LoggedDayDetails";
 import PeriodHistoryCalendar from "@/components/calendar/PeriodHistoryCalendar";
 import { getCycleDay } from "@/lib/cycle";
@@ -26,22 +27,6 @@ const expandLog = (log) => {
   }
   return days;
 };
-
-// A pomegranate dot marks every day that has data stored, so it reads as tappable.
-const CalendarDay = ({ date, activeModifiers }) => (
-  <div className="relative flex h-full w-full items-center justify-center">
-    <span>{date.getDate()}</span>
-    {activeModifiers.logged && (
-      <span
-        className={`absolute bottom-1 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full ${
-          activeModifiers.selected
-            ? "bg-primary-foreground"
-            : "bg-pomegranate-600"
-        }`}
-      />
-    )}
-  </div>
-);
 
 export default function CycleCalendar() {
   const [logs, setLogs] = useState([]);
