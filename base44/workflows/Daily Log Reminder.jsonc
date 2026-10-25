@@ -1,0 +1,49 @@
+{
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "daily_log_reminder",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "send_reminder": {
+          "call": "send_email",
+          "with": {
+            "template_name": "DailyLogReminder",
+            "to": "megrounsley@gmail.com",
+            "description": "Nudges you to log today's symptoms, flow and mood",
+            "variables": {
+              "first_name": "Megan"
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Send the evening reminder",
+            "description": "8pm every day"
+          }
+        }
+      }
+    ]
+  },
+  "description": "Emails a reminder every evening at 8pm to log symptoms and cycle data",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "recurring",
+      "cron_expression": "0 20 * * *",
+      "one_time_date": null,
+      "timezone": "Europe/Madrid",
+      "interval_value": null,
+      "interval_unit": null,
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "name": "Daily Log Reminder"
+}
