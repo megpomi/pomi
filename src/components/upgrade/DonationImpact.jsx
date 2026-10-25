@@ -6,14 +6,12 @@ const TIERS = [
   {
     key: "free",
     label: "Free with ads",
-    amount: "£0.40 / month",
     width: "20%",
     bar: "bg-pomegranate-200",
   },
   {
     key: "adfree",
     label: "Ad-free",
-    amount: "£2.00 / month",
     width: "100%",
     bar: "bg-pomegranate-600",
   },
@@ -38,9 +36,8 @@ export default function DonationImpact({ charityInterests = [] }) {
       <div className="mt-5 space-y-4">
         {TIERS.map((tier) => (
           <div key={tier.key}>
-            <div className="flex items-baseline justify-between text-sm">
-              <span className="font-medium text-slate-700">{tier.label}</span>
-              <span className="text-slate-500">{tier.amount}</span>
+            <div className="text-sm font-medium text-slate-700">
+              {tier.label}
             </div>
             <div className="mt-2 h-2.5 w-full overflow-hidden rounded-full bg-pomegranate-50">
               <div
@@ -53,7 +50,7 @@ export default function DonationImpact({ charityInterests = [] }) {
       </div>
 
       <p className="mt-5 text-sm leading-relaxed text-slate-500">
-        Going ad-free sends roughly five times more to the women's health causes
+        Going ad-free increases the donations sent to the women's health causes
         you care about — and every penny is tracked for you.
       </p>
 

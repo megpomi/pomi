@@ -9,7 +9,7 @@ const BENEFITS = [
   },
   {
     icon: HeartHandshake,
-    title: "Five times the donation",
+    title: "Increases your donation",
     desc: "Instead of ad revenue, your subscription funds the causes you chose.",
   },
   {
