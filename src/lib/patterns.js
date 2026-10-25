@@ -93,8 +93,8 @@ export function symptomBreakdown(logs, dailyLogs, month) {
     }));
 }
 
-// The headline numbers for the month: days logged, symptoms logged, and the
-// mood the user reported most often.
+// The headline numbers for the month: the days something was logged, the days
+// symptoms were logged, symptoms logged, and the mood reported most often.
 export function summarise(series) {
   const moods = series.map((day) => day.mood).filter(Boolean);
   const counts = moods.reduce(
@@ -105,6 +105,7 @@ export function summarise(series) {
 
   return {
     days: series.length,
+    symptomDays: series.filter((day) => day.symptoms > 0).length,
     symptoms: series.reduce((total, day) => total + day.symptoms, 0),
     mood: topMood ? MOOD_WORD[topMood] : null,
   };

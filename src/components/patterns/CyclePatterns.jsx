@@ -38,7 +38,7 @@ export default function CyclePatterns({ logs, dailyLogs = [] }) {
   const isThisMonth = month.getTime() === thisMonth.getTime();
 
   const tiles = [
-    { label: "Days logged", value: stats.days },
+    { label: "Symptom days", value: stats.symptomDays },
     { label: "Symptoms logged", value: stats.symptoms },
     { label: "Usual mood", value: stats.mood || "—" },
   ];
