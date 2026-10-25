@@ -82,40 +82,47 @@ export default function ImportFromScreenshot({ onImported }) {
     }
   };
 
-  const openAlbum = () => {
+  // The picker dialog takes a moment to unmount, and until it does the page is
+  // still locked by it, so give it a tick before opening the file chooser.
+  const openPicker = (open) => {
     setPickerOpen(false);
-    albumRef.current?.click();
+    window.setTimeout(open, 80);
   };
 
-  const openFileBrowser = async () => {
-    setPickerOpen(false);
-    if (typeof window.showOpenFilePicker === "function") {
-      try {
-        const handles = await window.showOpenFilePicker({
-          multiple: true,
-          types: [
-            {
-              description: "Images",
-              accept: {
-                "image/*": [".png", ".jpg", ".jpeg", ".webp", ".gif", ".heic"],
+  const openAlbum = () => openPicker(() => albumRef.current?.click());
+
+  const openFileBrowser = () =>
+    openPicker(async () => {
+      if (typeof window.showOpenFilePicker === "function") {
+        try {
+          const handles = await window.showOpenFilePicker({
+            multiple: true,
+            types: [
+              {
+                description: "Images",
+                accept: {
+                  "image/*": [".png", ".jpg", ".jpeg", ".webp", ".gif", ".heic"],
+                },
               },
-            },
-          ],
-        });
-        const files = await Promise.all(handles.map((handle) => handle.getFile()));
-        handleFiles(files);
-        return;
-      } catch (e) {
-        if (e?.name === "AbortError") return;
+            ],
+          });
+          const files = await Promise.all(
+            handles.map((handle) => handle.getFile())
+          );
+          handleFiles(files);
+          return;
+        } catch (e) {
+          if (e?.name === "AbortError") return;
+        }
       }
-    }
-    fileRef.current?.click();
-  };
+      fileRef.current?.click();
+    });
 
   const onInputChange = (e) => {
-    const files = e.target.files;
+    // Read the files before clearing the input — resetting it can empty the list.
+    const list = Array.from(e.target.files || []);
     e.target.value = "";
-    handleFiles(files);
+    handleFiles(list);
   };
 
   return (
@@ -181,7 +188,7 @@ export default function ImportFromScreenshot({ onImported }) {
         onChange={onInputChange}
       />
 
-      <Dialog open={pickerOpen} onOpenChange={setPickerOpen}>
+      <Dialog open={pickerOpen} onOpenChange={setPickerOpen} modal={false}>
         <DialogContent className="max-w-sm rounded-3xl">
           <DialogHeader>
             <DialogTitle className="font-heading text-lg">

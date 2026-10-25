@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { base44 } from "@/api/base44Client";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -25,8 +25,16 @@ const expandLog = (log) => {
 
 export default function PeriodHistoryCalendar({ logs, onSaved }) {
   const [days, setDays] = useState([]);
+  const daysRef = useRef([]);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+
+  // Keeps the ref in step with the selection so several screenshots imported
+  // in one go build on each other instead of overwriting one another.
+  const selectDays = (next) => {
+    daysRef.current = next;
+    setDays(next);
+  };
 
   const today = new Date();
   const historyStart = new Date(today.getFullYear(), today.getMonth() - 11, 1);
@@ -39,8 +47,9 @@ export default function PeriodHistoryCalendar({ logs, onSaved }) {
 
   // Adds the days read from an imported screenshot, skipping anything already there.
   const mergeImported = (values) => {
-    const keys = new Set(days.map(formatDay));
-    const next = [...days];
+    const current = daysRef.current;
+    const keys = new Set(current.map(formatDay));
+    const next = [...current];
     values.forEach((value) => {
       const date = new Date(`${value}T00:00:00`);
       const key = formatDay(date);
@@ -48,8 +57,8 @@ export default function PeriodHistoryCalendar({ logs, onSaved }) {
       keys.add(key);
       next.push(date);
     });
-    setDays(next);
-    return next.length - days.length;
+    selectDays(next);
+    return next.length - current.length;
   };
 
   // Opens on the most recent month, with the earlier months scrolled above it.
@@ -66,7 +75,7 @@ export default function PeriodHistoryCalendar({ logs, onSaved }) {
       await base44.entities.CycleLog.bulkCreate(
         runs.map((run) => ({ ...run, flow_intensity: "medium" }))
       );
-      setDays([]);
+      selectDays([]);
       onSaved();
     } catch (e) {
       setError(e?.message || "Couldn't save your days. Please try again.");
@@ -86,7 +95,7 @@ export default function PeriodHistoryCalendar({ logs, onSaved }) {
           <Calendar
             mode="multiple"
             selected={days}
-            onSelect={(value) => setDays(value || [])}
+            onSelect={(value) => selectDays(value || [])}
             numberOfMonths={12}
             defaultMonth={historyStart}
             disabled={[{ after: today }, ...loggedDays]}
