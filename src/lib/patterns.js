@@ -93,8 +93,18 @@ export function symptomBreakdown(logs, dailyLogs, month) {
     }));
 }
 
-// The headline numbers for the month: the days something was logged, the days
-// symptoms were logged, symptoms logged, and the mood reported most often.
+// The days of that month carrying a symptom dot in the calendar — a daily
+// check-in that recorded at least one symptom.
+export function symptomDayCount(dailyLogs, month) {
+  const key = monthKey(month);
+  return dailyLogs.filter(
+    (entry) =>
+      String(entry.date || "").startsWith(key) && entry.symptoms?.length > 0
+  ).length;
+}
+
+// The headline numbers for the month: symptoms logged and the mood reported
+// most often.
 export function summarise(series) {
   const moods = series.map((day) => day.mood).filter(Boolean);
   const counts = moods.reduce(
@@ -104,8 +114,6 @@ export function summarise(series) {
   const topMood = Object.entries(counts).sort((a, b) => b[1] - a[1])[0]?.[0];
 
   return {
-    days: series.length,
-    symptomDays: series.filter((day) => day.symptoms > 0).length,
     symptoms: series.reduce((total, day) => total + day.symptoms, 0),
     mood: topMood ? MOOD_WORD[topMood] : null,
   };

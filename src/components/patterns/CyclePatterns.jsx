@@ -9,6 +9,7 @@ import {
   startOfMonth,
   summarise,
   symptomBreakdown,
+  symptomDayCount,
 } from "@/lib/patterns";
 
 const SECTION_LABEL =
@@ -31,6 +32,10 @@ export default function CyclePatterns({ logs, dailyLogs = [] }) {
     [logs, dailyLogs, month]
   );
   const stats = useMemo(() => summarise(series), [series]);
+  const symptomDays = useMemo(
+    () => symptomDayCount(dailyLogs, month),
+    [dailyLogs, month]
+  );
   const symptoms = useMemo(
     () => symptomBreakdown(logs, dailyLogs, month),
     [logs, dailyLogs, month]
@@ -38,7 +43,7 @@ export default function CyclePatterns({ logs, dailyLogs = [] }) {
   const isThisMonth = month.getTime() === thisMonth.getTime();
 
   const tiles = [
-    { label: "Symptom days", value: stats.symptomDays },
+    { label: "Days logged", value: symptomDays },
     { label: "Symptoms logged", value: stats.symptoms },
     { label: "Usual mood", value: stats.mood || "—" },
   ];
