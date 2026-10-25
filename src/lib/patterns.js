@@ -2,6 +2,8 @@
 // stepper moving back through earlier ones. Everything here is derived from the
 // logs the user already has, so nothing extra is stored.
 
+import { prettySymptom } from "@/lib/dailyLog";
+
 export const MOOD_SCORE = { anxious: 1, low: 2, okay: 3, good: 4, great: 5 };
 export const MOOD_WORD = {
   1: "Anxious",
@@ -63,6 +65,31 @@ export function monthSeries(logs, dailyLogs, month) {
       label: dayLabel(day),
       title: dayTitle(day),
       ...entry,
+    }));
+}
+
+// How often each symptom was logged that month, busiest first, as the tiles the
+// user reads instead of a chart.
+export function symptomBreakdown(logs, dailyLogs, month) {
+  const key = monthKey(month);
+  const counts = new Map();
+
+  const collect = (date, symptoms) => {
+    if (!String(date || "").startsWith(key)) return;
+    (symptoms || []).forEach((symptom) =>
+      counts.set(symptom, (counts.get(symptom) || 0) + 1)
+    );
+  };
+
+  logs.forEach((log) => collect(log.start_date, log.symptoms));
+  dailyLogs.forEach((entry) => collect(entry.date, entry.symptoms));
+
+  return [...counts.entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .map(([symptom, count]) => ({
+      key: symptom,
+      label: prettySymptom(symptom),
+      count,
     }));
 }
 

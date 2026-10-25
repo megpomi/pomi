@@ -1,17 +1,17 @@
 import React, { useMemo, useState } from "react";
 import { TrendingUp } from "lucide-react";
-import MoodTrendChart from "@/components/patterns/MoodTrendChart";
-import SymptomTrendChart from "@/components/patterns/SymptomTrendChart";
 import MonthStepper from "@/components/patterns/MonthStepper";
+import SymptomTiles from "@/components/patterns/SymptomTiles";
 import {
   formatMonth,
   monthSeries,
   shiftMonth,
   startOfMonth,
   summarise,
+  symptomBreakdown,
 } from "@/lib/patterns";
 
-const CHART_LABEL =
+const SECTION_LABEL =
   "mb-2 text-xs font-medium uppercase tracking-[0.12em] text-pomegranate-700";
 
 // The month-by-month view of what the user logged: the present month on open,
@@ -31,6 +31,10 @@ export default function CyclePatterns({ logs, dailyLogs = [] }) {
     [logs, dailyLogs, month]
   );
   const stats = useMemo(() => summarise(series), [series]);
+  const symptoms = useMemo(
+    () => symptomBreakdown(logs, dailyLogs, month),
+    [logs, dailyLogs, month]
+  );
   const isThisMonth = month.getTime() === thisMonth.getTime();
 
   const tiles = [
@@ -84,15 +88,12 @@ export default function CyclePatterns({ logs, dailyLogs = [] }) {
             ))}
           </div>
 
-          <div className="grid gap-6 sm:grid-cols-2">
-            <div>
-              <p className={CHART_LABEL}>Mood</p>
-              <MoodTrendChart data={series} />
-            </div>
-            <div>
-              <p className={CHART_LABEL}>Symptoms logged</p>
-              <SymptomTrendChart data={series} />
-            </div>
+          <div>
+            <p className={SECTION_LABEL}>Symptoms logged</p>
+            <SymptomTiles
+              symptoms={symptoms}
+              monthLabel={formatMonth(month)}
+            />
           </div>
         </>
       )}
