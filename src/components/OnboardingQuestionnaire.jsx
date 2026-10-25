@@ -160,16 +160,14 @@ export default function OnboardingQuestionnaire({ draft, onComplete }) {
         </div>
 
         <div className="mt-6 flex items-center gap-3">
-          {!isFirst && (
-            <Button
-              variant="outline"
-              onClick={() => setStep(step - 1)}
-              className="rounded-full border-pomegranate-200 px-5 text-pomegranate-600 hover:bg-pomegranate-50"
-            >
-              <ArrowLeft className="mr-1.5 h-4 w-4" />
-              Back
-            </Button>
-          )}
+          <Button
+            variant="outline"
+            onClick={() => setStep(isFirst ? 0 : step - 1)}
+            className="rounded-full border-pomegranate-200 px-5 text-pomegranate-600 hover:bg-pomegranate-50"
+          >
+            <ArrowLeft className="mr-1.5 h-4 w-4" />
+            Back
+          </Button>
           <Button
             onClick={() => setStep(step + 1)}
             disabled={!selected.length}
