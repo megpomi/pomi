@@ -50,7 +50,7 @@ export default function CyclePatterns({ logs, dailyLogs = [] }) {
           <div className="flex items-center gap-2">
             <TrendingUp className="h-4 w-4 text-pomegranate-400" />
             <h2 className="font-heading text-lg font-semibold text-slate-800">
-              Your patterns
+              Your symptom patterns
             </h2>
           </div>
           <p className="mt-1 text-sm text-slate-500">
