@@ -91,12 +91,17 @@ export const AuthProvider = ({ children }) => {
       setIsLoadingAuth(false);
       setIsAuthenticated(false);
       setAuthChecked(true);
-      
-      // If user auth fails, it might be an expired token
-      if (error.status === 401 || error.status === 403) {
+
+      // This app is open to everyone: a missing, expired or invalid session just
+      // means the visitor is browsing anonymously, so they are never bounced to
+      // a sign-in page when they open the app.
+      if (
+        error.status === 403 &&
+        error.data?.extra_data?.reason === 'user_not_registered'
+      ) {
         setAuthError({
-          type: 'auth_required',
-          message: 'Authentication required'
+          type: 'user_not_registered',
+          message: 'User not registered for this app'
         });
       }
     }

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Droplet, Heart, Navigation } from "lucide-react";
@@ -82,6 +83,16 @@ export default function IntroStep({ onStart }) {
               Get started
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
+
+            <p className="mt-4 text-center text-sm text-slate-500">
+              Already have an account?{" "}
+              <Link
+                to="/login"
+                className="font-medium text-pomegranate-600 hover:underline"
+              >
+                Sign in
+              </Link>
+            </p>
           </motion.div>
         )}
       </motion.div>
