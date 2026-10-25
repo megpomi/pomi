@@ -38,6 +38,7 @@ export default function MoodTrendChart({ data }) {
             dataKey="label"
             tickLine={false}
             axisLine={false}
+            minTickGap={12}
             tick={{ fontSize: 11, fill: "#94a3b8" }}
           />
           <YAxis
@@ -50,6 +51,9 @@ export default function MoodTrendChart({ data }) {
           />
           <Tooltip
             contentStyle={TOOLTIP_STYLE}
+            labelFormatter={(label, payload) =>
+              payload?.[0]?.payload?.title ?? label
+            }
             formatter={(value) => [MOOD_WORD[value] || "Not logged", "Mood"]}
           />
           <Area

@@ -23,8 +23,13 @@ export const shiftMonth = (date, delta) =>
 export const formatMonth = (date) =>
   date.toLocaleDateString(undefined, { month: "long", year: "numeric" });
 
-const dayLabel = (key) =>
+// The axis shows the day of the month only, so it reads the same whichever
+// month is open; the full date stays in the hover tooltip.
+const dayLabel = (key) => String(Number(key.slice(8, 10)));
+
+const dayTitle = (key) =>
   new Date(`${key}T00:00:00`).toLocaleDateString(undefined, {
+    weekday: "short",
     month: "short",
     day: "numeric",
   });
@@ -54,7 +59,11 @@ export function monthSeries(logs, dailyLogs, month) {
 
   return [...byDay.entries()]
     .sort(([a], [b]) => a.localeCompare(b))
-    .map(([day, entry]) => ({ label: dayLabel(day), ...entry }));
+    .map(([day, entry]) => ({
+      label: dayLabel(day),
+      title: dayTitle(day),
+      ...entry,
+    }));
 }
 
 // The headline numbers for the month: days logged, symptoms logged, and the

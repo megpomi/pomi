@@ -35,6 +35,7 @@ export default function SymptomTrendChart({ data }) {
             dataKey="label"
             tickLine={false}
             axisLine={false}
+            minTickGap={12}
             tick={{ fontSize: 11, fill: "#94a3b8" }}
           />
           <YAxis
@@ -47,6 +48,9 @@ export default function SymptomTrendChart({ data }) {
           <Tooltip
             contentStyle={TOOLTIP_STYLE}
             cursor={{ fill: "#f7f1f2" }}
+            labelFormatter={(label, payload) =>
+              payload?.[0]?.payload?.title ?? label
+            }
             formatter={(value) => [
               value === 1 ? "1 symptom" : `${value} symptoms`,
               "Logged",
