@@ -47,11 +47,14 @@ export default function Mission() {
             Tracking your cycle should give something back.
           </h1>
           <p className="mt-4 max-w-2xl text-sm leading-relaxed text-white/85">
-            Cycle data is some of the most personal information there is, and it
-            is usually collected for someone else's profit. Pomi is built the
-            other way around: the revenue your tracking generates is shared with
-            the organisations working on women's health, from menstrual equity
-            and research to care for survivors.
+            Health data is some of the most personal information there is, and it
+            is usually collected for profit - Pomi's purpose is different. We've
+            used similar apps and felt uncomfortable for years with the money
+            going to sit in someone's bank account. Our founder wanted an
+            inclusive women's health app, one that would generate donations to
+            accelerate women's health research. Pomi's mission is to direct more
+            funds to seven causes via the charities given below, chosen to help
+            women as well as those similarly impacted.
           </p>
         </div>
 
