@@ -1,16 +1,16 @@
 import React from "react";
 import {
+  Area,
+  AreaChart,
   CartesianGrid,
-  Line,
-  LineChart,
   ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
+import { MOOD_WORD } from "@/lib/patterns";
 
 const MOOD_FACE = { 1: "😰", 2: "😔", 3: "😐", 4: "🙂", 5: "😊" };
-const MOOD_WORD = { 1: "Anxious", 2: "Low", 3: "Okay", 4: "Good", 5: "Great" };
 
 const TOOLTIP_STYLE = {
   borderRadius: 12,
@@ -23,10 +23,16 @@ export default function MoodTrendChart({ data }) {
   return (
     <div className="h-48 w-full">
       <ResponsiveContainer width="100%" height="100%">
-        <LineChart
+        <AreaChart
           data={data}
           margin={{ top: 8, right: 10, bottom: 0, left: 0 }}
         >
+          <defs>
+            <linearGradient id="moodFill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#c0989f" stopOpacity={0.45} />
+              <stop offset="100%" stopColor="#c0989f" stopOpacity={0} />
+            </linearGradient>
+          </defs>
           <CartesianGrid vertical={false} stroke="#f3e9ea" />
           <XAxis
             dataKey="label"
@@ -46,16 +52,17 @@ export default function MoodTrendChart({ data }) {
             contentStyle={TOOLTIP_STYLE}
             formatter={(value) => [MOOD_WORD[value] || "Not logged", "Mood"]}
           />
-          <Line
+          <Area
             type="monotone"
             dataKey="mood"
             stroke="#a1707a"
             strokeWidth={2.5}
+            fill="url(#moodFill)"
             dot={{ r: 3, fill: "#a1707a", strokeWidth: 0 }}
             activeDot={{ r: 5 }}
             connectNulls
           />
-        </LineChart>
+        </AreaChart>
       </ResponsiveContainer>
     </div>
   );

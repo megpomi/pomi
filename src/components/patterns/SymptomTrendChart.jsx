@@ -24,6 +24,12 @@ export default function SymptomTrendChart({ data }) {
           data={data}
           margin={{ top: 8, right: 10, bottom: 0, left: 0 }}
         >
+          <defs>
+            <linearGradient id="symptomFill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#c0989f" stopOpacity={0.95} />
+              <stop offset="100%" stopColor="#c0989f" stopOpacity={0.5} />
+            </linearGradient>
+          </defs>
           <CartesianGrid vertical={false} stroke="#f3e9ea" />
           <XAxis
             dataKey="label"
@@ -48,7 +54,7 @@ export default function SymptomTrendChart({ data }) {
           />
           <Bar
             dataKey="symptoms"
-            fill="#c0989f"
+            fill="url(#symptomFill)"
             radius={[6, 6, 0, 0]}
             maxBarSize={38}
           />
