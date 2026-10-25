@@ -31,6 +31,7 @@ export const SYMPTOM_OPTIONS = [
   "cervical_mucus",
   "spotting",
   "increased_libido",
+  "dreams",
 ];
 
 export const prettySymptom = (symptom) => symptom.replace(/_/g, " ");
