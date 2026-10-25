@@ -12,6 +12,7 @@ export default function PasswordForm({ user }) {
   const [next, setNext] = useState("");
   const [confirm, setConfirm] = useState("");
   const [saving, setSaving] = useState(false);
+  const [open, setOpen] = useState(false);
   const { toast } = useToast();
 
   const tooShort = next.length > 0 && next.length < MIN_LENGTH;
@@ -31,6 +32,7 @@ export default function PasswordForm({ user }) {
       setCurrent("");
       setNext("");
       setConfirm("");
+      setOpen(false);
       toast({
         title: "Password updated",
         description: "Use your new password next time you sign in.",
@@ -47,12 +49,26 @@ export default function PasswordForm({ user }) {
 
   return (
     <section className="rounded-3xl border border-pomegranate-100 bg-white p-5 sm:p-6">
-      <h2 className="font-heading text-lg font-semibold text-slate-800">
-        Password
-      </h2>
-      <p className="mt-1 text-sm text-slate-500">
-        Change the password you sign in with.
-      </p>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h2 className="font-heading text-lg font-semibold text-slate-800">
+            Password
+          </h2>
+          <p className="mt-1 text-sm text-slate-500">
+            Change the password you sign in with.
+          </p>
+        </div>
+        <Button
+          type="button"
+          variant="outline"
+          onClick={() => setOpen((current) => !current)}
+          className="rounded-full border-pomegranate-200 px-5 text-pomegranate-600 hover:bg-pomegranate-50"
+        >
+          {open ? "Cancel" : "Change password"}
+        </Button>
+      </div>
+
+      {open && (
       <form onSubmit={handleSave} className="mt-4 space-y-4">
         <div className="space-y-2">
           <Label htmlFor="current_password">Current password</Label>
@@ -109,6 +125,7 @@ export default function PasswordForm({ user }) {
           {saving ? "Updating…" : "Update password"}
         </Button>
       </form>
+      )}
     </section>
   );
 }
