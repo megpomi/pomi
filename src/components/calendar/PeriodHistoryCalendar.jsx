@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from "react";
+import React, { useCallback, useMemo, useRef, useState } from "react";
 import { base44 } from "@/api/base44Client";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -62,9 +62,11 @@ export default function PeriodHistoryCalendar({ logs, onSaved }) {
   };
 
   // Opens on the most recent month, with the earlier months scrolled above it.
-  const scrollToLatest = (node) => {
+  // A stable callback so it only runs when the container mounts — otherwise
+  // every re-render (each day you tap) would snap the view back down.
+  const scrollToLatest = useCallback((node) => {
     if (node) node.scrollTop = node.scrollHeight;
-  };
+  }, []);
 
   const handleSave = async () => {
     if (!days.length) return;
