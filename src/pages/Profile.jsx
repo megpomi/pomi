@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import AppHeader from "@/components/AppHeader";
 import TrackingPreferences from "@/components/profile/TrackingPreferences";
 import ProfileNameForm from "@/components/profile/ProfileNameForm";
+import EmailBox from "@/components/profile/EmailBox";
 import PasswordForm from "@/components/profile/PasswordForm";
 import CausePreferences from "@/components/profile/CausePreferences";
 import CurrencyPreference from "@/components/profile/CurrencyPreference";
@@ -114,12 +115,6 @@ export default function Profile() {
         <h1 className="font-heading text-3xl font-semibold text-slate-800 sm:text-4xl">
           Your profile
         </h1>
-        <p className="mt-1 text-sm text-slate-500">
-          {user.preferred_name || user.full_name
-            ? `${user.preferred_name || user.full_name} · `
-            : ""}
-          {user.email}
-        </p>
 
         <div className="mt-8 space-y-6">
           <ProfileNameForm
@@ -128,6 +123,7 @@ export default function Profile() {
               setUser((current) => ({ ...current, preferred_name: name }))
             }
           />
+          <EmailBox email={user.email} />
           <PasswordForm user={user} />
           <TrackingPreferences selected={tracking} onChange={setTracking} />
           <CausePreferences selected={causes} onChange={setCauses} />
