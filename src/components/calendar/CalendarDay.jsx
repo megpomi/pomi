@@ -1,11 +1,11 @@
 import React from "react";
 
-// A pomegranate dot marks every day that has a period logged, and a blue dot
-// marks a day with a symptom logged but no period, so it reads as tappable.
+// A pomegranate dot marks every day that has a period logged, and a symptom
+// dot every day the daily check-in recorded a symptom on — a day can carry both.
 export default function CalendarDay({ date, activeModifiers }) {
   const dots = [];
   if (activeModifiers.logged) dots.push("bg-pomegranate-600");
-  if (activeModifiers.symptom) dots.push("bg-blue-500");
+  if (activeModifiers.symptom) dots.push("bg-symptom");
 
   return (
     <div className="relative flex h-full w-full items-center justify-center">

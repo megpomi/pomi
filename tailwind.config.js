@@ -44,6 +44,7 @@ module.exports = {
   			border: 'hsl(var(--border))',
   			input: 'hsl(var(--input))',
   			ring: 'hsl(var(--ring))',
+  			symptom: 'hsl(var(--symptom))',
   			pomegranate: {
   				50: '#f7f1f2',
   				100: '#efe1e3',

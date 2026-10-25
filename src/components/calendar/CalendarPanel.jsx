@@ -124,9 +124,9 @@ export default function CalendarPanel({
           </span>
           <span className="flex items-center gap-2">
             <span className="inline-flex h-4 w-4 items-center justify-center rounded-full border border-slate-200">
-              <span className="h-1.5 w-1.5 rounded-full bg-blue-500" />
+              <span className="h-1.5 w-1.5 rounded-full bg-symptom" />
             </span>
-            Symptom logged, no period
+            Symptom day
           </span>
         </div>
       </div>
