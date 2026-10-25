@@ -161,7 +161,7 @@ export default function Home() {
 
         {/* Grid */}
         <div className="mt-6 grid gap-6 lg:grid-cols-5">
-          <div className="lg:col-span-3">
+          <div className="space-y-6 lg:col-span-3">
             <CalendarPanel
               logs={logs}
               dailyLogs={dailyLogs}
@@ -181,6 +181,8 @@ export default function Home() {
                 </Button>
               }
             />
+
+            <CyclePatterns logs={logs} dailyLogs={dailyLogs} />
           </div>
           <div className="lg:col-span-2">
             <CharityImpact daysTracked={daysTracked} />
@@ -190,11 +192,6 @@ export default function Home() {
         {/* Donations */}
         <div className="mt-6">
           <DonationTracker user={user} />
-        </div>
-
-        {/* Patterns */}
-        <div className="mt-6">
-          <CyclePatterns logs={logs} dailyLogs={dailyLogs} />
         </div>
 
         <p className="mt-10 text-center text-xs text-slate-400">

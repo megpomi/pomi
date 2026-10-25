@@ -44,7 +44,7 @@ export default function CyclePatterns({ logs, dailyLogs = [] }) {
   ];
 
   return (
-    <div className="rounded-3xl border border-slate-100 bg-white p-6 sm:p-8">
+    <div className="rounded-3xl border border-slate-100 bg-white p-5 sm:p-6">
       <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
         <div>
           <div className="flex items-center gap-2">
@@ -72,16 +72,16 @@ export default function CyclePatterns({ logs, dailyLogs = [] }) {
         </p>
       ) : (
         <>
-          <div className="mb-6 grid grid-cols-3 gap-3">
+          <div className="mb-5 grid grid-cols-3 gap-2">
             {tiles.map((tile) => (
               <div
                 key={tile.label}
-                className="rounded-2xl bg-pomegranate-50/70 px-3 py-3 text-center"
+                className="rounded-2xl bg-pomegranate-50/70 px-2 py-3 text-center"
               >
-                <p className="font-heading text-xl font-semibold text-pomegranate-700">
+                <p className="font-heading text-lg font-semibold text-pomegranate-700">
                   {tile.value}
                 </p>
-                <p className="mt-0.5 text-[11px] uppercase tracking-[0.1em] text-slate-500">
+                <p className="mt-0.5 text-[10px] uppercase leading-tight tracking-[0.08em] text-slate-500">
                   {tile.label}
                 </p>
               </div>
