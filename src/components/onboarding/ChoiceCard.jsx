@@ -1,7 +1,7 @@
 import React from "react";
 import { Check } from "lucide-react";
 
-export default function ChoiceCard({ icon: Icon, label, desc, active, onClick }) {
+export default function ChoiceCard({ icon: Icon, label, desc, active, onClick, comingSoon }) {
   return (
     <button
       type="button"
@@ -22,7 +22,14 @@ export default function ChoiceCard({ icon: Icon, label, desc, active, onClick })
         <Icon className="h-5 w-5" />
       </span>
       <span className="flex-1">
-        <span className="block font-medium text-slate-800">{label}</span>
+        <span className="flex flex-wrap items-center gap-2">
+          <span className="font-medium text-slate-800">{label}</span>
+          {comingSoon && (
+            <span className="rounded-full bg-pomegranate-100 px-2 py-0.5 text-[11px] font-medium uppercase tracking-wide text-pomegranate-600">
+              Coming soon
+            </span>
+          )}
+        </span>
         {desc && (
           <span className="mt-0.5 block text-sm text-slate-500">{desc}</span>
         )}

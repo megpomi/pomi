@@ -146,6 +146,7 @@ export default function OnboardingQuestionnaire({ draft, onComplete }) {
               label={opt.label}
               desc={opt.desc}
               active={selected.includes(opt.value)}
+              comingSoon={opt.comingSoon}
               onClick={() => toggleCurrent(opt.value)}
             />
           ))}

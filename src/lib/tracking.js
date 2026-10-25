@@ -14,24 +14,28 @@ export const TRACKING_OPTIONS = [
     label: "Perimenopausal or menopausal",
     desc: "Track hot flashes, sleep, and mood shifts.",
     icon: Flame,
+    comingSoon: true,
   },
   {
     value: "trying_to_conceive",
     label: "Trying for a baby",
     desc: "Watch for ovulation and your fertile window with the intention of conception.",
     icon: Egg,
+    comingSoon: true,
   },
   {
     value: "pregnancy",
     label: "Pregnancy journey",
     desc: "Track pregnancy symptoms.",
     icon: Sprout,
+    comingSoon: true,
   },
   {
     value: "postpartum",
     label: "Postpartum recovery",
     desc: "Track recovery and changes after birth.",
     icon: HeartPulse,
+    comingSoon: true,
   },
   {
     value: "general_wellbeing",
