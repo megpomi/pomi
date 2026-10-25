@@ -128,13 +128,6 @@ export default function PeriodHistoryCalendar({ logs, onSaved }) {
           />
         </div>
 
-        <div className="flex flex-wrap items-center gap-2 px-4 pt-3 text-xs text-slate-500">
-          <span className="h-3.5 w-3.5 rounded-full bg-pomegranate-200" />
-          Already logged
-          <span className="ml-2 h-3.5 w-3.5 rounded-full bg-pomegranate-600" />
-          Selected now
-        </div>
-
         {error && (
           <p className="px-4 pt-2 text-sm text-destructive">{error}</p>
         )}
