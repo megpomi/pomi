@@ -41,11 +41,10 @@ const SYMPTOMS = [
   "backache",
   "mood_swings",
   "insomnia",
-  "sex",
+  "dreams",
+  "increased_libido",
   "cervical_mucus",
   "spotting",
-  "increased_libido",
-  "dreams",
 ];
 
 const pretty = (s) => s.replace(/_/g, " ");

@@ -46,15 +46,19 @@
           "backache",
           "mood_swings",
           "insomnia",
-          "sex",
-          "cervical_mucus",
-          "spotting",
+          "dreams",
           "increased_libido",
-          "dreams"
+          "cervical_mucus",
+          "spotting"
         ]
       },
       "default": [],
       "title": "Symptoms"
+    },
+    "had_sex": {
+      "type": "boolean",
+      "default": false,
+      "title": "Had sex today"
     },
     "notes": {
       "type": "string",

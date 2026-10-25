@@ -50,11 +50,10 @@
           "backache",
           "mood_swings",
           "insomnia",
-          "sex",
-          "cervical_mucus",
-          "spotting",
+          "dreams",
           "increased_libido",
-          "dreams"
+          "cervical_mucus",
+          "spotting"
         ]
       },
       "default": [],

@@ -11,6 +11,7 @@ import { useToast } from "@/components/ui/use-toast";
 import {
   FlowPicker,
   MoodPicker,
+  SexToggle,
   SymptomPicker,
 } from "@/components/daily-log/DailyLogFields";
 
@@ -18,6 +19,7 @@ const EMPTY = {
   flow_intensity: "none",
   mood: "",
   symptoms: [],
+  had_sex: false,
   notes: "",
 };
 
@@ -43,6 +45,7 @@ export default function LogToday() {
           flow_intensity: entry?.flow_intensity || "none",
           mood: entry?.mood || "",
           symptoms: entry?.symptoms || [],
+          had_sex: entry?.had_sex || false,
           notes: entry?.notes || "",
         });
       })
@@ -63,6 +66,7 @@ export default function LogToday() {
         date,
         flow_intensity: form.flow_intensity,
         symptoms: form.symptoms,
+        had_sex: form.had_sex,
         notes: form.notes,
       };
       if (form.mood) payload.mood = form.mood;
@@ -120,6 +124,10 @@ export default function LogToday() {
             <SymptomPicker
               value={form.symptoms}
               onChange={(value) => set({ symptoms: value })}
+            />
+            <SexToggle
+              value={form.had_sex}
+              onChange={(value) => set({ had_sex: value })}
             />
 
             <div className="space-y-2">

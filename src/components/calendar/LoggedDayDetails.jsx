@@ -1,5 +1,6 @@
 import React from "react";
 import { Droplet } from "lucide-react";
+import { prettySymptom } from "@/lib/dailyLog";
 
 const FLOW_LABEL = { light: "Light", medium: "Medium", heavy: "Heavy" };
 const MOOD_EMOJI = {
@@ -60,7 +61,7 @@ export default function LoggedDayDetails({ date, log, cycleDay }) {
                     key={s}
                     className="rounded-full bg-pomegranate-50 px-3 py-1 text-xs capitalize text-pomegranate-700"
                   >
-                    {s.replace(/_/g, " ")}
+                    {prettySymptom(s)}
                   </span>
                 ))}
               </div>

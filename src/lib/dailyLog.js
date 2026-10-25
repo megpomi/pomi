@@ -28,11 +28,10 @@ export const SYMPTOM_OPTIONS = [
   "backache",
   "mood_swings",
   "insomnia",
-  "sex",
+  "dreams",
+  "increased_libido",
   "cervical_mucus",
   "spotting",
-  "increased_libido",
-  "dreams",
 ];
 
 // Symptom labels that differ from the stored value.

@@ -1,5 +1,6 @@
 import React from "react";
 import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import {
   FLOW_OPTIONS,
   MOOD_OPTIONS,
@@ -87,6 +88,20 @@ export function SymptomPicker({ value, onChange }) {
           );
         })}
       </div>
+    </div>
+  );
+}
+
+export function SexToggle({ value, onChange }) {
+  return (
+    <div className="flex items-center justify-between gap-4">
+      <Label htmlFor="had-sex">Had sex today</Label>
+      <Switch
+        id="had-sex"
+        checked={value}
+        onCheckedChange={onChange}
+        className="data-[state=checked]:bg-pomegranate-600"
+      />
     </div>
   );
 }
