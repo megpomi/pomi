@@ -74,7 +74,7 @@ export default function DonationTracker({ user }) {
         <Sparkles className="h-3.5 w-3.5 text-pomegranate-400" />
         {subscribed
           ? `${money(SUBSCRIPTION_REVENUE_PER_DAY)} of revenue a day while subscribed`
-          : `${money(AD_REVENUE_PER_VISIT)} of ad revenue per visit — go ad-free to add revenue daily`}
+          : `${money(AD_REVENUE_PER_VISIT)} of ad revenue per visit — go ad-free to donate more`}
       </p>
     </div>
   );
