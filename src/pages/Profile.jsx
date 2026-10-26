@@ -91,7 +91,7 @@ export default function Profile() {
           to="/"
           className="text-sm font-medium text-pomegranate-600 hover:text-pomegranate-700"
         >
-          Back to my cycle
+          Back to my dashboard
         </Link>
       </div>
     );
@@ -107,7 +107,7 @@ export default function Profile() {
           className="inline-flex items-center gap-1.5 text-sm font-medium text-pomegranate-600 hover:text-pomegranate-700"
         >
           <ArrowLeft className="h-4 w-4" />
-          Back to my cycle
+          Back to my dashboard
         </Link>
       </AppHeader>
 

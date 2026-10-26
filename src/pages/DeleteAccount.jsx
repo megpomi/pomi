@@ -99,7 +99,7 @@ export default function DeleteAccount() {
           to="/"
           className="text-sm font-medium text-pomegranate-600 hover:text-pomegranate-700"
         >
-          Back to my cycle
+          Back to my dashboard
         </Link>
       </div>
     );

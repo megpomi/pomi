@@ -27,7 +27,7 @@ export default function ThankYou() {
           to="/"
           className="mt-6 inline-flex rounded-full bg-pomegranate-600 px-6 py-3 text-sm font-medium text-white hover:bg-pomegranate-700"
         >
-          Back to my cycle
+          Back to my dashboard
         </Link>
       </div>
     </div>
