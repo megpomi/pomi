@@ -98,7 +98,9 @@ export function buildReminders(logs = [], dailyLogs = []) {
     reminders.push({
       id: "check_in",
       tone: "info",
-      title: `It's been ${daysSinceLog} days since your last log`,
+      title: `It's been ${daysSinceLog} day${
+        daysSinceLog === 1 ? "" : "s"
+      } since your last log`,
       body: "A quick check-in on mood or symptoms keeps your patterns — and your impact tracking — consistent.",
       cta: "Log today",
     });
