@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { format } from "date-fns";
 import { base44 } from "@/api/base44Client";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
@@ -13,6 +14,7 @@ import CyclePatterns from "@/components/patterns/CyclePatterns";
 import DonationTracker from "@/components/DonationTracker";
 import { countTrackedDays, recordAdVisit } from "@/lib/donations";
 import ReminderBanner from "@/components/reminders/ReminderBanner";
+import JournalPrompt from "@/components/journal/JournalPrompt";
 import ReminderBell from "@/components/reminders/ReminderBell";
 import { useReminders } from "@/hooks/use-reminders";
 import useIsSubscriber from "@/hooks/use-is-subscriber";
@@ -89,6 +91,12 @@ export default function Home() {
     .trim()
     .split(/\s+/)[0];
 
+  // People tracking general wellbeing get a daily journalling prompt instead of
+  // cycle-only framing at the top of their dashboard.
+  const tracking = user?.tracking_focus || [];
+  const tracksWellbeing = tracking.includes("general_wellbeing");
+  const tracksCycles = tracking.includes("menstrual_cycles");
+
   if (checkingProfile) {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-background">
@@ -142,7 +150,9 @@ export default function Home() {
             Hello{firstName ? `, ${firstName}` : logs.length ? "" : ", welcome"}
           </h1>
           <p className="mt-1 text-sm text-slate-500">
-            {logs.length
+            {tracksWellbeing && !tracksCycles
+              ? "Here's your space to check in with yourself today."
+              : logs.length
               ? "Here's where you are in your cycle today."
               : "Let's start tracking your cycle — and giving back."}
           </p>
@@ -155,6 +165,13 @@ export default function Home() {
             onDismiss={dismiss}
             onLogPeriod={openFromReminder}
           />
+        )}
+
+        {/* Daily journalling prompt for general wellbeing tracking */}
+        {tracksWellbeing && (
+          <div className="mb-6">
+            <JournalPrompt dateKey={format(new Date(), "yyyy-MM-dd")} />
+          </div>
         )}
 
         {/* Status */}
