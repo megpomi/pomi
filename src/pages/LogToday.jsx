@@ -172,7 +172,7 @@ export default function LogToday() {
         <p className="mt-2 text-sm text-slate-500">
           {format(new Date(`${date}T00:00:00`), "EEEE d MMMM")} —{" "}
           {isToday
-            ? "log your mood, symptoms and lifestyle choices for today."
+            ? "log your flow, mood and symptoms for today."
             : "update the flow, mood and symptoms you logged for this day."}
         </p>
 
@@ -248,7 +248,7 @@ export default function LogToday() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="daily-notes">Anything else you noticed today?</Label>
+              <Label htmlFor="daily-notes">Notes</Label>
               <Textarea
                 id="daily-notes"
                 rows={3}
