@@ -154,6 +154,13 @@ export default function Profile() {
         >
           Log out
         </button>
+
+        <Link
+          to="/delete-account"
+          className="mx-auto mt-4 block text-center text-sm font-medium text-slate-400 hover:text-destructive"
+        >
+          Delete my account
+        </Link>
       </main>
     </div>
   );

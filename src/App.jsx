@@ -19,6 +19,7 @@ import Profile from '@/pages/Profile';
 import ThankYou from '@/pages/ThankYou';
 import Mission from '@/pages/Mission';
 import LogToday from '@/pages/LogToday';
+import DeleteAccount from '@/pages/DeleteAccount';
 // Add page imports here
 
 const AuthenticatedApp = () => {
@@ -58,6 +59,7 @@ const AuthenticatedApp = () => {
         <Route path="/log-today" element={<LogToday />} />
         <Route path="/causes/:causeValue" element={<CauseDetail />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/delete-account" element={<DeleteAccount />} />
         <Route path="/upgrade" element={<Upgrade />} />
         <Route path="/mission" element={<Mission />} />
       </Route>
