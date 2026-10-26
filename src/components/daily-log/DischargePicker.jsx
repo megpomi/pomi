@@ -36,11 +36,6 @@ export default function DischargePicker({ value, onChange, disabled }) {
           );
         })}
       </div>
-      {disabled && (
-        <p className="text-xs text-slate-400">
-          Turn on Discharge above to note what you noticed.
-        </p>
-      )}
     </div>
   );
 }
