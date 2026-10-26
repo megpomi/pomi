@@ -313,7 +313,8 @@ export default function LogToday() {
                   General wellbeing
                 </h2>
                 <p className="mt-1 text-sm text-slate-500">
-                  A quiet moment to reflect on how you are.
+                  Take a quiet moment to reflect on today, maybe using today's
+                  journal prompt if you need.
                 </p>
                 <div className="mt-5">
                   <JournalEntryBox
