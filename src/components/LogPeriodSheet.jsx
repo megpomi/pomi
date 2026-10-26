@@ -30,7 +30,6 @@ const MOODS = [
 
 const SYMPTOMS = [
   "cramps",
-  "ovulation_cramps",
   "headache",
   "bloating",
   "fatigue",

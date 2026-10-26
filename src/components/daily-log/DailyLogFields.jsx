@@ -8,35 +8,32 @@ import {
   prettySymptom,
 } from "@/lib/dailyLog";
 
-export function PeriodToggle({ value, onChange, disabled }) {
+// A small on/off slider with its label — the shared look of every lifestyle toggle.
+export function TogglePill({ label, checked, onChange, disabled }) {
+  const id = `toggle-${label.toLowerCase().replace(/\s+/g, "-")}`;
   return (
     <div
-      className={`flex items-center justify-between gap-3 rounded-2xl border px-4 py-3 transition ${
-        value
+      className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 transition ${
+        checked
           ? "border-pomegranate-400 bg-pomegranate-50"
-          : "border-slate-200 bg-white"
+          : "border-slate-200 hover:border-pomegranate-200"
       }`}
     >
-      <div>
-        <Label
-          htmlFor="is-period-day"
-          className={`cursor-pointer ${value ? "text-pomegranate-700" : ""}`}
-        >
-          Period
-        </Label>
-        <p className="mt-0.5 text-xs text-slate-500">
-          {value
-            ? "This day is marked as a period day."
-            : "Turn on if this day is part of your period."}
-        </p>
-      </div>
       <Switch
-        id="is-period-day"
-        checked={value}
+        id={id}
+        checked={checked}
         onCheckedChange={onChange}
         disabled={disabled}
-        className="data-[state=checked]:bg-pomegranate-600"
+        className="h-4 w-7 [&>span]:h-3 [&>span]:w-3 [&>span]:data-[state=checked]:translate-x-3 data-[state=checked]:bg-pomegranate-600"
       />
+      <Label
+        htmlFor={id}
+        className={`cursor-pointer text-xs ${
+          checked ? "text-pomegranate-700" : "text-slate-600"
+        }`}
+      >
+        {label}
+      </Label>
     </div>
   );
 }
@@ -128,35 +125,6 @@ export function SymptomPicker({ value, onChange }) {
             </button>
           );
         })}
-      </div>
-    </div>
-  );
-}
-
-export function SexToggle({ value, onChange }) {
-  return (
-    <div className="flex justify-start">
-      <div
-        className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 transition ${
-          value
-            ? "border-pomegranate-400 bg-pomegranate-50"
-            : "border-slate-200 hover:border-pomegranate-200"
-        }`}
-      >
-        <Switch
-          id="had-sex"
-          checked={value}
-          onCheckedChange={onChange}
-          className="h-4 w-7 [&>span]:h-3 [&>span]:w-3 [&>span]:data-[state=checked]:translate-x-3 data-[state=checked]:bg-pomegranate-600"
-        />
-        <Label
-          htmlFor="had-sex"
-          className={`cursor-pointer text-xs ${
-            value ? "text-pomegranate-700" : "text-slate-600"
-          }`}
-        >
-          Sex
-        </Label>
       </div>
     </div>
   );

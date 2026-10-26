@@ -17,7 +17,6 @@ export const MOOD_OPTIONS = [
 
 export const SYMPTOM_OPTIONS = [
   "cramps",
-  "ovulation_cramps",
   "headache",
   "bloating",
   "fatigue",
@@ -34,10 +33,4 @@ export const SYMPTOM_OPTIONS = [
   "spotting",
 ];
 
-// Symptom labels that differ from the stored value.
-const SYMPTOM_LABELS = {
-  cramps: "Menstrual Cramps",
-};
-
-export const prettySymptom = (symptom) =>
-  SYMPTOM_LABELS[symptom] || symptom.replace(/_/g, " ");
+export const prettySymptom = (symptom) => symptom.replace(/_/g, " ");

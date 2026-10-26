@@ -60,6 +60,26 @@
       "default": false,
       "title": "Had sex today"
     },
+    "alcohol": {
+      "type": "boolean",
+      "default": false,
+      "title": "Alcohol"
+    },
+    "light_exercise": {
+      "type": "boolean",
+      "default": false,
+      "title": "Light exercise"
+    },
+    "intense_exercise": {
+      "type": "boolean",
+      "default": false,
+      "title": "Intense exercise"
+    },
+    "caffeine": {
+      "type": "boolean",
+      "default": false,
+      "title": "Caffeine"
+    },
     "notes": {
       "type": "string",
       "title": "Notes",

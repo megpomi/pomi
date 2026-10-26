@@ -11,9 +11,8 @@ import { useToast } from "@/components/ui/use-toast";
 import {
   FlowPicker,
   MoodPicker,
-  PeriodToggle,
-  SexToggle,
   SymptomPicker,
+  TogglePill,
 } from "@/components/daily-log/DailyLogFields";
 import {
   addPeriodDays,
@@ -26,6 +25,10 @@ const EMPTY = {
   mood: "",
   symptoms: [],
   had_sex: false,
+  alcohol: false,
+  light_exercise: false,
+  intense_exercise: false,
+  caffeine: false,
   notes: "",
 };
 
@@ -58,6 +61,10 @@ export default function LogToday() {
           mood: entry?.mood || "",
           symptoms: entry?.symptoms || [],
           had_sex: entry?.had_sex || false,
+          alcohol: entry?.alcohol || false,
+          light_exercise: entry?.light_exercise || false,
+          intense_exercise: entry?.intense_exercise || false,
+          caffeine: entry?.caffeine || false,
           notes: entry?.notes || "",
         });
       })
@@ -114,6 +121,10 @@ export default function LogToday() {
         flow_intensity: form.flow_intensity,
         symptoms: form.symptoms,
         had_sex: form.had_sex,
+        alcohol: form.alcohol,
+        light_exercise: form.light_exercise,
+        intense_exercise: form.intense_exercise,
+        caffeine: form.caffeine,
         notes: form.notes,
       };
       if (form.mood) payload.mood = form.mood;
@@ -164,8 +175,9 @@ export default function LogToday() {
           </div>
         ) : (
           <div className="mt-6 space-y-6 rounded-3xl border border-slate-100 bg-white p-5 sm:p-6">
-            <PeriodToggle
-              value={isPeriodDay}
+            <TogglePill
+              label="Period"
+              checked={isPeriodDay}
               onChange={togglePeriod}
               disabled={periodBusy}
             />
@@ -182,10 +194,33 @@ export default function LogToday() {
               value={form.symptoms}
               onChange={(value) => set({ symptoms: value })}
             />
-            <SexToggle
-              value={form.had_sex}
-              onChange={(value) => set({ had_sex: value })}
-            />
+            <div className="flex flex-wrap gap-2">
+              <TogglePill
+                label="Sex"
+                checked={form.had_sex}
+                onChange={(value) => set({ had_sex: value })}
+              />
+              <TogglePill
+                label="Alcohol"
+                checked={form.alcohol}
+                onChange={(value) => set({ alcohol: value })}
+              />
+              <TogglePill
+                label="Light exercise"
+                checked={form.light_exercise}
+                onChange={(value) => set({ light_exercise: value })}
+              />
+              <TogglePill
+                label="Intense exercise"
+                checked={form.intense_exercise}
+                onChange={(value) => set({ intense_exercise: value })}
+              />
+              <TogglePill
+                label="Caffeine"
+                checked={form.caffeine}
+                onChange={(value) => set({ caffeine: value })}
+              />
+            </div>
 
             <div className="space-y-2">
               <Label htmlFor="daily-notes">Notes</Label>
