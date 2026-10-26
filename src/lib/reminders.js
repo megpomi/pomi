@@ -84,10 +84,12 @@ export function buildReminders(logs = [], dailyLogs = []) {
     });
   }
 
-  const lastLogged = logs.reduce((latest, log) => {
-    const end = startOfDay(log.end_date || log.start_date);
-    return !latest || end > latest ? end : latest;
-  }, null);
+  // Any log counts as activity: a period entry, or a daily check-in on mood or
+  // symptoms. The counter resets to the most recent of the two.
+  const lastLogged = [
+    ...logs.map((log) => startOfDay(log.end_date || log.start_date)),
+    ...dailyLogs.map((entry) => startOfDay(entry.date)),
+  ].reduce((latest, date) => (!latest || date > latest ? date : latest), null);
   const daysSinceLog = lastLogged ? daysBetween(lastLogged, today) : 0;
 
   if (
