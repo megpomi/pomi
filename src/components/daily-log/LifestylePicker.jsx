@@ -181,7 +181,7 @@ export default function LifestylePicker({ value, onChange }) {
           className="inline-flex items-center gap-1 rounded-full border border-dashed border-pomegranate-300 px-3 py-1.5 text-xs text-pomegranate-600 transition hover:border-pomegranate-400 hover:bg-pomegranate-50"
         >
           <Plus className="h-3 w-3" />
-          Add Custom Tracker
+          Add Custom Lifestyle Tracker
         </button>
       )}
 
