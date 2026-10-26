@@ -210,96 +210,106 @@ export default function LogToday() {
           </div>
         ) : (
           <div className="mt-6 space-y-6">
-            {showCycle && (
             <section className="rounded-3xl border border-slate-100 bg-white p-5 sm:p-6">
-            <h2 className="font-heading text-xl font-semibold text-slate-800">
-              Menstrual cycles
-            </h2>
-            <p className="mt-1 text-sm text-slate-500">
-              Flow, mood, symptoms and lifestyle for this day.
-            </p>
-            <div className="mt-5 space-y-6">
-            <TogglePill
-              label="Period"
-              checked={isPeriodDay}
-              onChange={togglePeriod}
-              disabled={periodBusy}
-            />
-            <FlowPicker
-              value={form.flow_intensity}
-              onChange={(value) => set({ flow_intensity: value })}
-              disabled={!isPeriodDay}
-            />
-            <MoodPicker
-              value={form.mood}
-              onChange={(value) => set({ mood: value })}
-            />
-            <SymptomPicker
-              value={form.symptoms}
-              onChange={(value) => set({ symptoms: value })}
-            />
-            <TogglePill
-              label="Discharge"
-              checked={form.discharge}
-              onChange={(value) =>
-                set({
-                  discharge: value,
-                  discharge_types: value ? form.discharge_types : [],
-                })
-              }
-            />
-            <DischargePicker
-              value={form.discharge_types}
-              onChange={(value) => set({ discharge_types: value })}
-              disabled={!form.discharge}
-            />
-            <div className="space-y-2">
-              <Label>Lifestyle</Label>
-              <div className="flex flex-wrap gap-2">
-              <TogglePill
-                label="Sex"
-                checked={form.had_sex}
-                onChange={(value) => set({ had_sex: value })}
-              />
-              <TogglePill
-                label="Light exercise"
-                checked={form.light_exercise}
-                onChange={(value) => set({ light_exercise: value })}
-              />
-              <TogglePill
-                label="Intense exercise"
-                checked={form.intense_exercise}
-                onChange={(value) => set({ intense_exercise: value })}
-              />
-              <TogglePill
-                label="Alcohol"
-                checked={form.alcohol}
-                onChange={(value) => set({ alcohol: value })}
-              />
-              <TogglePill
-                label="Caffeine"
-                checked={form.caffeine}
-                onChange={(value) => set({ caffeine: value })}
-              />
-                <LifestylePicker
-                  value={form.custom_lifestyle}
-                  onChange={(value) => set({ custom_lifestyle: value })}
+              <h2 className="font-heading text-xl font-semibold text-slate-800">
+                Mood &amp; lifestyle
+              </h2>
+              <p className="mt-1 text-sm text-slate-500">
+                How you feel today, and the little things that shape it.
+              </p>
+              <div className="mt-5 space-y-6">
+                <MoodPicker
+                  value={form.mood}
+                  onChange={(value) => set({ mood: value })}
                 />
+                <div className="space-y-2">
+                  <Label>Lifestyle</Label>
+                  <div className="flex flex-wrap gap-2">
+                    <TogglePill
+                      label="Sex"
+                      checked={form.had_sex}
+                      onChange={(value) => set({ had_sex: value })}
+                    />
+                    <TogglePill
+                      label="Light exercise"
+                      checked={form.light_exercise}
+                      onChange={(value) => set({ light_exercise: value })}
+                    />
+                    <TogglePill
+                      label="Intense exercise"
+                      checked={form.intense_exercise}
+                      onChange={(value) => set({ intense_exercise: value })}
+                    />
+                    <TogglePill
+                      label="Alcohol"
+                      checked={form.alcohol}
+                      onChange={(value) => set({ alcohol: value })}
+                    />
+                    <TogglePill
+                      label="Caffeine"
+                      checked={form.caffeine}
+                      onChange={(value) => set({ caffeine: value })}
+                    />
+                    <LifestylePicker
+                      value={form.custom_lifestyle}
+                      onChange={(value) => set({ custom_lifestyle: value })}
+                    />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="daily-notes">Notes</Label>
+                  <Textarea
+                    id="daily-notes"
+                    rows={3}
+                    value={form.notes}
+                    onChange={(e) => set({ notes: e.target.value })}
+                    placeholder="Anything else you noticed today?"
+                  />
+                </div>
               </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="daily-notes">Notes</Label>
-              <Textarea
-                id="daily-notes"
-                rows={3}
-                value={form.notes}
-                onChange={(e) => set({ notes: e.target.value })}
-                placeholder="Anything else you noticed today?"
-              />
-            </div>
-            </div>
             </section>
+
+            {showCycle && (
+              <section className="rounded-3xl border border-slate-100 bg-white p-5 sm:p-6">
+                <h2 className="font-heading text-xl font-semibold text-slate-800">
+                  Menstrual cycles
+                </h2>
+                <p className="mt-1 text-sm text-slate-500">
+                  Period days, flow, symptoms and discharge.
+                </p>
+                <div className="mt-5 space-y-6">
+                  <TogglePill
+                    label="Period"
+                    checked={isPeriodDay}
+                    onChange={togglePeriod}
+                    disabled={periodBusy}
+                  />
+                  <FlowPicker
+                    value={form.flow_intensity}
+                    onChange={(value) => set({ flow_intensity: value })}
+                    disabled={!isPeriodDay}
+                  />
+                  <SymptomPicker
+                    value={form.symptoms}
+                    onChange={(value) => set({ symptoms: value })}
+                  />
+                  <TogglePill
+                    label="Discharge"
+                    checked={form.discharge}
+                    onChange={(value) =>
+                      set({
+                        discharge: value,
+                        discharge_types: value ? form.discharge_types : [],
+                      })
+                    }
+                  />
+                  <DischargePicker
+                    value={form.discharge_types}
+                    onChange={(value) => set({ discharge_types: value })}
+                    disabled={!form.discharge}
+                  />
+                </div>
+              </section>
             )}
 
             {tracksWellbeing && (
