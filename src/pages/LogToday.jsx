@@ -248,7 +248,7 @@ export default function LogToday() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="daily-notes">Notes</Label>
+              <Label htmlFor="daily-notes">Anything else you noticed today?</Label>
               <Textarea
                 id="daily-notes"
                 rows={3}
