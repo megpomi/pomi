@@ -8,11 +8,11 @@ export const FLOW_OPTIONS = [
 ];
 
 export const MOOD_OPTIONS = [
-  { value: "great", emoji: "😊", label: "Great" },
-  { value: "good", emoji: "🙂", label: "Good" },
-  { value: "okay", emoji: "😐", label: "Okay" },
-  { value: "low", emoji: "😔", label: "Low" },
-  { value: "anxious", emoji: "😰", label: "Anxious" },
+  { value: "great", label: "Great" },
+  { value: "good", label: "Good" },
+  { value: "okay", label: "Okay" },
+  { value: "low", label: "Low" },
+  { value: "anxious", label: "Anxious" },
 ];
 
 export const SYMPTOM_OPTIONS = [
@@ -38,9 +38,7 @@ export const DISCHARGE_OPTIONS = [
   "watery",
   "sticky",
   "milky_white",
-  "yellow",
-  "green",
-  "brown",
+  "discoloured",
 ];
 
 export const prettySymptom = (symptom) => symptom.replace(/_/g, " ");

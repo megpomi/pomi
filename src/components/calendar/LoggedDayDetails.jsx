@@ -4,15 +4,10 @@ import { Droplet, PencilLine } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { prettySymptom } from "@/lib/dailyLog";
+import MoodFace from "@/components/icons/MoodFace";
 
 const FLOW_LABEL = { light: "Light", medium: "Medium", heavy: "Heavy" };
-const MOOD_EMOJI = {
-  great: "😊",
-  good: "🙂",
-  okay: "😐",
-  low: "😔",
-  anxious: "😰",
-};
+
 
 const prettyDate = (d) =>
   d
@@ -84,7 +79,11 @@ export default function LoggedDayDetails({
           {mood && (
             <p>
               <span className="text-slate-400">Mood: </span>
-              {MOOD_EMOJI[mood]} {mood}
+              <MoodFace
+                mood={mood}
+                className="inline h-4 w-4 align-[-3px] text-pomegranate-500"
+              />{" "}
+              {mood}
             </p>
           )}
           {symptoms.length > 0 && (

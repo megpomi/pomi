@@ -13,6 +13,8 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { base44 } from "@/api/base44Client";
 import { Loader2 } from "lucide-react";
+import { MOOD_OPTIONS } from "@/lib/dailyLog";
+import MoodFace from "@/components/icons/MoodFace";
 
 const FLOWS = [
   { value: "light", label: "Light", dot: "bg-pomegranate-200" },
@@ -20,13 +22,7 @@ const FLOWS = [
   { value: "heavy", label: "Heavy", dot: "bg-pomegranate-600" },
 ];
 
-const MOODS = [
-  { value: "great", emoji: "😊" },
-  { value: "good", emoji: "🙂" },
-  { value: "okay", emoji: "😐" },
-  { value: "low", emoji: "😔" },
-  { value: "anxious", emoji: "😰" },
-];
+
 
 const SYMPTOMS = [
   "cramps",
@@ -174,7 +170,7 @@ export default function LogPeriodSheet({ open, onOpenChange, onSaved }) {
           <div className="space-y-2">
             <Label>Mood (optional)</Label>
             <div className="flex gap-2">
-              {MOODS.map((m) => (
+              {MOOD_OPTIONS.map((m) => (
                 <button
                   key={m.value}
                   type="button"
@@ -184,13 +180,21 @@ export default function LogPeriodSheet({ open, onOpenChange, onSaved }) {
                       mood: s.mood === m.value ? "" : m.value,
                     }))
                   }
-                  className={`flex-1 rounded-xl border px-2 py-2 text-xl transition ${
+                  aria-label={m.label}
+                  className={`flex-1 rounded-xl border px-2 py-2 transition ${
                     form.mood === m.value
                       ? "border-pomegranate-400 bg-pomegranate-50"
                       : "border-slate-200 hover:border-pomegranate-200"
                   }`}
                 >
-                  {m.emoji}
+                  <MoodFace
+                    mood={m.value}
+                    className={`mx-auto h-6 w-6 ${
+                      form.mood === m.value
+                        ? "text-pomegranate-600"
+                        : "text-slate-500"
+                    }`}
+                  />
                 </button>
               ))}
             </div>

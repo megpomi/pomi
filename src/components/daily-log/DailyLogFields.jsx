@@ -1,6 +1,7 @@
 import React from "react";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import MoodFace from "@/components/icons/MoodFace";
 import {
   FLOW_OPTIONS,
   MOOD_OPTIONS,
@@ -82,13 +83,20 @@ export function MoodPicker({ value, onChange }) {
             type="button"
             aria-label={option.label}
             onClick={() => onChange(value === option.value ? "" : option.value)}
-            className={`flex-1 rounded-xl border px-2 py-2 text-xl transition ${
+            className={`flex-1 rounded-xl border px-2 py-2 transition ${
               value === option.value
                 ? "border-pomegranate-400 bg-pomegranate-50"
                 : "border-slate-200 hover:border-pomegranate-200"
             }`}
           >
-            {option.emoji}
+            <MoodFace
+              mood={option.value}
+              className={`mx-auto h-6 w-6 ${
+                value === option.value
+                  ? "text-pomegranate-600"
+                  : "text-slate-500"
+              }`}
+            />
           </button>
         ))}
       </div>
