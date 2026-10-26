@@ -11,9 +11,9 @@ import { useToast } from "@/components/ui/use-toast";
 import {
   FlowPicker,
   MoodPicker,
-  SymptomPicker,
   TogglePill,
 } from "@/components/daily-log/DailyLogFields";
+import SymptomPicker from "@/components/daily-log/SymptomPicker";
 import DischargePicker from "@/components/daily-log/DischargePicker";
 import {
   addPeriodDays,

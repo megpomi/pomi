@@ -2,12 +2,7 @@ import React from "react";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import MoodFace from "@/components/icons/MoodFace";
-import {
-  FLOW_OPTIONS,
-  MOOD_OPTIONS,
-  SYMPTOM_OPTIONS,
-  prettySymptom,
-} from "@/lib/dailyLog";
+import { FLOW_OPTIONS, MOOD_OPTIONS } from "@/lib/dailyLog";
 
 // A small on/off slider with its label — the shared look of every lifestyle toggle.
 export function TogglePill({ label, checked, onChange, disabled }) {
@@ -104,36 +99,4 @@ export function MoodPicker({ value, onChange }) {
   );
 }
 
-export function SymptomPicker({ value, onChange }) {
-  const toggle = (symptom) =>
-    onChange(
-      value.includes(symptom)
-        ? value.filter((item) => item !== symptom)
-        : [...value, symptom]
-    );
-
-  return (
-    <div className="space-y-2">
-      <Label>Symptoms</Label>
-      <div className="flex flex-wrap gap-2">
-        {SYMPTOM_OPTIONS.map((symptom) => {
-          const active = value.includes(symptom);
-          return (
-            <button
-              key={symptom}
-              type="button"
-              onClick={() => toggle(symptom)}
-              className={`rounded-full border px-3 py-1.5 text-xs capitalize transition ${
-                active
-                  ? "border-pomegranate-400 bg-pomegranate-50 text-pomegranate-700"
-                  : "border-slate-200 text-slate-600 hover:border-pomegranate-200"
-              }`}
-            >
-              {prettySymptom(symptom)}
-            </button>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
+// Symptom bubbles (including custom ones) live in their own component.

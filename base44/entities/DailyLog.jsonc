@@ -33,25 +33,7 @@
     "symptoms": {
       "type": "array",
       "items": {
-        "type": "string",
-        "enum": [
-          "cramps",
-          "ovulation_cramps",
-          "headache",
-          "bloating",
-          "fatigue",
-          "breast_tenderness",
-          "spotting",
-          "acne",
-          "cravings",
-          "appetite_loss",
-          "backache",
-          "mood_swings",
-          "insomnia",
-          "dreams",
-          "increased_libido",
-          "cervical_mucus"
-        ]
+        "type": "string"
       },
       "default": [],
       "title": "Symptoms"
