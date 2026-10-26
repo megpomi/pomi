@@ -1,18 +1,14 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
-import { ArrowLeft, CalendarPlus } from "lucide-react";
+import { Link } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 import { base44 } from "@/api/base44Client";
 import AppHeader from "@/components/AppHeader";
-import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-import CalendarPanel from "@/components/calendar/CalendarPanel";
 import PeriodHistoryCalendar from "@/components/calendar/PeriodHistoryCalendar";
 
 export default function CycleCalendar() {
   const [logs, setLogs] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [searchParams, setSearchParams] = useSearchParams();
-  const logMode = searchParams.get("log") === "1";
   const { toast } = useToast();
 
   const loadLogs = useCallback(
@@ -40,60 +36,40 @@ export default function CycleCalendar() {
       </AppHeader>
 
       <main className="mx-auto max-w-3xl px-5 py-8 sm:px-8 sm:py-12">
-        {logMode ? (
-          <>
-            <h1 className="font-heading text-3xl font-semibold text-slate-800 sm:text-4xl">
-              Log historical menstrual days
-            </h1>
-            <p className="mt-2 text-sm text-slate-500">
-              Tap days you were menstruating to add them, or tap a logged day to
-              remove it.
-            </p>
+        <h1 className="font-heading text-3xl font-semibold text-slate-800 sm:text-4xl">
+          Log historical menstrual days
+        </h1>
+        <p className="mt-2 text-sm text-slate-500">
+          Tap days you were menstruating to add them, or tap a logged day to
+          remove it.
+        </p>
 
-            <div className="mt-6">
-              {loading ? (
-                <div className="h-64 animate-pulse rounded-3xl bg-white" />
-              ) : (
-                <PeriodHistoryCalendar
-                  logs={logs}
-                  onSaved={() => {
-                    loadLogs();
-                    toast({
-                      title: "Calendar updated",
-                      description: "Your period days are saved.",
-                    });
-                    setSearchParams({});
-                  }}
-                />
-              )}
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="flex flex-wrap items-start justify-between gap-4">
-              <div>
-                <h1 className="font-heading text-3xl font-semibold text-slate-800 sm:text-4xl">
-                  Your calendar
-                </h1>
-                <p className="mt-2 text-sm text-slate-500">
-                  Every day you've logged, in one place. Tap a day to see what
-                  you recorded.
-                </p>
-              </div>
-              <Button
-                onClick={() => setSearchParams({ log: "1" })}
-                className="rounded-full bg-pomegranate-600 hover:bg-pomegranate-700"
-              >
-                <CalendarPlus className="mr-1.5 h-4 w-4" />
-                Log historical data
-              </Button>
-            </div>
+        <div className="mt-6">
+          {loading ? (
+            <div className="h-64 animate-pulse rounded-3xl bg-white" />
+          ) : (
+            <PeriodHistoryCalendar
+              logs={logs}
+              onSaved={() => {
+                loadLogs();
+                toast({
+                  title: "Calendar updated",
+                  description:
+                    "Your period days are saved. Head back to your cycle when you're ready.",
+                });
+              }}
+            />
+          )}
+        </div>
 
-            <div className="mt-6">
-              <CalendarPanel logs={logs} loading={loading} />
-            </div>
-          </>
-        )}
+        <div className="mt-6 text-center">
+          <Link
+            to="/"
+            className="text-sm font-medium text-pomegranate-600 hover:text-pomegranate-700"
+          >
+            Back to my cycle
+          </Link>
+        </div>
       </main>
     </div>
   );

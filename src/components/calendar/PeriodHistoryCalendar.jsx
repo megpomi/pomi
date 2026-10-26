@@ -100,6 +100,7 @@ export default function PeriodHistoryCalendar({ logs, onSaved }) {
       }
       selectDays([]);
       setRemovals([]);
+      setSaving(false);
       onSaved();
     } catch (e) {
       setError(e?.message || "Couldn't save your days. Please try again.");
