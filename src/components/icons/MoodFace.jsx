@@ -42,10 +42,16 @@ export default function MoodFace({ mood, className = "h-6 w-6" }) {
         <>
           <path d="M8.1 9.4c.6.9 1.4.9 2 0" />
           <path d="M13.9 9.4c.6.9 1.4.9 2 0" />
-          <path d="M8.5 10.2c-.9 1.5-.9 3.2-.2 4.8" />
-          <path d="M15.5 10.2c.9 1.5.9 3.2.2 4.8" />
-          <circle cx="8.3" cy="15.8" r="0.55" fill="currentColor" stroke="none" />
-          <circle cx="15.7" cy="15.8" r="0.55" fill="currentColor" stroke="none" />
+          <path
+            d="M8.7 11.0c.5.7.9 1.15.9 1.5a.9.9 0 0 1-1.8 0c0-.35.4-.8.9-1.5Z"
+            fill="currentColor"
+            stroke="none"
+          />
+          <path
+            d="M15.3 11.0c.5.7.9 1.15.9 1.5a.9.9 0 0 1-1.8 0c0-.35.4-.8.9-1.5Z"
+            fill="currentColor"
+            stroke="none"
+          />
         </>
       ) : (
         EYES
