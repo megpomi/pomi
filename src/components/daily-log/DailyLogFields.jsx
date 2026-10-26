@@ -8,18 +8,54 @@ import {
   prettySymptom,
 } from "@/lib/dailyLog";
 
-export function FlowPicker({ value, onChange }) {
+export function PeriodToggle({ value, onChange, disabled }) {
   return (
-    <div className="space-y-2">
-      <Label>Flow</Label>
+    <div
+      className={`flex items-center justify-between gap-3 rounded-2xl border px-4 py-3 transition ${
+        value
+          ? "border-pomegranate-400 bg-pomegranate-50"
+          : "border-slate-200 bg-white"
+      }`}
+    >
+      <div>
+        <Label
+          htmlFor="is-period-day"
+          className={`cursor-pointer ${value ? "text-pomegranate-700" : ""}`}
+        >
+          Period
+        </Label>
+        <p className="mt-0.5 text-xs text-slate-500">
+          {value
+            ? "This day is marked as a period day."
+            : "Turn on if this day is part of your period."}
+        </p>
+      </div>
+      <Switch
+        id="is-period-day"
+        checked={value}
+        onCheckedChange={onChange}
+        disabled={disabled}
+        className="data-[state=checked]:bg-pomegranate-600"
+      />
+    </div>
+  );
+}
+
+export function FlowPicker({ value, onChange, disabled }) {
+  return (
+    <div className={`space-y-2 transition ${disabled ? "opacity-50" : ""}`}>
+      <Label className={disabled ? "text-slate-400" : undefined}>Flow</Label>
       <div className="flex gap-2">
         {FLOW_OPTIONS.map((option) => (
           <button
             key={option.value}
             type="button"
+            disabled={disabled}
             onClick={() => onChange(option.value)}
             className={`flex flex-1 items-center justify-center gap-2 rounded-xl border px-2 py-2.5 text-sm transition ${
-              value === option.value
+              disabled
+                ? "cursor-not-allowed border-slate-200 text-slate-400"
+                : value === option.value
                 ? "border-pomegranate-400 bg-pomegranate-50 text-pomegranate-700"
                 : "border-slate-200 text-slate-600 hover:border-pomegranate-200"
             }`}
@@ -29,6 +65,11 @@ export function FlowPicker({ value, onChange }) {
           </button>
         ))}
       </div>
+      {disabled && (
+        <p className="text-xs text-slate-400">
+          Flow is only logged on period days.
+        </p>
+      )}
     </div>
   );
 }

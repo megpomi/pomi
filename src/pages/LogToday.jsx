@@ -11,9 +11,15 @@ import { useToast } from "@/components/ui/use-toast";
 import {
   FlowPicker,
   MoodPicker,
+  PeriodToggle,
   SexToggle,
   SymptomPicker,
 } from "@/components/daily-log/DailyLogFields";
+import {
+  addPeriodDays,
+  deletePeriodDays,
+  toDayKey,
+} from "@/lib/periodLogs";
 
 const EMPTY = {
   flow_intensity: "none",
@@ -32,6 +38,8 @@ export default function LogToday() {
   const isToday = date === today;
   const [form, setForm] = useState(EMPTY);
   const [entryId, setEntryId] = useState(null);
+  const [periodLogs, setPeriodLogs] = useState([]);
+  const [periodBusy, setPeriodBusy] = useState(false);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
@@ -60,7 +68,42 @@ export default function LogToday() {
     };
   }, [date]);
 
+  // Period days live in their own history, so the toggle needs the runs that
+  // already exist to extend or split them correctly.
+  useEffect(() => {
+    let active = true;
+    base44.entities.CycleLog.filter({}, { limit: 100 })
+      .then((page) => active && setPeriodLogs(page.items))
+      .catch(() => active && setError("Couldn't load your period history."));
+    return () => {
+      active = false;
+    };
+  }, []);
+
   const set = (patch) => setForm((current) => ({ ...current, ...patch }));
+
+  const isPeriodDay = periodLogs.some((log) => {
+    const start = toDayKey(log.start_date);
+    const end = toDayKey(log.end_date || log.start_date);
+    return date >= start && date <= end;
+  });
+
+  const togglePeriod = async (next) => {
+    if (periodBusy) return;
+    setPeriodBusy(true);
+    setError("");
+    try {
+      const updated = next
+        ? await addPeriodDays(periodLogs, [date])
+        : await deletePeriodDays(periodLogs, [date]);
+      setPeriodLogs(updated.filter(Boolean));
+      if (!next) set({ flow_intensity: "none" });
+    } catch (e) {
+      setError(e?.message || "Couldn't update this period day. Please try again.");
+    } finally {
+      setPeriodBusy(false);
+    }
+  };
 
   const save = async () => {
     setSaving(true);
@@ -121,9 +164,15 @@ export default function LogToday() {
           </div>
         ) : (
           <div className="mt-6 space-y-6 rounded-3xl border border-slate-100 bg-white p-5 sm:p-6">
+            <PeriodToggle
+              value={isPeriodDay}
+              onChange={togglePeriod}
+              disabled={periodBusy}
+            />
             <FlowPicker
               value={form.flow_intensity}
               onChange={(value) => set({ flow_intensity: value })}
+              disabled={!isPeriodDay}
             />
             <MoodPicker
               value={form.mood}
