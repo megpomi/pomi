@@ -92,12 +92,9 @@ export function buildReminders(logs = [], dailyLogs = []) {
   ].reduce((latest, date) => (!latest || date > latest ? date : latest), null);
   const daysSinceLog = lastLogged ? daysBetween(lastLogged, today) : 0;
 
-  if (
-    daysSinceLog >= 5 &&
-    !loggedSomethingToday &&
-    phase.phase !== "period" &&
-    (phase.daysUntilNext == null || phase.daysUntilNext > 2)
-  ) {
+  // Shown every day the user hasn't logged anything, counting from the most
+  // recent period entry or daily check-in.
+  if (daysSinceLog >= 1 && !loggedSomethingToday) {
     reminders.push({
       id: "check_in",
       tone: "info",
