@@ -13,6 +13,10 @@ import CausePreferences from "@/components/profile/CausePreferences";
 import CurrencyPreference from "@/components/profile/CurrencyPreference";
 import NotificationPreferences from "@/components/profile/NotificationPreferences";
 import { DEFAULT_CURRENCY, currencyOf } from "@/lib/currency";
+import {
+  notificationUserFields,
+  readNotificationPrefs,
+} from "@/lib/notifications";
 
 export default function Profile() {
   const [user, setUser] = useState(null);
@@ -20,10 +24,9 @@ export default function Profile() {
   const [tracking, setTracking] = useState([]);
   const [causes, setCauses] = useState([]);
   const [currency, setCurrency] = useState(DEFAULT_CURRENCY);
-  const [notifications, setNotifications] = useState({
-    email: true,
-    push: false,
-  });
+  const [notifications, setNotifications] = useState(() =>
+    readNotificationPrefs(null)
+  );
   const [saving, setSaving] = useState(false);
   const { toast } = useToast();
   // Clears the stored session and reloads, so the app opens as a new visitor.
@@ -39,10 +42,7 @@ export default function Profile() {
         setTracking(u?.tracking_focus || []);
         setCauses(u?.charity_interests || []);
         setCurrency(currencyOf(u));
-        setNotifications({
-          email: u?.notify_email ?? true,
-          push: u?.notify_push ?? false,
-        });
+        setNotifications(readNotificationPrefs(u));
       })
       .catch(() => setUser(null))
       .finally(() => setLoading(false));
@@ -55,8 +55,7 @@ export default function Profile() {
         tracking_focus: tracking,
         charity_interests: causes,
         currency,
-        notify_email: notifications.email,
-        notify_push: notifications.push,
+        ...notificationUserFields(notifications),
       });
       toast({
         title: "Preferences saved",
@@ -131,6 +130,7 @@ export default function Profile() {
           <NotificationPreferences
             preferences={notifications}
             onChange={setNotifications}
+            tracking={tracking}
           />
         </div>
 

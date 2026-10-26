@@ -1,25 +1,55 @@
 import React from "react";
 import { Bell, Mail, Smartphone } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
+import { CHANNELS, visibleTopics } from "@/lib/notifications";
 
-// The two ways Pomi can reach the user, kept on their own record so the
-// reminder that reads them can be switched off from here.
-const ROWS = [
-  {
-    key: "email",
-    label: "Email notifications",
-    desc: "Your daily check-in reminder and occasional cycle updates.",
-    icon: Mail,
-  },
-  {
-    key: "push",
-    label: "Push notifications",
-    desc: "Alerts on your phone, in the Pomi mobile app.",
-    icon: Smartphone,
-  },
-];
+const ICONS = { email: Mail, push: Smartphone };
 
-export default function NotificationPreferences({ preferences, onChange }) {
+function ChannelToggle({ channel, checked, onChange, topicLabel }) {
+  const Icon = ICONS[channel.key];
+  return (
+    <div
+      className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-1 transition ${
+        checked
+          ? "border-pomegranate-300 bg-pomegranate-50"
+          : "border-slate-200 hover:border-pomegranate-200"
+      }`}
+    >
+      <Icon
+        className={`h-3.5 w-3.5 ${
+          checked ? "text-pomegranate-600" : "text-slate-400"
+        }`}
+      />
+      <span
+        className={`text-xs ${checked ? "text-pomegranate-700" : "text-slate-500"}`}
+      >
+        {channel.label}
+      </span>
+      <Switch
+        checked={checked}
+        onCheckedChange={onChange}
+        aria-label={`${topicLabel} by ${channel.label}`}
+        className="h-4 w-7 [&>span]:h-3 [&>span]:w-3 [&>span]:data-[state=checked]:translate-x-3 data-[state=checked]:bg-pomegranate-600"
+      />
+    </div>
+  );
+}
+
+// Every tracker has its own email and push switch, so the reminders someone
+// gets follow what they actually track.
+export default function NotificationPreferences({
+  preferences,
+  onChange,
+  tracking = [],
+}) {
+  const topics = visibleTopics(tracking);
+
+  const set = (topicKey, channelKey, checked) =>
+    onChange({
+      ...preferences,
+      [topicKey]: { ...preferences[topicKey], [channelKey]: checked },
+    });
+
   return (
     <section className="rounded-3xl border border-slate-100 bg-white p-6 sm:p-8">
       <div className="flex items-center gap-2">
@@ -29,37 +59,40 @@ export default function NotificationPreferences({ preferences, onChange }) {
         </h2>
       </div>
       <p className="mt-1 text-sm text-slate-500">
-        Choose how Pomi reminds you to log your cycle and symptoms.
+        Choose what Pomi sends you, and how — separately for each thing you
+        track.
       </p>
 
-      <div className="mt-4 space-y-3">
-        {ROWS.map((row) => {
-          const Icon = row.icon;
-          return (
-            <div
-              key={row.key}
-              className="flex items-center justify-between gap-4 rounded-2xl border border-slate-100 px-4 py-3"
-            >
-              <div className="flex items-start gap-3">
-                <Icon className="mt-0.5 h-4 w-4 shrink-0 text-pomegranate-400" />
-                <div>
-                  <p className="text-sm font-medium text-slate-800">
-                    {row.label}
-                  </p>
-                  <p className="mt-0.5 text-xs text-slate-500">{row.desc}</p>
-                </div>
-              </div>
-              <Switch
-                checked={Boolean(preferences[row.key])}
-                onCheckedChange={(checked) =>
-                  onChange({ ...preferences, [row.key]: checked })
-                }
-                aria-label={row.label}
-              />
+      <div className="mt-4 overflow-hidden rounded-2xl border border-slate-100">
+        {topics.map((topic) => (
+          <div
+            key={topic.key}
+            className="flex flex-col gap-2.5 border-b border-slate-100 px-4 py-3.5 last:border-b-0 sm:flex-row sm:items-center sm:justify-between sm:gap-4"
+          >
+            <div>
+              <p className="text-sm font-medium text-slate-800">
+                {topic.label}
+              </p>
+              <p className="mt-0.5 text-xs text-slate-500">{topic.desc}</p>
             </div>
-          );
-        })}
+            <div className="flex flex-wrap items-center gap-2">
+              {CHANNELS.map((channel) => (
+                <ChannelToggle
+                  key={channel.key}
+                  channel={channel}
+                  topicLabel={topic.label}
+                  checked={Boolean(preferences[topic.key]?.[channel.key])}
+                  onChange={(checked) => set(topic.key, channel.key, checked)}
+                />
+              ))}
+            </div>
+          </div>
+        ))}
       </div>
+
+      <p className="mt-3 text-xs text-slate-400">
+        Push notifications arrive in the Pomi mobile app.
+      </p>
     </section>
   );
 }
