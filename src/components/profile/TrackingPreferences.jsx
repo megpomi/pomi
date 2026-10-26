@@ -28,6 +28,7 @@ export default function TrackingPreferences({ selected, onChange }) {
             label={opt.label}
             desc={opt.desc}
             active={selected.includes(opt.value)}
+            comingSoon={opt.comingSoon}
             onClick={() => toggle(opt.value)}
           />
         ))}
