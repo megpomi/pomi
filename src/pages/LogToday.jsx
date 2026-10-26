@@ -254,7 +254,7 @@ export default function LogToday() {
                 rows={3}
                 value={form.notes}
                 onChange={(e) => set({ notes: e.target.value })}
-                placeholder="Anything else worth remembering?"
+                placeholder="Anything else you noticed today?"
               />
             </div>
 
