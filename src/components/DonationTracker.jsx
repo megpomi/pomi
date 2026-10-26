@@ -2,15 +2,11 @@ import React from "react";
 import { Heart, Sparkles } from "lucide-react";
 import {
   AD_REVENUE_PER_VISIT,
-  DONATION_SHARE,
-  SUBSCRIPTION_REVENUE_PER_DAY,
   donationTotals,
 } from "@/lib/donations";
 import DonationCauses from "@/components/donations/DonationCauses";
 import { currencyOf, formatMoney } from "@/lib/currency";
 import useIsSubscriber from "@/hooks/use-is-subscriber";
-
-const percent = `${Math.round(DONATION_SHARE * 100)}%`;
 
 export default function DonationTracker({ user }) {
   const money = (value) => formatMoney(value, currencyOf(user));
@@ -35,11 +31,8 @@ export default function DonationTracker({ user }) {
         </h2>
       </div>
       <p className="mb-5 text-sm text-slate-500">
-        {percent} of the revenue your activity generates goes into your donation
-        pot, split equally between the causes you chose.{" "}
-        {subscribed
-          ? "Your subscription adds revenue every day."
-          : "The ads you see each time you open Pomi add revenue."}
+        Track the growth of your donation pot. Revenue is earned from your
+        engagement and is split equally between your chosen causes.
       </p>
 
       <div className="grid gap-3 sm:grid-cols-2">
@@ -70,12 +63,12 @@ export default function DonationTracker({ user }) {
 
       <DonationCauses user={user} pot={totals.allTime} />
 
-      <p className="mt-5 flex items-center gap-1.5 text-xs text-slate-400">
-        <Sparkles className="h-3.5 w-3.5 text-pomegranate-400" />
-        {subscribed
-          ? `${money(SUBSCRIPTION_REVENUE_PER_DAY)} of revenue a day while subscribed`
-          : `${money(AD_REVENUE_PER_VISIT)} of ad revenue per visit — go ad-free to donate more`}
-      </p>
+      {!subscribed && (
+        <p className="mt-5 flex items-center gap-1.5 text-xs text-slate-400">
+          <Sparkles className="h-3.5 w-3.5 text-pomegranate-400" />
+          {`${money(AD_REVENUE_PER_VISIT)} of ad revenue per visit — go ad-free to donate more`}
+        </p>
+      )}
     </div>
   );
 }
