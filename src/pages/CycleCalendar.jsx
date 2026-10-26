@@ -46,7 +46,8 @@ export default function CycleCalendar() {
               Log historical menstrual days
             </h1>
             <p className="mt-2 text-sm text-slate-500">
-              Tap days you were menstruating to build up your history.
+              Tap days you were menstruating to add them, or tap a logged day to
+              remove it.
             </p>
 
             <div className="mt-6">
@@ -58,8 +59,8 @@ export default function CycleCalendar() {
                   onSaved={() => {
                     loadLogs();
                     toast({
-                      title: "Days added",
-                      description: "Your calendar is updated.",
+                      title: "Calendar updated",
+                      description: "Your period days are saved.",
                     });
                     setSearchParams({});
                   }}

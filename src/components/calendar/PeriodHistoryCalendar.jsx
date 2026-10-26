@@ -1,10 +1,9 @@
 import React, { useCallback, useMemo, useRef, useState } from "react";
-import { base44 } from "@/api/base44Client";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import CalendarDay from "@/components/calendar/CalendarDay";
 import ImportFromScreenshot from "@/components/calendar/ImportFromScreenshot";
-import { groupBleedingDays } from "@/lib/cycle";
+import { addPeriodDays, deletePeriodDays } from "@/lib/periodLogs";
 
 // yyyy-MM-dd, built from local parts so days never shift by a timezone offset.
 const formatDay = (date) => {
@@ -26,6 +25,8 @@ const expandLog = (log) => {
 
 export default function PeriodHistoryCalendar({ logs, onSaved }) {
   const [days, setDays] = useState([]);
+  // Days already logged that this save removes — tapped on the calendar.
+  const [removals, setRemovals] = useState([]);
   const daysRef = useRef([]);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
@@ -45,6 +46,23 @@ export default function PeriodHistoryCalendar({ logs, onSaved }) {
     () => new Set(loggedDays.map(formatDay)),
     [loggedDays]
   );
+  const removedKeys = useMemo(() => new Set(removals), [removals]);
+  const keptLoggedDays = useMemo(
+    () => loggedDays.filter((day) => !removedKeys.has(formatDay(day))),
+    [loggedDays, removedKeys]
+  );
+  const removedDays = useMemo(
+    () => loggedDays.filter((day) => removedKeys.has(formatDay(day))),
+    [loggedDays, removedKeys]
+  );
+
+  // Tapping a logged day marks it for removal, tapping it again keeps it.
+  const toggleRemoval = (day) => {
+    const key = formatDay(day);
+    setRemovals((prev) =>
+      prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key]
+    );
+  };
 
   // Adds the days read from an imported screenshot, skipping anything already there.
   const mergeImported = (values) => {
@@ -70,15 +88,18 @@ export default function PeriodHistoryCalendar({ logs, onSaved }) {
   }, []);
 
   const handleSave = async () => {
-    if (!days.length) return;
+    if (!days.length && !removals.length) return;
     setSaving(true);
     setError("");
     try {
-      const runs = groupBleedingDays(days.map(formatDay));
-      await base44.entities.CycleLog.bulkCreate(
-        runs.map((run) => ({ ...run, flow_intensity: "medium" }))
-      );
+      const remaining = removals.length
+        ? await deletePeriodDays(logs, removals)
+        : logs;
+      if (days.length) {
+        await addPeriodDays(remaining, days.map(formatDay));
+      }
       selectDays([]);
+      setRemovals([]);
       onSaved();
     } catch (e) {
       setError(e?.message || "Couldn't save your days. Please try again.");
@@ -107,7 +128,10 @@ export default function PeriodHistoryCalendar({ logs, onSaved }) {
             numberOfMonths={12}
             defaultMonth={historyStart}
             disabled={{ after: today }}
-            modifiers={{ logged: loggedDays }}
+            modifiers={{ logged: keptLoggedDays, removing: removedDays }}
+            onDayClick={(day, modifiers) => {
+              if (modifiers.logged || modifiers.removing) toggleRemoval(day);
+            }}
             components={{ DayContent: CalendarDay }}
             classNames={{
               months: "flex flex-col items-center",
@@ -122,6 +146,8 @@ export default function PeriodHistoryCalendar({ logs, onSaved }) {
                 "bg-pomegranate-600 text-primary-foreground hover:bg-pomegranate-600 focus:bg-pomegranate-600",
               day_logged:
                 "bg-pomegranate-200 font-semibold text-pomegranate-900 hover:bg-pomegranate-200",
+              day_removing:
+                "bg-transparent font-semibold text-muted-foreground line-through hover:bg-accent",
               day_today: "font-semibold",
             }}
             className="w-full p-3"
@@ -134,15 +160,20 @@ export default function PeriodHistoryCalendar({ logs, onSaved }) {
 
         <div className="flex items-center gap-3 px-4 py-3">
           <span className="flex-1 text-sm text-slate-500">
-            {days.length > 0 &&
-              `${days.length} day${days.length === 1 ? "" : "s"} selected`}
+            {[
+              days.length > 0 &&
+                `${days.length} day${days.length === 1 ? "" : "s"} selected`,
+              removals.length > 0 && `${removals.length} to remove`,
+            ]
+              .filter(Boolean)
+              .join(" · ")}
           </span>
           <Button
             onClick={handleSave}
-            disabled={!days.length || saving}
+            disabled={(!days.length && !removals.length) || saving}
             className="rounded-full bg-pomegranate-600 px-6 hover:bg-pomegranate-700"
           >
-            {saving ? "Saving…" : "Save days"}
+            {saving ? "Saving…" : removals.length ? "Save changes" : "Save days"}
           </Button>
         </div>
       </div>
