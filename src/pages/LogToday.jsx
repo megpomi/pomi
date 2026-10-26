@@ -269,7 +269,8 @@ export default function LogToday() {
                   Menstrual cycles
                 </h2>
                 <p className="mt-1 text-sm text-slate-500">
-                  Period days, flow, symptoms and discharge.
+                  Log today as a period day or simply track today's cycle
+                  symptoms.
                 </p>
                 <div className="mt-5 space-y-6">
                   <TogglePill
