@@ -4,7 +4,14 @@
 
 import { prettySymptom } from "@/lib/dailyLog";
 
-export const MOOD_SCORE = { anxious: 1, low: 2, okay: 3, good: 4, great: 5 };
+export const MOOD_SCORE = {
+  devastated: 1,
+  anxious: 1,
+  low: 2,
+  okay: 3,
+  good: 4,
+  great: 5,
+};
 export const MOOD_WORD = {
   1: "Anxious",
   2: "Low",

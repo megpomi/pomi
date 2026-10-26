@@ -16,7 +16,9 @@ const MOUTHS = {
   good: "M9.3 13.9c.8 1 1.7 1.5 2.7 1.5s1.9-.5 2.7-1.5",
   okay: "M9.3 14.4c1.8.25 3.6.25 5.4 0",
   low: "M9.3 15.5c.8-.95 1.7-1.4 2.7-1.4s1.9.45 2.7 1.4",
-  anxious: "M9.2 14.6c.65-.65 1.3-.65 1.95 0s1.3.65 1.95 0 1.3-.65 1.95 0",
+  anxious: "M9.6 15.1c1.5-.8 3.3-.8 4.8 0",
+  devastated:
+    "M9.5 15.1c.6-.9 1.4-1.4 2.5-1.4s1.9.5 2.5 1.4c-.6 1.5-1.4 2.2-2.5 2.2s-1.9-.7-2.5-2.2Z",
 };
 
 export default function MoodFace({ mood, className = "h-6 w-6" }) {
@@ -37,13 +39,20 @@ export default function MoodFace({ mood, className = "h-6 w-6" }) {
           <path d="M8.3 10.2c.55-1 1.35-1 1.9 0" />
           <path d="M13.8 10.2c.55-1 1.35-1 1.9 0" />
         </>
+      ) : mood === "devastated" ? (
+        <>
+          <path d="M8.1 9.4c.6.9 1.4.9 2 0" />
+          <path d="M13.9 9.4c.6.9 1.4.9 2 0" />
+          <circle cx="8.9" cy="12.1" r="0.6" fill="currentColor" stroke="none" />
+          <circle cx="15.1" cy="12.1" r="0.6" fill="currentColor" stroke="none" />
+        </>
       ) : (
         EYES
       )}
       {mood === "anxious" && (
         <>
-          <path d="M8.6 7.9c.6-.35 1.2-.3 1.8.1" />
-          <path d="M15.4 7.9c-.6-.35-1.2-.3-1.8.1" />
+          <path d="M8.3 8.1 10.4 9.1" />
+          <path d="M15.7 8.1 13.6 9.1" />
         </>
       )}
       <path d={MOUTHS[mood] || MOUTHS.okay} />
