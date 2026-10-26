@@ -95,6 +95,15 @@
       "default": [],
       "title": "Custom lifestyle trackers"
     },
+    "journal_response": {
+      "type": "string",
+      "title": "Journal reflection",
+      "maxLength": 4000
+    },
+    "journal_voice_note": {
+      "type": "string",
+      "title": "Journal voice note"
+    },
     "notes": {
       "type": "string",
       "title": "Notes",

@@ -16,6 +16,7 @@ import {
 import SymptomPicker from "@/components/daily-log/SymptomPicker";
 import LifestylePicker from "@/components/daily-log/LifestylePicker";
 import DischargePicker from "@/components/daily-log/DischargePicker";
+import JournalEntryBox from "@/components/journal/JournalEntryBox";
 import {
   addPeriodDays,
   deletePeriodDays,
@@ -34,6 +35,8 @@ const EMPTY = {
   intense_exercise: false,
   caffeine: false,
   custom_lifestyle: [],
+  journal_response: "",
+  journal_voice_note: "",
   notes: "",
 };
 
@@ -49,6 +52,7 @@ export default function LogToday() {
   const [periodLogs, setPeriodLogs] = useState([]);
   const [periodBusy, setPeriodBusy] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [tracking, setTracking] = useState(null);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const { toast } = useToast();
@@ -73,6 +77,8 @@ export default function LogToday() {
           intense_exercise: entry?.intense_exercise || false,
           caffeine: entry?.caffeine || false,
           custom_lifestyle: entry?.custom_lifestyle || [],
+          journal_response: entry?.journal_response || "",
+          journal_voice_note: entry?.journal_voice_note || "",
           notes: entry?.notes || "",
         });
       })
@@ -90,6 +96,18 @@ export default function LogToday() {
     base44.entities.CycleLog.filter({}, { limit: 100 })
       .then((page) => active && setPeriodLogs(page.items))
       .catch(() => active && setError("Couldn't load your period history."));
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  // Which boxes to show comes from the tracking areas chosen in the profile.
+  useEffect(() => {
+    let active = true;
+    base44.auth
+      .me()
+      .then((user) => active && setTracking(user?.tracking_focus || []))
+      .catch(() => active && setTracking([]));
     return () => {
       active = false;
     };
@@ -136,6 +154,8 @@ export default function LogToday() {
         intense_exercise: form.intense_exercise,
         caffeine: form.caffeine,
         custom_lifestyle: form.custom_lifestyle,
+        journal_response: form.journal_response,
+        journal_voice_note: form.journal_voice_note,
         notes: form.notes,
       };
       if (form.mood) payload.mood = form.mood;
@@ -156,6 +176,10 @@ export default function LogToday() {
       setSaving(false);
     }
   };
+
+  const tracksWellbeing = (tracking || []).includes("general_wellbeing");
+  const showCycle =
+    (tracking || []).includes("menstrual_cycles") || !tracksWellbeing;
 
   return (
     <div className="min-h-screen bg-background">
@@ -180,12 +204,21 @@ export default function LogToday() {
             : "update the flow, mood and symptoms you logged for this day."}
         </p>
 
-        {loading ? (
+        {loading || !tracking ? (
           <div className="mt-8 flex justify-center">
             <Loader2 className="h-5 w-5 animate-spin text-pomegranate-400" />
           </div>
         ) : (
-          <div className="mt-6 space-y-6 rounded-3xl border border-slate-100 bg-white p-5 sm:p-6">
+          <div className="mt-6 space-y-6">
+            {showCycle && (
+            <section className="rounded-3xl border border-slate-100 bg-white p-5 sm:p-6">
+            <h2 className="font-heading text-xl font-semibold text-slate-800">
+              Menstrual cycles
+            </h2>
+            <p className="mt-1 text-sm text-slate-500">
+              Flow, mood, symptoms and lifestyle for this day.
+            </p>
+            <div className="mt-5 space-y-6">
             <TogglePill
               label="Period"
               checked={isPeriodDay}
@@ -265,6 +298,33 @@ export default function LogToday() {
                 placeholder="Anything else you noticed today?"
               />
             </div>
+            </div>
+            </section>
+            )}
+
+            {tracksWellbeing && (
+              <section className="rounded-3xl border border-slate-100 bg-white p-5 sm:p-6">
+                <h2 className="font-heading text-xl font-semibold text-slate-800">
+                  General wellbeing
+                </h2>
+                <p className="mt-1 text-sm text-slate-500">
+                  A quiet moment to reflect on how you are.
+                </p>
+                <div className="mt-5">
+                  <JournalEntryBox
+                    dateKey={date}
+                    response={form.journal_response}
+                    voiceNote={form.journal_voice_note}
+                    onResponseChange={(value) =>
+                      set({ journal_response: value })
+                    }
+                    onVoiceNoteChange={(value) =>
+                      set({ journal_voice_note: value })
+                    }
+                  />
+                </div>
+              </section>
+            )}
 
             {error && <p className="text-sm text-destructive">{error}</p>}
 
