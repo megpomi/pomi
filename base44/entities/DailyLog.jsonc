@@ -40,6 +40,7 @@
           "bloating",
           "fatigue",
           "breast_tenderness",
+          "spotting",
           "acne",
           "cravings",
           "appetite_loss",
@@ -48,12 +49,34 @@
           "insomnia",
           "dreams",
           "increased_libido",
-          "cervical_mucus",
-          "spotting"
+          "cervical_mucus"
         ]
       },
       "default": [],
       "title": "Symptoms"
+    },
+    "discharge": {
+      "type": "boolean",
+      "default": false,
+      "title": "Discharge"
+    },
+    "discharge_types": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "egg_white",
+          "creamy",
+          "watery",
+          "sticky",
+          "milky_white",
+          "yellow",
+          "green",
+          "brown"
+        ]
+      },
+      "default": [],
+      "title": "Discharge type"
     },
     "had_sex": {
       "type": "boolean",

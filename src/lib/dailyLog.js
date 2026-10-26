@@ -32,4 +32,15 @@ export const SYMPTOM_OPTIONS = [
   "increased_libido",
 ];
 
+export const DISCHARGE_OPTIONS = [
+  "egg_white",
+  "creamy",
+  "watery",
+  "sticky",
+  "milky_white",
+  "yellow",
+  "green",
+  "brown",
+];
+
 export const prettySymptom = (symptom) => symptom.replace(/_/g, " ");

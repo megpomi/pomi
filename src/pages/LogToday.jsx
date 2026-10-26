@@ -14,6 +14,7 @@ import {
   SymptomPicker,
   TogglePill,
 } from "@/components/daily-log/DailyLogFields";
+import DischargePicker from "@/components/daily-log/DischargePicker";
 import {
   addPeriodDays,
   deletePeriodDays,
@@ -24,6 +25,8 @@ const EMPTY = {
   flow_intensity: "none",
   mood: "",
   symptoms: [],
+  discharge: false,
+  discharge_types: [],
   had_sex: false,
   alcohol: false,
   light_exercise: false,
@@ -60,6 +63,8 @@ export default function LogToday() {
           flow_intensity: entry?.flow_intensity || "none",
           mood: entry?.mood || "",
           symptoms: entry?.symptoms || [],
+          discharge: entry?.discharge || false,
+          discharge_types: entry?.discharge_types || [],
           had_sex: entry?.had_sex || false,
           alcohol: entry?.alcohol || false,
           light_exercise: entry?.light_exercise || false,
@@ -120,6 +125,8 @@ export default function LogToday() {
         date,
         flow_intensity: form.flow_intensity,
         symptoms: form.symptoms,
+        discharge: form.discharge,
+        discharge_types: form.discharge_types,
         had_sex: form.had_sex,
         alcohol: form.alcohol,
         light_exercise: form.light_exercise,
@@ -194,6 +201,21 @@ export default function LogToday() {
               value={form.symptoms}
               onChange={(value) => set({ symptoms: value })}
             />
+            <TogglePill
+              label="Discharge"
+              checked={form.discharge}
+              onChange={(value) =>
+                set({
+                  discharge: value,
+                  discharge_types: value ? form.discharge_types : [],
+                })
+              }
+            />
+            <DischargePicker
+              value={form.discharge_types}
+              onChange={(value) => set({ discharge_types: value })}
+              disabled={!form.discharge}
+            />
             <div className="space-y-2">
               <Label>Lifestyle</Label>
               <div className="flex flex-wrap gap-2">
@@ -201,11 +223,6 @@ export default function LogToday() {
                 label="Sex"
                 checked={form.had_sex}
                 onChange={(value) => set({ had_sex: value })}
-              />
-              <TogglePill
-                label="Alcohol"
-                checked={form.alcohol}
-                onChange={(value) => set({ alcohol: value })}
               />
               <TogglePill
                 label="Light exercise"
@@ -216,6 +233,11 @@ export default function LogToday() {
                 label="Intense exercise"
                 checked={form.intense_exercise}
                 onChange={(value) => set({ intense_exercise: value })}
+              />
+              <TogglePill
+                label="Alcohol"
+                checked={form.alcohol}
+                onChange={(value) => set({ alcohol: value })}
               />
               <TogglePill
                 label="Caffeine"
