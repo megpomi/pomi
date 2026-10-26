@@ -3,6 +3,7 @@ import { Calendar } from "@/components/ui/calendar";
 import CalendarDay from "@/components/calendar/CalendarDay";
 import LoggedDayDetails from "@/components/calendar/LoggedDayDetails";
 import { getCycleDay } from "@/lib/cycle";
+import { addPeriodDays, deletePeriodDays } from "@/lib/periodLogs";
 
 // yyyy-MM-dd, built from local parts so days never shift by a timezone offset.
 const dayKey = (value) => {
@@ -37,8 +38,11 @@ export default function CalendarPanel({
   loading,
   title,
   action,
+  onChanged,
 }) {
   const [selected, setSelected] = useState(new Date());
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState("");
 
   const loggedDays = useMemo(() => logs.flatMap(expandLog), [logs]);
 
@@ -75,6 +79,23 @@ export default function CalendarPanel({
     () => (selected ? getCycleDay(logs, selected) : null),
     [logs, selected]
   );
+
+  // Marks the selected day as a period day, or clears it when it already is one.
+  const togglePeriodDay = async () => {
+    if (!selected || saving) return;
+    setSaving(true);
+    setError("");
+    try {
+      const key = dayKey(selected);
+      if (selectedLog) await deletePeriodDays(logs, [key]);
+      else await addPeriodDays(logs, [key]);
+      if (onChanged) await onChanged();
+    } catch (e) {
+      setError(e?.message || "Couldn't update this day. Please try again.");
+    } finally {
+      setSaving(false);
+    }
+  };
 
   return (
     <div>
@@ -126,7 +147,7 @@ export default function CalendarPanel({
             <span className="inline-flex h-4 w-4 items-center justify-center rounded-full border border-slate-200">
               <span className="h-1.5 w-1.5 rounded-full bg-symptom" />
             </span>
-            Symptom day
+            Symptoms
           </span>
         </div>
       </div>
@@ -140,6 +161,10 @@ export default function CalendarPanel({
             log={selectedLog}
             dailyLog={selectedDailyLog}
             cycleDay={cycleDay}
+            isPeriodDay={Boolean(selectedLog)}
+            onTogglePeriod={togglePeriodDay}
+            periodSaving={saving}
+            periodError={error}
           />
         )}
       </div>

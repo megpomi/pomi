@@ -173,6 +173,7 @@ export default function Home() {
               dailyLogs={dailyLogs}
               loading={loading}
               title="Your calendar"
+              onChanged={loadLogs}
               action={
                 <Button
                   asChild

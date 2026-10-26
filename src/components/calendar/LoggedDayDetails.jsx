@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Droplet, PencilLine } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { prettySymptom } from "@/lib/dailyLog";
 
 const FLOW_LABEL = { light: "Light", medium: "Medium", heavy: "Heavy" };
@@ -31,7 +32,16 @@ const dayKey = (d) => {
   return `${d.getFullYear()}-${month}-${day}`;
 };
 
-export default function LoggedDayDetails({ date, log, dailyLog, cycleDay }) {
+export default function LoggedDayDetails({
+  date,
+  log,
+  dailyLog,
+  cycleDay,
+  isPeriodDay,
+  onTogglePeriod,
+  periodSaving,
+  periodError,
+}) {
   // A period entry and the daily check-in are separate records for the same
   // day, so the card shows whatever either of them has to say.
   const flow =
@@ -106,7 +116,7 @@ export default function LoggedDayDetails({ date, log, dailyLog, cycleDay }) {
         </div>
       )}
 
-      <div className="mt-5">
+      <div className="mt-5 flex flex-wrap items-center gap-2">
         <Button
           asChild
           variant="outline"
@@ -118,7 +128,30 @@ export default function LoggedDayDetails({ date, log, dailyLog, cycleDay }) {
             Add or edit symptoms
           </Link>
         </Button>
+        <Button
+          onClick={onTogglePeriod}
+          disabled={periodSaving}
+          variant="outline"
+          size="sm"
+          className={cn(
+            "rounded-full",
+            isPeriodDay
+              ? "border-slate-200 text-slate-600 hover:bg-slate-50"
+              : "border-pomegranate-200 text-pomegranate-600 hover:bg-pomegranate-50"
+          )}
+        >
+          <Droplet className="mr-1.5 h-4 w-4" />
+          {periodSaving
+            ? "Saving…"
+            : isPeriodDay
+            ? "Remove as period day"
+            : "Add as period day"}
+        </Button>
       </div>
+
+      {periodError && (
+        <p className="mt-2 text-sm text-destructive">{periodError}</p>
+      )}
     </div>
   );
 }
