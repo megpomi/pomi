@@ -14,6 +14,7 @@ import {
   TogglePill,
 } from "@/components/daily-log/DailyLogFields";
 import SymptomPicker from "@/components/daily-log/SymptomPicker";
+import LifestylePicker from "@/components/daily-log/LifestylePicker";
 import DischargePicker from "@/components/daily-log/DischargePicker";
 import {
   addPeriodDays,
@@ -32,6 +33,7 @@ const EMPTY = {
   light_exercise: false,
   intense_exercise: false,
   caffeine: false,
+  custom_lifestyle: [],
   notes: "",
 };
 
@@ -70,6 +72,7 @@ export default function LogToday() {
           light_exercise: entry?.light_exercise || false,
           intense_exercise: entry?.intense_exercise || false,
           caffeine: entry?.caffeine || false,
+          custom_lifestyle: entry?.custom_lifestyle || [],
           notes: entry?.notes || "",
         });
       })
@@ -132,6 +135,7 @@ export default function LogToday() {
         light_exercise: form.light_exercise,
         intense_exercise: form.intense_exercise,
         caffeine: form.caffeine,
+        custom_lifestyle: form.custom_lifestyle,
         notes: form.notes,
       };
       if (form.mood) payload.mood = form.mood;
@@ -244,6 +248,10 @@ export default function LogToday() {
                 checked={form.caffeine}
                 onChange={(value) => set({ caffeine: value })}
               />
+                <LifestylePicker
+                  value={form.custom_lifestyle}
+                  onChange={(value) => set({ custom_lifestyle: value })}
+                />
               </div>
             </div>
 

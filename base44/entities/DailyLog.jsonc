@@ -87,6 +87,14 @@
       "default": false,
       "title": "Caffeine"
     },
+    "custom_lifestyle": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "title": "Custom lifestyle trackers"
+    },
     "notes": {
       "type": "string",
       "title": "Notes",
