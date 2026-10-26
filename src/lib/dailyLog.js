@@ -21,6 +21,7 @@ export const SYMPTOM_OPTIONS = [
   "bloating",
   "fatigue",
   "breast_tenderness",
+  "spotting",
   "acne",
   "cravings",
   "appetite_loss",
@@ -29,8 +30,6 @@ export const SYMPTOM_OPTIONS = [
   "insomnia",
   "dreams",
   "increased_libido",
-  "cervical_mucus",
-  "spotting",
 ];
 
 export const prettySymptom = (symptom) => symptom.replace(/_/g, " ");

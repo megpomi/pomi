@@ -194,7 +194,9 @@ export default function LogToday() {
               value={form.symptoms}
               onChange={(value) => set({ symptoms: value })}
             />
-            <div className="flex flex-wrap gap-2">
+            <div className="space-y-2">
+              <Label>Lifestyle</Label>
+              <div className="flex flex-wrap gap-2">
               <TogglePill
                 label="Sex"
                 checked={form.had_sex}
@@ -220,6 +222,7 @@ export default function LogToday() {
                 checked={form.caffeine}
                 onChange={(value) => set({ caffeine: value })}
               />
+              </div>
             </div>
 
             <div className="space-y-2">
