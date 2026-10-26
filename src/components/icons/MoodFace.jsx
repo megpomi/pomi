@@ -49,14 +49,6 @@ export default function MoodFace({ mood, className = "h-6 w-6" }) {
       ) : (
         EYES
       )}
-      {mood === "low" && (
-        <>
-          <path d="M8.9 11.4c-.55 1.4-.4 2.9.15 4.2" />
-          <path d="M15.1 11.4c.55 1.4.4 2.9-.15 4.2" />
-          <circle cx="8.95" cy="16.3" r="0.55" fill="currentColor" stroke="none" />
-          <circle cx="15.05" cy="16.3" r="0.55" fill="currentColor" stroke="none" />
-        </>
-      )}
       {mood === "anxious" && (
         <>
           <path d="M8.3 8.1 10.4 9.1" />
