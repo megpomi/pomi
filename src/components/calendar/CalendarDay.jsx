@@ -1,11 +1,13 @@
 import React from "react";
 
-// A pomegranate dot marks every day that has a period logged, and a symptom
-// dot every day the daily check-in recorded a symptom on — a day can carry both.
+// A pomegranate dot marks every day that has a period logged, a symptom dot
+// every day the daily check-in recorded a symptom on, and a dark purple one
+// every day with a journal entry — a day can carry several.
 export default function CalendarDay({ date, activeModifiers }) {
   const dots = [];
   if (activeModifiers.logged) dots.push("bg-pomegranate-600");
   if (activeModifiers.symptom) dots.push("bg-symptom");
+  if (activeModifiers.journal) dots.push("bg-purple-800");
 
   return (
     <div className="relative flex h-full w-full items-center justify-center">

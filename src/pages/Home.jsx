@@ -187,6 +187,7 @@ export default function Home() {
               logs={logs}
               dailyLogs={dailyLogs}
               loading={loading}
+              showJournal={tracksWellbeing}
               title="Your calendar"
               onChanged={loadLogs}
               action={

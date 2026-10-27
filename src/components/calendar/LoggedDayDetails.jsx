@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Droplet, PencilLine } from "lucide-react";
+import { BookOpen, Droplet, Mic, PencilLine } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { prettySymptom } from "@/lib/dailyLog";
 import MoodFace from "@/components/icons/MoodFace";
+import JournalEntryDialog from "@/components/journal/JournalEntryDialog";
 
 const FLOW_LABEL = { light: "Light", medium: "Medium", heavy: "Heavy" };
 
@@ -31,12 +32,17 @@ export default function LoggedDayDetails({
   date,
   log,
   dailyLog,
+  journal,
   cycleDay,
   isPeriodDay,
   onTogglePeriod,
   periodSaving,
   periodError,
 }) {
+  const [journalOpen, setJournalOpen] = useState(false);
+  const journalResponse = journal?.journal_response?.trim() || "";
+  const journalVoice = journal?.journal_voice_note || "";
+  const hasJournal = Boolean(journalResponse || journalVoice);
   // A period entry and the daily check-in are separate records for the same
   // day, so the card shows whatever either of them has to say.
   const flow =
@@ -112,6 +118,24 @@ export default function LoggedDayDetails({
               {notes}
             </p>
           )}
+          {hasJournal && (
+            <button
+              type="button"
+              onClick={() => setJournalOpen(true)}
+              className="flex w-full items-center justify-between gap-3 rounded-2xl border border-purple-200 bg-purple-50/60 px-4 py-3 text-left text-sm text-purple-900 transition-colors hover:bg-purple-50"
+            >
+              <span className="flex items-center gap-2">
+                <BookOpen className="h-4 w-4 shrink-0" />
+                Journal entry saved
+                {journalVoice && (
+                  <Mic className="h-3.5 w-3.5 text-purple-600" />
+                )}
+              </span>
+              <span className="shrink-0 text-[11px] font-medium uppercase tracking-[0.14em] text-purple-700">
+                Read
+              </span>
+            </button>
+          )}
         </div>
       )}
 
@@ -151,6 +175,14 @@ export default function LoggedDayDetails({
       {periodError && (
         <p className="mt-2 text-sm text-destructive">{periodError}</p>
       )}
+
+      <JournalEntryDialog
+        open={journalOpen}
+        onOpenChange={setJournalOpen}
+        date={date}
+        response={journalResponse}
+        voiceNote={journalVoice}
+      />
     </div>
   );
 }

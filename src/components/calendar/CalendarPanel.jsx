@@ -36,6 +36,7 @@ export default function CalendarPanel({
   logs,
   dailyLogs = [],
   loading,
+  showJournal = false,
   title,
   action,
   onChanged,
@@ -54,6 +55,20 @@ export default function CalendarPanel({
         .filter((entry) => entry.symptoms?.length > 0)
         .map((entry) => parseDayKey(entry.date)),
     [dailyLogs]
+  );
+
+  // Days with a journal entry, for people tracking general wellbeing.
+  const journalDays = useMemo(
+    () =>
+      showJournal
+        ? dailyLogs
+            .filter(
+              (entry) =>
+                entry.journal_response?.trim() || entry.journal_voice_note
+            )
+            .map((entry) => parseDayKey(entry.date))
+        : [],
+    [dailyLogs, showJournal]
   );
 
   const selectedLog = useMemo(() => {
@@ -115,7 +130,11 @@ export default function CalendarPanel({
           mode="single"
           selected={selected}
           onSelect={(value) => value && setSelected(value)}
-          modifiers={{ logged: loggedDays, symptom: symptomDays }}
+          modifiers={{
+            logged: loggedDays,
+            symptom: symptomDays,
+            journal: journalDays,
+          }}
           components={{ DayContent: CalendarDay }}
           disabled={{ after: new Date() }}
           classNames={{
@@ -149,6 +168,14 @@ export default function CalendarPanel({
             </span>
             Symptoms
           </span>
+          {showJournal && (
+            <span className="flex items-center gap-2">
+              <span className="inline-flex h-4 w-4 items-center justify-center rounded-full border border-slate-200">
+                <span className="h-1.5 w-1.5 rounded-full bg-purple-800" />
+              </span>
+              Journal entry
+            </span>
+          )}
         </div>
       </div>
 
@@ -160,6 +187,7 @@ export default function CalendarPanel({
             date={selected}
             log={selectedLog}
             dailyLog={selectedDailyLog}
+            journal={showJournal ? selectedDailyLog : null}
             cycleDay={cycleDay}
             isPeriodDay={Boolean(selectedLog)}
             onTogglePeriod={togglePeriodDay}
