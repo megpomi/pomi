@@ -26,14 +26,14 @@ export default function CharityImpact() {
       </p>
 
       <div className="mt-7 rounded-2xl bg-white/15 p-5 backdrop-blur-sm">
-        <div className="flex items-center justify-center gap-2">
-          <Sparkles className="h-5 w-5 shrink-0 text-white/70" />
+        <div className="flex items-center justify-between gap-2">
           <p className="text-xs uppercase tracking-wider text-white/70">
             Your contribution
           </p>
+          <Sparkles className="h-5 w-5 shrink-0 text-white/70" />
         </div>
         <ContributionDays />
-        <p className="mt-3 text-center text-xs text-white/70">
+        <p className="mt-3 text-left text-xs text-white/70">
           Consistent tracking powers the community that makes these donations
           possible.
         </p>
