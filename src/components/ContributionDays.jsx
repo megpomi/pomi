@@ -28,7 +28,7 @@ export default function ContributionDays() {
   const thisMonth = counts?.thisMonth ?? 0;
 
   return (
-    <div className="mt-3 flex items-end gap-10">
+    <div className="mt-3 flex items-start justify-center gap-12 text-center">
       <div>
         <p className="font-heading text-4xl font-semibold">{allTime}</p>
         <p className="mt-1 text-xs text-white/80">days tracked all time</p>

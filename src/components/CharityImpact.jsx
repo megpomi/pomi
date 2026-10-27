@@ -17,7 +17,7 @@ export default function CharityImpact() {
       </Link>
 
       <h3 className="font-heading text-2xl font-semibold leading-snug sm:text-3xl">
-        Every day you track helps fund women's health.
+        Every day you track helps fund important causes.
       </h3>
       <p className="mt-3 max-w-md text-sm leading-relaxed text-white/85">
         Pomi is free with ads, or ad-free with a subscription. A share of the
@@ -26,14 +26,14 @@ export default function CharityImpact() {
       </p>
 
       <div className="mt-7 rounded-2xl bg-white/15 p-5 backdrop-blur-sm">
-        <div className="flex items-start justify-between">
+        <div className="flex items-center justify-center gap-2">
+          <Sparkles className="h-5 w-5 shrink-0 text-white/70" />
           <p className="text-xs uppercase tracking-wider text-white/70">
             Your contribution
           </p>
-          <Sparkles className="h-6 w-6 shrink-0 text-white/70" />
         </div>
         <ContributionDays />
-        <p className="mt-2 text-xs text-white/70">
+        <p className="mt-3 text-center text-xs text-white/70">
           Consistent tracking powers the community that makes these donations
           possible.
         </p>
@@ -41,7 +41,7 @@ export default function CharityImpact() {
 
       <div className="mt-6">
         <p className="mb-3 text-xs uppercase tracking-wider text-white/70">
-          Featured causes we support
+          Today's featured causes we support
         </p>
         <div className="space-y-2">
           {featured.map((c) => (
