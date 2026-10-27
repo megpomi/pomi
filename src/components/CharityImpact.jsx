@@ -2,8 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Heart, Sparkles, ArrowUpRight, ArrowRight } from "lucide-react";
 import { featuredCauses } from "@/lib/charities";
+import ContributionDays from "@/components/ContributionDays";
 
-export default function CharityImpact({ daysTracked }) {
+export default function CharityImpact() {
   const featured = featuredCauses();
   return (
     <div className="overflow-hidden rounded-3xl border border-pomegranate-100 bg-gradient-to-br from-pomegranate-500 to-pomegranate-800 p-8 text-white sm:p-10">
@@ -25,20 +26,13 @@ export default function CharityImpact({ daysTracked }) {
       </p>
 
       <div className="mt-7 rounded-2xl bg-white/15 p-5 backdrop-blur-sm">
-        <div className="flex items-end justify-between">
-          <div>
-            <p className="text-xs uppercase tracking-wider text-white/70">
-              Your contribution
-            </p>
-            <p className="mt-1 font-heading text-4xl font-semibold">
-              {daysTracked}
-              <span className="ml-1 text-lg font-normal text-white/80">
-                days tracked
-              </span>
-            </p>
-          </div>
-          <Sparkles className="h-8 w-8 text-white/70" />
+        <div className="flex items-start justify-between">
+          <p className="text-xs uppercase tracking-wider text-white/70">
+            Your contribution
+          </p>
+          <Sparkles className="h-6 w-6 shrink-0 text-white/70" />
         </div>
+        <ContributionDays />
         <p className="mt-2 text-xs text-white/70">
           Consistent tracking powers the community that makes these donations
           possible.

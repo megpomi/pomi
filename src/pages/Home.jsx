@@ -12,7 +12,7 @@ import CalendarPanel from "@/components/calendar/CalendarPanel";
 import CharityImpact from "@/components/CharityImpact";
 import CyclePatterns from "@/components/patterns/CyclePatterns";
 import DonationTracker from "@/components/DonationTracker";
-import { countTrackedDays, recordAdVisit } from "@/lib/donations";
+import { recordAdVisit } from "@/lib/donations";
 import ReminderBanner from "@/components/reminders/ReminderBanner";
 import JournalPrompt from "@/components/journal/JournalPrompt";
 import ReminderBell from "@/components/reminders/ReminderBell";
@@ -82,8 +82,6 @@ export default function Home() {
       .catch(() => setUser(null))
       .finally(() => setCheckingProfile(false));
   }, [subscriber]);
-
-  const daysTracked = countTrackedDays(logs);
 
   // The name given during onboarding greets them here; accounts made another way
   // fall back to the first word of their account name.
@@ -209,7 +207,7 @@ export default function Home() {
             <CyclePatterns logs={logs} dailyLogs={dailyLogs} />
           </div>
           <div className="lg:col-span-2">
-            <CharityImpact daysTracked={daysTracked} />
+            <CharityImpact />
           </div>
         </div>
 

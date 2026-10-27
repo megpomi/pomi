@@ -32,6 +32,40 @@ export const logDays = (log) => {
 export const countTrackedDays = (logs) =>
   logs.reduce((total, log) => total + logDays(log), 0);
 
+const dayKeyOf = (value) => {
+  const d = toDate(value);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(
+    d.getDate()
+  ).padStart(2, "0")}`;
+};
+
+// Distinct days with any data: every day covered by a period log, plus every
+// daily check-in. Returns the all-time count and the count for this month.
+export const countContributionDays = (logs, dailyLogs) => {
+  const days = new Set();
+
+  (logs || []).forEach((log) => {
+    if (!log.start_date) return;
+    const start = toDate(log.start_date);
+    const total = logDays(log);
+    for (let i = 0; i < total; i += 1) {
+      days.add(dayKeyOf(new Date(start.getTime() + i * DAY)));
+    }
+  });
+
+  (dailyLogs || []).forEach((log) => {
+    if (log.date) days.add(dayKeyOf(log.date));
+  });
+
+  const thisMonthPrefix = monthKey();
+  let thisMonth = 0;
+  days.forEach((day) => {
+    if (day.startsWith(thisMonthPrefix)) thisMonth += 1;
+  });
+
+  return { allTime: days.size, thisMonth };
+};
+
 // --- ad-funded donations (free plan) ---
 
 const viewsByMonth = (user) => user?.ad_views_by_month || {};
