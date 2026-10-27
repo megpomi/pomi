@@ -191,17 +191,19 @@ export default function Home() {
               title="Your calendar"
               onChanged={loadLogs}
               action={
-                <Button
-                  asChild
-                  variant="outline"
-                  size="sm"
-                  className="rounded-full border-pomegranate-200 text-pomegranate-600 hover:bg-pomegranate-50"
-                >
-                  <Link to="/calendar?log=1">
-                    <CalendarPlus className="mr-1.5 h-4 w-4" />
-                    Log historical menstrual days
-                  </Link>
-                </Button>
+                tracksCycles && (
+                  <Button
+                    asChild
+                    variant="outline"
+                    size="sm"
+                    className="rounded-full border-pomegranate-200 text-pomegranate-600 hover:bg-pomegranate-50"
+                  >
+                    <Link to="/calendar?log=1">
+                      <CalendarPlus className="mr-1.5 h-4 w-4" />
+                      Log historical menstrual days
+                    </Link>
+                  </Button>
+                )
               }
             />
 

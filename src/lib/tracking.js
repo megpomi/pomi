@@ -8,6 +8,14 @@ export const TRACKING_OPTIONS = [
     label: "Menstrual cycles",
     desc: "Track periods, flow, and predictions.",
     icon: Droplet,
+    removal: {
+      title: "Stop tracking menstrual cycles?",
+      items: [
+        "Period days, flow intensity and cycle symptoms",
+        "Cycle predictions, stats and patterns",
+        "Logging historical menstrual days from your calendar",
+      ],
+    },
   },
   {
     value: "perimenopause_menopause",
@@ -42,5 +50,13 @@ export const TRACKING_OPTIONS = [
     label: "General wellbeing",
     desc: "Track mood, energy, and everyday health.",
     icon: LotusIcon,
+    removal: {
+      title: "Stop tracking general wellbeing?",
+      items: [
+        "Daily journal prompts, reflections and voice notes",
+        "The wellbeing prompt on your dashboard",
+        "Seeing your journal entries on the calendar",
+      ],
+    },
   },
 ];
