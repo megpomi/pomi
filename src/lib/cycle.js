@@ -65,9 +65,11 @@ export function getCurrentPhase(logs) {
   nextStart.setDate(nextStart.getDate() + avgCycle);
   const daysUntilNext = Math.round((nextStart - today) / 86400000);
 
+  // Ovulation sits mid-cycle, roughly 12–16 days before the next period is due,
+  // and the days after it — closer to that next start — are the luteal phase.
   let phase = "follicular";
   if (onPeriod) phase = "period";
-  else if (daysUntilNext <= 14 && daysUntilNext >= 9) phase = "luteal";
+  else if (daysUntilNext < 12) phase = "luteal";
   else if (daysUntilNext <= 16) phase = "ovulation";
 
   return {
