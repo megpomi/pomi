@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Droplet, Heart, Navigation } from "lucide-react";
 import { Image } from "@/components/ui/image";
 import pomiLogo from "@/assets/pomi-logo.png";
+import PublicHeader from "@/components/PublicHeader";
 import PublicFooter from "@/components/PublicFooter";
 
 export default function IntroStep({ onStart }) {
@@ -17,8 +17,10 @@ export default function IntroStep({ onStart }) {
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
-      <div className="flex flex-1 items-center justify-center px-5 py-10">
-        <motion.div layout className="w-full max-w-xl">
+      <PublicHeader />
+
+      <main className="flex flex-1 items-center justify-center px-5 py-10">
+        <div className="w-full max-w-xl">
           <motion.div layout className="flex flex-col items-center text-center">
             <motion.div
               layout
@@ -82,23 +84,14 @@ export default function IntroStep({ onStart }) {
                 onClick={onStart}
                 className="mt-6 w-full rounded-full bg-pomegranate-600 py-6 text-base hover:bg-pomegranate-700"
               >
-                Get started
+                Start with Pomi
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
-
-              <p className="mt-4 text-center text-sm text-slate-500">
-                Already have an account?{" "}
-                <Link
-                  to="/login"
-                  className="font-medium text-pomegranate-600 hover:underline"
-                >
-                  Sign in
-                </Link>
-              </p>
             </motion.div>
           )}
-        </motion.div>
-      </div>
+        </div>
+      </main>
+
       <PublicFooter />
     </div>
   );

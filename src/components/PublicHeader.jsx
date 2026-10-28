@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Image } from "@/components/ui/image";
+import { Button } from "@/components/ui/button";
 import pomiLogo from "@/assets/pomi-logo.png";
 
 // Header for the public (non signed-in) pages: the logo plus the plain links a
@@ -20,7 +21,7 @@ export default function PublicHeader() {
             Pomi
           </span>
         </Link>
-        <nav className="flex items-center gap-4 text-sm">
+        <nav className="flex items-center gap-3 text-sm sm:gap-4">
           <Link
             to="/about"
             className="font-medium text-slate-600 hover:text-pomegranate-600"
@@ -39,6 +40,13 @@ export default function PublicHeader() {
           >
             Sign in
           </Link>
+          <Button
+            asChild
+            size="sm"
+            className="rounded-full bg-pomegranate-600 px-4 hover:bg-pomegranate-700"
+          >
+            <Link to="/">Start with Pomi</Link>
+          </Button>
         </nav>
       </div>
     </header>
