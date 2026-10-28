@@ -46,12 +46,19 @@ export default function Home() {
   const loadLogs = useCallback(async () => {
     setLoading(true);
     try {
+      // Only the signed-in person's own logs: admins can read every user's
+      // records, and another account's entry would skew the stats.
+      const me = await base44.auth.me();
+      const owner = { created_by_id: me?.id };
       const [cycles, dailies] = await Promise.all([
-        base44.entities.CycleLog.filter(
-          {},
-          { sort: "-start_date", limit: 100 }
-        ),
-        base44.entities.DailyLog.filter({}, { sort: "-date", limit: 200 }),
+        base44.entities.CycleLog.filter(owner, {
+          sort: "-start_date",
+          limit: 100,
+        }),
+        base44.entities.DailyLog.filter(owner, {
+          sort: "-date",
+          limit: 200,
+        }),
       ]);
       setLogs(cycles.items);
       setDailyLogs(dailies.items);

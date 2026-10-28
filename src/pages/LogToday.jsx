@@ -60,7 +60,14 @@ export default function LogToday() {
 
   useEffect(() => {
     let active = true;
-    base44.entities.DailyLog.filter({ date }, { limit: 1 })
+    base44.auth
+      .me()
+      .then((me) =>
+        base44.entities.DailyLog.filter(
+          { date, created_by_id: me?.id },
+          { limit: 1 }
+        )
+      )
       .then((page) => {
         if (!active) return;
         const entry = page.items[0];
@@ -93,7 +100,14 @@ export default function LogToday() {
   // already exist to extend or split them correctly.
   useEffect(() => {
     let active = true;
-    base44.entities.CycleLog.filter({}, { limit: 100 })
+    base44.auth
+      .me()
+      .then((me) =>
+        base44.entities.CycleLog.filter(
+          { created_by_id: me?.id },
+          { limit: 100 }
+        )
+      )
       .then((page) => active && setPeriodLogs(page.items))
       .catch(() => active && setError("Couldn't load your period history."));
     return () => {

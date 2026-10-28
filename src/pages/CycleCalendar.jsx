@@ -13,7 +13,14 @@ export default function CycleCalendar() {
 
   const loadLogs = useCallback(
     () =>
-      base44.entities.CycleLog.filter({}, { sort: "-start_date", limit: 200 })
+      base44.auth
+        .me()
+        .then((me) =>
+          base44.entities.CycleLog.filter(
+            { created_by_id: me?.id },
+            { sort: "-start_date", limit: 200 }
+          )
+        )
         .then((res) => setLogs(res.items))
         .finally(() => setLoading(false)),
     []

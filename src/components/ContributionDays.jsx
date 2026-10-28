@@ -9,10 +9,15 @@ export default function ContributionDays() {
 
   useEffect(() => {
     let active = true;
-    Promise.all([
-      base44.entities.CycleLog.filter({}, { limit: 500 }),
-      base44.entities.DailyLog.filter({}, { limit: 500 }),
-    ])
+    base44.auth
+      .me()
+      .then((me) => {
+        const owner = { created_by_id: me?.id };
+        return Promise.all([
+          base44.entities.CycleLog.filter(owner, { limit: 500 }),
+          base44.entities.DailyLog.filter(owner, { limit: 500 }),
+        ]);
+      })
       .then(([cycles, dailies]) => {
         if (active) {
           setCounts(countContributionDays(cycles.items, dailies.items));
