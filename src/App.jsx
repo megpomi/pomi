@@ -20,6 +20,8 @@ import ThankYou from '@/pages/ThankYou';
 import Mission from '@/pages/Mission';
 import LogToday from '@/pages/LogToday';
 import DeleteAccount from '@/pages/DeleteAccount';
+import About from '@/pages/About';
+import Contact from '@/pages/Contact';
 // Add page imports here
 
 const AuthenticatedApp = () => {
@@ -54,6 +56,8 @@ const AuthenticatedApp = () => {
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/ThankYou" element={<ThankYou />} />
       <Route path="/" element={<Start />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/contact" element={<Contact />} />
       <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>
         <Route path="/calendar" element={<CycleCalendar />} />
         <Route path="/log-today" element={<LogToday />} />
