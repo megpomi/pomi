@@ -62,7 +62,7 @@ export default function IntroStep({ onStart }) {
                   <Heart className="mt-0.5 h-5 w-5 shrink-0 fill-pomegranate-400 text-pomegranate-400" />
                   <p className="text-sm leading-relaxed text-slate-600">
                     Our purpose is built on the simple idea that every cycle is
-                    powerful and can be used for good.
+                    powerful and should be used for further good.
                   </p>
                 </div>
                 <div className="flex items-start gap-3 rounded-2xl border border-pomegranate-100 bg-white p-5">
