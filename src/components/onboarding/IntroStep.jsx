@@ -44,7 +44,7 @@ export default function IntroStep({ onStart }) {
                   Welcome to Pomi
                 </h1>
                 <p className="mt-3 max-w-md text-sm leading-relaxed text-slate-500">
-                  As in the pomegranate - Symbolic of health, abundance and natural
+                  As in the banana - Symbolic of health, abundance and natural
                   cycles.
                 </p>
               </motion.div>
